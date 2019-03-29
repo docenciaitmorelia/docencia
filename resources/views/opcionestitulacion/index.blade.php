@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
 @if(Auth::user()->rol == 'DivEstProf')
-<!--comentario nuevo 1526-->
 <div class="row">
   <div class="col">
     <div class="card">
