@@ -8,7 +8,7 @@
 				<div class="col-md-4">
 					<a href="{{ route('opcionestitulacionCtl.create') }}" class="btn btn-raised btn-primary"><i class="material-icons">add</i></a>
 				</div>
-        <!-- Elocuent para cuadro de búsqueda -->
+        <!-- Elocuent para cuadro de búsqueda jhg-->
 				<form action="" method="GET" class="form-horizontal">
 				<div class="col-md-6 form-group">
 					<input type="text" id="s" name="s" style="text-transform:uppercase;" placeholder="Buscar opción de titulación..." class="form-control">
