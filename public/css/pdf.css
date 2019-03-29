@@ -1,0 +1,31 @@
+#contenido{
+	margin-left: 1.5cm;
+	margin-right: 1.5cm;
+	margin-top: 3.5cm;
+	font: sans-serif;
+}
+#bg {
+	position: fixed;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+}
+#dep{
+	font-size: 8pt;
+}
+#den{
+	font-size: 10pt;
+}
+#firmas{
+	font size: 10pt; 
+}
+#tec{
+	font-size: 8pt;
+	font-style: italic;
+}
+#cp{
+	font-size: 8pt;
+}
+#titulo{
+	font-size: 9pt;	
+}

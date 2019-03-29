@@ -1,0 +1,21 @@
+{
+  "name": "MAPD",
+  "description": "Modulo de Apoyo a Proyecto Docencia",
+  "main": "",
+  "authors": [
+    "Guadalupe Isabel Heraclio Lagunas"
+  ],
+  "license": "ITM",
+  "homepage": "mapd.app",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.4.0",
+    "bootstrap-material-design": "0.5.10"
+  }
+}

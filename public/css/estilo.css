@@ -1,0 +1,25 @@
+@font-face {
+    font-family: Soberana;
+    src: url(../fonts/SoberanaSans-Light.otf) format("opentype");
+}
+
+html, body { 
+    margin: -3; padding: 0;
+}
+
+
+body{
+    background-image: url('../img/membrete.jpg');
+    background-position: top left;
+    background-size: 99.8% 100%;
+    width: 100%;
+    height: 100%;
+	
+}
+
+#contenido{
+    font-family: Verdana;
+    padding-top: 195px;
+	margin-left: 1.5cm;
+	margin-right: 1.5cm;
+}
