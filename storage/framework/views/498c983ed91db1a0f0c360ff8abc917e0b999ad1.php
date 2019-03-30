@@ -8,61 +8,83 @@
 					<a href="<?php echo e(route('procesotitulacion.create')); ?>" class="btn btn-raised btn-primary"><i class="material-icons">add</i></a>
 				</div>
 				<form action="" method="GET" class="form-horizontal">
-				<div class="col-md-6 form-group">
-					<input type="text" id="s" name="s" style="text-transform:uppercase;" placeholder="Buscar..." class="form-control">
-				</div>
-				<div class="col-md-2">
-					<button type="submit" class="btn btn-raised btn-primary"><i class="material-icons">search</i></button>
-				</div>
+  				<div class="col-md-6 form-group">
+  					<input type="text" id="s" name="s" style="text-transform:uppercase;" placeholder="Buscar..." class="form-control">
+  				</div>
+  				<div class="col-md-2">
+  					<button type="submit" class="btn btn-raised btn-primary"><i class="material-icons">search</i></button>
+  				</div>
 				</form>
-			<br>
-			<br>
-			<br>
-			<br>
-			<?php echo $__env->make('procesotitulacion.fragment.info', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-			<h3>Proceso de Titulaciones</h3>
-			<table class="table table-striped table-hover ">
-				<thead>
-					<tr>
-						<th>Opción de Titulación</th>
-						<th>Orden</th>
-			            <th>Descripción</th>
-						<th colspan="1">&nbsp;</th>
-						<th colspan="1">&nbsp;</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php $__currentLoopData = $procesotitulacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $procesot): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-						<tr>
-							<td>
-								<strong><?php echo e($procesot->nombre_opcion); ?></strong>
-							</td>
-							<td>
-								<strong><?php echo e($procesot->orden); ?></strong>
-							</td>
-			                <td>
-			                    <strong><?php echo e($procesot->descripcion); ?></strong>
-			                </td>
-							<td width="20px">
-								<a href="<?php echo e(route('procesotitulacion.edit', $procesot->id)); ?>"class="btn btn-raised btn-primary">
-									<i class="material-icons">create</i>
-								</a>
-							</td>
-							<td width="20px">
-								<form action="<?php echo e(route('procesotitulacion.destroy', $procesot->id)); ?>" method="POST">
-									<?php echo e(csrf_field()); ?>
+  			<br>
+  			<br>
+  			<br>
+  			<br>
+        <?php echo $__env->make('procesotitulacion.fragment.info', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+  			<h3>Proceso de Titulaciones</h3>
 
-									<input type="hidden" name="_method" value="DELETE">
-									<button class="btn btn-raised btn-primary"><i class="material-icons">clear</i></button>
-							</td>
-						</tr>
-					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</div>
-</div>
+        <div id="accordion">
+          <?php $id=0; ?>
+          <?php $__currentLoopData = $opcion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php $id=$id+1 ?>
+          <div class="card">
+            <div class="card-header" id="heading<?php echo e($id); ?>">
+              <h3 class="mb-0">
+                <a class="btn btn-link" data-toggle="collapse" data-target="#collapse<?php echo e($id); ?>" aria-expanded="true" aria-controls="collapse<?php echo e($id); ?>">
+                  <?php echo e($item); ?>
+
+                </a>
+              </h3>
+            </div>
+
+            <div id="collapse<?php echo e($id); ?>" class="collapse" aria-labelledby="heading<?php echo e($id); ?>" data-parent="#accordion">
+              <div class="card-body">
+                <table class="table table-striped table-hover ">
+                  <thead>
+                    <tr>
+                      <th>No. Paso</th>
+                      <th>Descripción</th>
+                      <th colspan="1">&nbsp;</th>
+                      <th colspan="1">&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $__currentLoopData = $procesotitulacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $procesot): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                      <?php if($item != $procesot->nombre_opcion): ?>
+                        <?php continue; ?>
+                      <?php endif; ?>
+                      <tr>
+                        <td>
+                          <strong><?php echo e($procesot->orden); ?></strong>
+                        </td>
+                        <td>
+                            <strong><?php echo e($procesot->descripcion); ?></strong>
+                        </td>
+                        <td width="20px">
+                          <a href="<?php echo e(route('procesotitulacion.edit', $procesot->id)); ?>"class="btn btn-raised btn-primary">
+                            <i class="material-icons">create</i>
+                          </a>
+                        </td>
+                        <td width="20px">
+                          <form action="<?php echo e(route('procesotitulacion.destroy', $procesot->id)); ?>" method="POST">
+                            <?php echo e(csrf_field()); ?>
+
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button class="btn btn-raised btn-primary"><i class="material-icons">clear</i></button>
+                          </form>
+                        </td>
+                      </tr>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div> <!--end accordion-->
+      </div> <!--end card body-->
+    </div> <!--end card-->
+  </div> <!--end col-->
+</div> <!--end row-->
 <?php endif; ?>
 <?php $__env->stopSection(); ?>
 

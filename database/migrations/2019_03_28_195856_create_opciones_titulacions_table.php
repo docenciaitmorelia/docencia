@@ -15,10 +15,10 @@ class CreateOpcionesTitulacionsTable extends Migration
     {
         Schema::create('opciones_titulacion', function (Blueprint $table) {
           $table->increments('id');
-          $table->string('opcion_titulacion');
-          $table->string('nombre_opcion');
-          $table->string('detalle_opcion');
-          $table->string('plan_de_estudios');
+          $table->string('opcion_titulacion',10);
+          $table->string('nombre_opcion',255);
+          $table->string('detalle_opcion',255);
+          $table->string('reticula',10);
           $table->timestamps();
         });
     }

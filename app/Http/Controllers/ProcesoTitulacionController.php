@@ -12,8 +12,18 @@ class ProcesoTitulacionController extends Controller
 {
     public function index(Request $request)
     {
-    	$procesotitulacion= ProcesoTitulacion::PT($request->s)->orderBy('proceso_titulacion.id','ASC')->paginate();
-        return view('procesotitulacion.index',compact('procesotitulacion'));
+    	 $procesotitulacion= ProcesoTitulacion::PT($request->s)->orderBy('proceso_titulacion.orden','asc')->paginate();
+       $id=0;
+       foreach ($procesotitulacion as $item) {
+         $opcion[$id] = $item->nombre_opcion;
+         $id++;
+       }
+       $opcion = array_unique($opcion);
+       /*$opcion=OpcionesTitulacion::select('nombre_opcion')
+       ->distinct()
+       ->orderBy('nombre_opcion','asc')
+       ->get();*/
+       return view('procesotitulacion.index',compact('procesotitulacion','opcion'));
     }
 
     public function create()
@@ -27,9 +37,8 @@ class ProcesoTitulacionController extends Controller
     	$procesotitulacion = new ProcesoTitulacion;
     	$procesotitulacion->id_opcion       = $request->opcion;
     	$procesotitulacion->orden           = $request->orden;
-        $procesotitulacion->descripcion     = $request->descripcion;
-
-        $procesotitulacion->save();
+      $procesotitulacion->descripcion     = $request->descripcion;
+      $procesotitulacion->save();
     	return redirect()->route('procesotitulacion.index')->with('info', 'El paso para el proceso de titulación fue registrado');
     }
 

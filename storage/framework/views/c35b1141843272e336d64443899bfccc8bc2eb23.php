@@ -1,6 +1,5 @@
 <?php $__env->startSection('content'); ?>
 <?php if(Auth::user()->rol == 'DivEstProf'): ?>
-
 <div class="row">
   <div class="col">
     <div class="card">
@@ -11,7 +10,7 @@
             <?php echo csrf_field(); ?>
             <div class="form-group col-md-6">
                 <label for="opcion_titulacion" class="bmd-label-floating col-form-label"><?php echo e(__('Opción de Titulación')); ?></label>
-                    <input id="opcion_titulacion" type="text" class="form-control<?php echo e($errors->has('opcion_titulacion') ? ' is-invalid' : ''); ?>" name="opcion_titulacion" value="" placeholder="I" required autofocus>
+                    <input maxlength="10" id="opcion_titulacion" type="text" class="form-control<?php echo e($errors->has('opcion_titulacion') ? ' is-invalid' : ''); ?>" name="opcion_titulacion" value="" placeholder="I" required autofocus>
                     <?php if($errors->has('opcion_titulacion')): ?>
                         <span class="invalid-feedback" role="alert">
                             <strong><?php echo e($errors->first('opcion_titulacion')); ?></strong>
@@ -20,7 +19,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="nombre_opcion" class="bmd-label-floating col-form-label"><?php echo e(__('Nombre')); ?></label>
-                    <input id="nombre_opcion" type="text" class="form-control<?php echo e($errors->has('nombre_opcion') ? ' is-invalid' : ''); ?>" name="nombre_opcion" value="" placeholder="Titulación Integral Por ..." required>
+                    <input maxlength="255" id="nombre_opcion" type="text" class="form-control<?php echo e($errors->has('nombre_opcion') ? ' is-invalid' : ''); ?>" name="nombre_opcion" value="" placeholder="Titulación Integral Por ..." required>
                     <?php if($errors->has('nombre_opcion')): ?>
                         <span class="invalid-feedback" role="alert">
                             <strong><?php echo e($errors->first('nombre_opcion')); ?></strong>
@@ -29,7 +28,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="detalle_opcion" class="bmd-label-floating col-form-label"><?php echo e(__('Descripción')); ?></label>
-                    <input id="detalle_opcion" type="text" class="form-control<?php echo e($errors->has('detalle_opcion') ? ' is-invalid' : ''); ?>" name="detalle_opcion" value="" placeholder="Ejemplo: Producto de Investigación..." required>
+                    <input maxlength="255" id="detalle_opcion" type="text" class="form-control<?php echo e($errors->has('detalle_opcion') ? ' is-invalid' : ''); ?>" name="detalle_opcion" value="" placeholder="Ejemplo: Producto de Investigación..." required>
                     <?php if($errors->has('detalle_opcion')): ?>
                         <span class="invalid-feedback" role="alert">
                             <strong><?php echo e($errors->first('detalle_opcion')); ?></strong>
@@ -37,15 +36,15 @@
                     <?php endif; ?>
             </div>
             <div class="form-group col-md-6">
-                <label for="plan_de_estudios" class="bmd-label-floating col-form-label"><?php echo e(__('Plan de Estudios')); ?></label>
-                    <select id="plan_de_estudios" type="text" class="form-control<?php echo e($errors->has('plan_de_estudios') ? ' is-invalid' : ''); ?>" name="plan_de_estudios" value="" required>
+                <label for="reticula" class="bmd-label-floating col-form-label"><?php echo e(__('Planes de Estudio de la Retícula')); ?></label>
+                    <select id="reticula" type="text" class="form-control<?php echo e($errors->has('reticula') ? ' is-invalid' : ''); ?>" name="reticula" value="" required>
                       <?php $__currentLoopData = $Array; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <option id="plan_de_estudios" value="<?php echo e($item->clave_oficial); ?>"><?php echo e($item->clave_oficial); ?>, <?php echo e($item->nombre_reducido); ?></option>
+                        <option id="reticula" value="<?php echo e($item->reticula); ?>"><?php echo e($item->reticula); ?></option>
                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
-                    <?php if($errors->has('plan_de_estudios')): ?>
+                    <?php if($errors->has('reticula')): ?>
                         <span class="invalid-feedback" role="alert">
-                            <strong><?php echo e($errors->first('plan_de_estudios')); ?></strong>
+                            <strong><?php echo e($errors->first('reticula')); ?></strong>
                         </span>
                     <?php endif; ?>
             </div>

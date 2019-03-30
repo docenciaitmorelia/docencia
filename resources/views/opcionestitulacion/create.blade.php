@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
 @if(Auth::user()->rol == 'DivEstProf')
-
 <div class="row">
   <div class="col">
     <div class="card">
@@ -12,7 +11,7 @@
             @csrf
             <div class="form-group col-md-6">
                 <label for="opcion_titulacion" class="bmd-label-floating col-form-label">{{ __('Opción de Titulación') }}</label>
-                    <input id="opcion_titulacion" type="text" class="form-control{{ $errors->has('opcion_titulacion') ? ' is-invalid' : '' }}" name="opcion_titulacion" value="" placeholder="I" required autofocus>
+                    <input maxlength="10" id="opcion_titulacion" type="text" class="form-control{{ $errors->has('opcion_titulacion') ? ' is-invalid' : '' }}" name="opcion_titulacion" value="" placeholder="I" required autofocus>
                     @if ($errors->has('opcion_titulacion'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('opcion_titulacion') }}</strong>
@@ -21,7 +20,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="nombre_opcion" class="bmd-label-floating col-form-label">{{ __('Nombre') }}</label>
-                    <input id="nombre_opcion" type="text" class="form-control{{ $errors->has('nombre_opcion') ? ' is-invalid' : '' }}" name="nombre_opcion" value="" placeholder="Titulación Integral Por ..." required>
+                    <input maxlength="255" id="nombre_opcion" type="text" class="form-control{{ $errors->has('nombre_opcion') ? ' is-invalid' : '' }}" name="nombre_opcion" value="" placeholder="Titulación Integral Por ..." required>
                     @if ($errors->has('nombre_opcion'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('nombre_opcion') }}</strong>
@@ -30,7 +29,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="detalle_opcion" class="bmd-label-floating col-form-label">{{ __('Descripción') }}</label>
-                    <input id="detalle_opcion" type="text" class="form-control{{ $errors->has('detalle_opcion') ? ' is-invalid' : '' }}" name="detalle_opcion" value="" placeholder="Ejemplo: Producto de Investigación..." required>
+                    <input maxlength="255" id="detalle_opcion" type="text" class="form-control{{ $errors->has('detalle_opcion') ? ' is-invalid' : '' }}" name="detalle_opcion" value="" placeholder="Ejemplo: Producto de Investigación..." required>
                     @if ($errors->has('detalle_opcion'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('detalle_opcion') }}</strong>
@@ -38,15 +37,15 @@
                     @endif
             </div>
             <div class="form-group col-md-6">
-                <label for="plan_de_estudios" class="bmd-label-floating col-form-label">{{ __('Plan de Estudios') }}</label>
-                    <select id="plan_de_estudios" type="text" class="form-control{{ $errors->has('plan_de_estudios') ? ' is-invalid' : '' }}" name="plan_de_estudios" value="" required>
+                <label for="reticula" class="bmd-label-floating col-form-label">{{ __('Planes de Estudio de la Retícula') }}</label>
+                    <select id="reticula" type="text" class="form-control{{ $errors->has('reticula') ? ' is-invalid' : '' }}" name="reticula" value="" required>
                       @foreach($Array as $item)
-                        <option id="plan_de_estudios" value="{{ $item->clave_oficial }}">{{$item->clave_oficial}}, {{$item->nombre_reducido}}</option>
+                        <option id="reticula" value="{{ $item->reticula }}">{{$item->reticula}}</option>
                       @endforeach
                     </select>
-                    @if ($errors->has('plan_de_estudios'))
+                    @if ($errors->has('reticula'))
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('plan_de_estudios') }}</strong>
+                            <strong>{{ $errors->first('reticula') }}</strong>
                         </span>
                     @endif
             </div>

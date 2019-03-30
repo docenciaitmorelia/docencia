@@ -8,7 +8,7 @@
 				<div class="col-md-4">
 					<a href="{{ route('opcionestitulacionCtl.create') }}" class="btn btn-raised btn-primary"><i class="material-icons">add</i></a>
 				</div>
-        <!-- Elocuent para cuadro de búsqueda jhg-->
+        <!-- Elocuent para cuadro de búsqueda -->
 				<form action="" method="GET" class="form-horizontal">
 				<div class="col-md-6 form-group">
 					<input type="text" id="s" name="s" style="text-transform:uppercase;" placeholder="Buscar opción de titulación..." class="form-control">
@@ -46,7 +46,7 @@
                       <strong>{{ $item->detalle_opcion}}</strong>
                   </td>
                   <td>
-                      <strong>{{ $item->plan_de_estudios}}</strong>
+                      <strong>{{ $item->reticula}}</strong>
                   </td>
     							<td width="20px">
     								<a href="{{ route('opcionestitulacionCtl.edit', $item->id) }}"class="btn btn-raised btn-primary">

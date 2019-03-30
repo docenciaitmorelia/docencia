@@ -1,6 +1,5 @@
 <?php $__env->startSection('content'); ?>
 <?php if(Auth::user()->rol == 'DivEstProf'): ?>
-
 <div class="row">
   <div class="col">
     <div class="card">
@@ -46,7 +45,7 @@
                       <strong><?php echo e($item->detalle_opcion); ?></strong>
                   </td>
                   <td>
-                      <strong><?php echo e($item->plan_de_estudios); ?></strong>
+                      <strong><?php echo e($item->reticula); ?></strong>
                   </td>
     							<td width="20px">
     								<a href="<?php echo e(route('opcionestitulacionCtl.edit', $item->id)); ?>"class="btn btn-raised btn-primary">

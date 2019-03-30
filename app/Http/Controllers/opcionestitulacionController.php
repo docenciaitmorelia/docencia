@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\OpcionesTitulacion;
+use Illuminate\Support\Facades\DB;
 use App\Carrera;
 
 class opcionestitulacionController extends Controller
@@ -27,8 +28,10 @@ class opcionestitulacionController extends Controller
      */
     public function create()
     {
-      $Array = Carrera::select('clave_oficial','nombre_reducido')
+      $Array = Carrera::select('reticula')
+      ->distinct()
       ->where('nivel_escolar','=','L')
+      ->orderBy('reticula','desc')
       ->get();
       return view('opcionestitulacion.create',['Array' => $Array]);
     }
@@ -41,7 +44,14 @@ class opcionestitulacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $opciontitulacion = new OpcionesTitulacion;
+      $opciontitulacion->opcion_titulacion = $request->opcion_titulacion;
+      $opciontitulacion->nombre_opcion = $request->nombre_opcion;
+      $opciontitulacion->detalle_opcion = $request->detalle_opcion;
+      $opciontitulacion->reticula = $request->reticula;
+      $opciontitulacion->save();
+      return redirect()->route('opcionestitulacionCtl.index');
+
     }
 
     /**
@@ -63,7 +73,16 @@ class opcionestitulacionController extends Controller
      */
     public function edit($id)
     {
-        //
+      $Array = OpcionesTitulacion::select('opciones_titulacion.*')
+      ->where('id','=',$id)
+      ->get();
+      $Reticulas = Carrera::select('reticula')
+      ->distinct()
+      ->where('nivel_escolar','=','L')
+      ->orderBy('reticula','desc')
+      ->get();
+      return view('opcionestitulacion.edit',['Array' => $Array[0], 'Reticulas' => $Reticulas]);
+
     }
 
     /**
@@ -75,7 +94,15 @@ class opcionestitulacionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      DB::table('opciones_titulacion')
+          ->where('id', $id)
+          ->update([
+            'opcion_titulacion' => $request->opcion_titulacion,
+            'nombre_opcion' => $request->nombre_opcion,
+            'detalle_opcion' => $request->detalle_opcion,
+            'reticula' => $request->reticula,
+          ]);
+      return redirect()->route('opcionestitulacionCtl.index');
     }
 
     /**
