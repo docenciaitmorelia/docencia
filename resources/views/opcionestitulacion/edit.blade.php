@@ -38,7 +38,7 @@
                     @endif
             </div>
             <div class="form-group col-md-6">
-                <label for="reticula" class="bmd-label-floating col-form-label">{{ __('Planes de Estudio de la Retícula') }}</label>
+                <label for="reticula" class="bmd-label-floating col-form-label">{{ __('Año de la Retícula Para los Planes de Estudio') }}</label>
                     <select id="reticula" type="text" class="form-control{{ $errors->has('reticula') ? ' is-invalid' : '' }}" name="reticula" value="" required>
                       <option id="reticula" value="{{$Array->reticula}}" selected>{{$Array->reticula}}</option>
                       @foreach($Reticulas as $item)
