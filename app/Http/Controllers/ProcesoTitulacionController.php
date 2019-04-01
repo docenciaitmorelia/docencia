@@ -12,18 +12,16 @@ class ProcesoTitulacionController extends Controller
 {
     public function index(Request $request)
     {
-    	 $procesotitulacion= ProcesoTitulacion::PT($request->s)->orderBy('proceso_titulacion.orden','asc')->paginate();
-       $id=0;
+    	 $procesotitulacion= ProcesoTitulacion::PT($request->s)->orderBy('reticula', 'desc')->orderBy('nombre_opcion','asc')->orderBy('proceso_titulacion.orden','asc')->paginate();
+       $opciones=Array();
        foreach ($procesotitulacion as $item) {
-         $opcion[$id] = $item->nombre_opcion;
-         $id++;
+         $op = array_column($opciones,'nombre_opcion');
+         if((string)array_search($item->nombre_opcion,$op) != "0") {
+           array_push($opciones,['nombre_opcion'=>$item->nombre_opcion,'reticula'=>$item->reticula]);
+         }
        }
-       $opcion = array_unique($opcion);
-       /*$opcion=OpcionesTitulacion::select('nombre_opcion')
-       ->distinct()
-       ->orderBy('nombre_opcion','asc')
-       ->get();*/
-       return view('procesotitulacion.index',compact('procesotitulacion','opcion'));
+       $reticulas = array_unique(array_column($opciones,'reticula'));
+       return view('procesotitulacion.index',compact('procesotitulacion','opciones','reticulas'));
     }
 
     public function create()

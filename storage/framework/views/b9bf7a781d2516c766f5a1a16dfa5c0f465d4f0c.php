@@ -115,7 +115,13 @@
     <script type="text/javascript" src=" <?php echo e(url('bower_components/bootstrap-material-design/dist/js/ripples.min.js')); ?>"></script>
     <script type="text/javascript" src=" <?php echo e(url('bower_components/bootstrap-material-design/dist/js/material.min.js')); ?>"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
-    <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+    <script>
+      $(document).ready(function()
+      {
+        $('body').bootstrapMaterialDesign();
+      });
+      $.material.init();
+    </script>
 </body>
 </html>
 
