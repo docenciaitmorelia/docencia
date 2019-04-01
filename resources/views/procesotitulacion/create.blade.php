@@ -21,12 +21,12 @@
 
           <div class="col-md-4">
               <label class="control-label" for="orden">Paso número:</label>
-              <input class="form-control" type="text" id="orden" name="orden" style="text-transform:uppercase;">
+              <input maxlength="10" class="form-control" type="text" id="orden" name="orden" style="text-transform:uppercase;">
           </div>
 
           <div class="col-md-4">
               <label class="control-label" for="descripcion">Descripción del paso:</label>
-              <input class="form-control" type="text" id="descripcion" name="descripcion">
+              <input maxlength="255" class="form-control" type="text" id="descripcion" name="descripcion">
           </div>
 
           <p class="col-md-12 form-group">
