@@ -4,8 +4,69 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4731429c7f25ab92eaa813447a972209",
+    "content-hash": "33b2932b8b898941ad95ab85d5afa81f",
     "packages": [
+        {
+            "name": "barryvdh/laravel-snappy",
+            "version": "v0.4.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-snappy.git",
+                "reference": "4379153df99c04938946b8174337eb99a8852a8f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-snappy/zipball/4379153df99c04938946b8174337eb99a8852a8f",
+                "reference": "4379153df99c04938946b8174337eb99a8852a8f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/filesystem": "5.5.x|5.6.x|5.7.x|5.8.x",
+                "illuminate/support": "5.5.x|5.6.x|5.7.x|5.8.x",
+                "knplabs/knp-snappy": "^1",
+                "php": ">=7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.4-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Barryvdh\\Snappy\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "PDF": "Barryvdh\\Snappy\\Facades\\SnappyPdf",
+                        "SnappyImage": "Barryvdh\\Snappy\\Facades\\SnappyImage"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Barryvdh\\Snappy\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "Snappy PDF/Image for Laravel",
+            "keywords": [
+                "image",
+                "laravel",
+                "pdf",
+                "snappy",
+                "wkhtmltoimage",
+                "wkhtmltopdf"
+            ],
+            "time": "2019-02-26T20:00:55+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
@@ -162,25 +223,30 @@
         },
         {
             "name": "dragonmantank/cron-expression",
-            "version": "v2.2.0",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dragonmantank/cron-expression.git",
-                "reference": "92a2c3768d50e21a1f26a53cb795ce72806266c5"
+                "reference": "72b6fbf76adb3cf5bc0db68559b33d41219aba27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/92a2c3768d50e21a1f26a53cb795ce72806266c5",
-                "reference": "92a2c3768d50e21a1f26a53cb795ce72806266c5",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/72b6fbf76adb3cf5bc0db68559b33d41219aba27",
+                "reference": "72b6fbf76adb3cf5bc0db68559b33d41219aba27",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0.0"
+                "php": "^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~6.4"
+                "phpunit/phpunit": "^6.4|^7.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Cron\\": "src/Cron/"
@@ -207,7 +273,7 @@
                 "cron",
                 "schedule"
             ],
-            "time": "2018-06-06T03:12:17+00:00"
+            "time": "2019-03-31T00:38:28+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -367,6 +433,91 @@
             "time": "2019-01-10T14:06:47+00:00"
         },
         {
+            "name": "h4cc/wkhtmltoimage-amd64",
+            "version": "0.12.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/h4cc/wkhtmltoimage-amd64.git",
+                "reference": "c4e33f635207af89a704205b8902fb5715ca88be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/h4cc/wkhtmltoimage-amd64/zipball/c4e33f635207af89a704205b8902fb5715ca88be",
+                "reference": "c4e33f635207af89a704205b8902fb5715ca88be",
+                "shasum": ""
+            },
+            "bin": [
+                "bin/wkhtmltoimage-amd64"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL Version 3"
+            ],
+            "authors": [
+                {
+                    "name": "Julius Beckmann",
+                    "email": "github@h4cc.de"
+                }
+            ],
+            "description": "Convert html to image using webkit (qtwebkit). Static linked linux binary for amd64 systems.",
+            "homepage": "http://wkhtmltopdf.org/",
+            "keywords": [
+                "binary",
+                "convert",
+                "image",
+                "snapshot",
+                "thumbnail",
+                "wkhtmltoimage"
+            ],
+            "time": "2018-01-15T07:23:40+00:00"
+        },
+        {
+            "name": "h4cc/wkhtmltopdf-amd64",
+            "version": "0.12.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/h4cc/wkhtmltopdf-amd64.git",
+                "reference": "4e2ab2d032a5d7fbe2a741de8b10b8989523c95b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/h4cc/wkhtmltopdf-amd64/zipball/4e2ab2d032a5d7fbe2a741de8b10b8989523c95b",
+                "reference": "4e2ab2d032a5d7fbe2a741de8b10b8989523c95b",
+                "shasum": ""
+            },
+            "bin": [
+                "bin/wkhtmltopdf-amd64"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "h4cc\\WKHTMLToPDF\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL Version 3"
+            ],
+            "authors": [
+                {
+                    "name": "Julius Beckmann",
+                    "email": "github@h4cc.de"
+                }
+            ],
+            "description": "Convert html to pdf using webkit (qtwebkit). Static linked linux binary for amd64 systems.",
+            "homepage": "http://wkhtmltopdf.org/",
+            "keywords": [
+                "binary",
+                "convert",
+                "pdf",
+                "snapshot",
+                "thumbnail",
+                "wkhtmltopdf"
+            ],
+            "time": "2018-01-15T06:57:33+00:00"
+        },
+        {
             "name": "jakub-onderka/php-console-color",
             "version": "v0.2",
             "source": {
@@ -453,6 +604,72 @@
             ],
             "description": "Highlight PHP code in terminal",
             "time": "2018-09-29T18:48:56+00:00"
+        },
+        {
+            "name": "knplabs/knp-snappy",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/snappy.git",
+                "reference": "ea037298d3c613454da77ecb9588cf0397d695e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/snappy/zipball/ea037298d3c613454da77ecb9588cf0397d695e1",
+                "reference": "ea037298d3c613454da77ecb9588cf0397d695e1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "psr/log": "^1.0",
+                "symfony/process": "~3.4||~4.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~7.4"
+            },
+            "suggest": {
+                "h4cc/wkhtmltoimage-amd64": "Provides wkhtmltoimage-amd64 binary for Linux-compatible machines, use version `~0.12` as dependency",
+                "h4cc/wkhtmltoimage-i386": "Provides wkhtmltoimage-i386 binary for Linux-compatible machines, use version `~0.12` as dependency",
+                "h4cc/wkhtmltopdf-amd64": "Provides wkhtmltopdf-amd64 binary for Linux-compatible machines, use version `~0.12` as dependency",
+                "h4cc/wkhtmltopdf-i386": "Provides wkhtmltopdf-i386 binary for Linux-compatible machines, use version `~0.12` as dependency",
+                "wemersonjanuario/wkhtmltopdf-windows": "Provides wkhtmltopdf executable for Windows, use version `~0.12` as dependency"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Knp\\Snappy\\": "src/Knp/Snappy"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://github.com/KnpLabs/snappy/contributors"
+                }
+            ],
+            "description": "PHP5 library allowing thumbnail, snapshot or PDF generation from a url or a html page. Wrapper for wkhtmltopdf/wkhtmltoimage.",
+            "homepage": "http://github.com/KnpLabs/snappy",
+            "keywords": [
+                "knp",
+                "knplabs",
+                "pdf",
+                "snapshot",
+                "thumbnail",
+                "wkhtmltopdf"
+            ],
+            "time": "2018-12-14T14:59:37+00:00"
         },
         {
             "name": "laravel/framework",
@@ -666,16 +883,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.50",
+            "version": "1.0.51",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "dab4e7624efa543a943be978008f439c333f2249"
+                "reference": "755ba7bf3fb9031e6581d091db84d78275874396"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/dab4e7624efa543a943be978008f439c333f2249",
-                "reference": "dab4e7624efa543a943be978008f439c333f2249",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/755ba7bf3fb9031e6581d091db84d78275874396",
+                "reference": "755ba7bf3fb9031e6581d091db84d78275874396",
                 "shasum": ""
             },
             "require": {
@@ -746,7 +963,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2019-02-01T08:50:36+00:00"
+            "time": "2019-03-30T13:22:34+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -828,16 +1045,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.16.1",
+            "version": "2.16.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "b509524136d579f6b15ad9af4e5bd4533d1ab6c2"
+                "reference": "720a9c36927396efeeb48a972e9d129d44b6dc28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/b509524136d579f6b15ad9af4e5bd4533d1ab6c2",
-                "reference": "b509524136d579f6b15ad9af4e5bd4533d1ab6c2",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/720a9c36927396efeeb48a972e9d129d44b6dc28",
+                "reference": "720a9c36927396efeeb48a972e9d129d44b6dc28",
                 "shasum": ""
             },
             "require": {
@@ -884,7 +1101,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-03-20T12:20:01+00:00"
+            "time": "2019-03-29T12:23:12+00:00"
         },
         {
             "name": "nikic/php-parser",
