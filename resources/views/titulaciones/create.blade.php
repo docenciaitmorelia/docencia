@@ -1,13 +1,16 @@
 @extends('layouts.app')
 @section('content')
-<span class="card-title">Registrar Titulación</span>
+@if(Auth::user()->rol == 'Jefe de Docencia')
+
 
 @include('titulaciones.fragment.error')
+<div class="row">
+	<div class="col">
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Filtrar Alumnos</h5>
+				<h3 class="modal-title" id="exampleModalLabel">Filtrar Alumnos</h3>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -21,23 +24,27 @@
 						<button type="submit" class="btn btn-raised btn-primary"><i class="material-icons">search</i></button>
 					</div>
 				</form>
-				<table style="width:100%">
-				<tr>
-					<th>No. Control</th>
-					<th>Apellido Paterno</th>
-					<th>Apellido Materno</th>
-					<th>Nombre(s)</th>
-					<th>Carrera</th>
-				</tr>
-				@foreach($alumnos as $alumno)
-				<tr>
-					<td>{{$alumno->no_de_control}}</td>
-					<td>{{$alumno->apellido_paterno}}</td>
-					<td>{{$alumno->apellido_materno}}</td>
-					<td>{{$alumno->nombre_alumno}}</td>
-					<td>{{$alumno->carrera}}</td>
-				</tr>
-				@endforeach
+				<table style="width:100%" class="table table-striped table-hover">
+					<thead class="thead-dark">
+						<tr>
+							<th>No. Control</th>
+							<th>Apellido Paterno</th>
+							<th>Apellido Materno</th>
+							<th>Nombre(s)</th>
+							<th>Carrera</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($alumnos as $alumno)
+						<tr>
+							<td>{{$alumno->no_de_control}}</td>
+							<td>{{$alumno->apellido_paterno}}</td>
+							<td>{{$alumno->apellido_materno}}</td>
+							<td>{{$alumno->nombre_alumno}}</td>
+							<td>{{$alumno->carrera}}</td>
+						</tr>
+						@endforeach
+					</tbody>
 			</table>
 			</div>
 			<div class="modal-footer">
@@ -47,8 +54,20 @@
 		</div>
 	</div>
 </div>
-<form action="{{ route('titulaciones.store') }}" method="POST" class="form">
-	@include('titulaciones.fragment.form')
-</form>
+</div>
+</div>
+<div class="row">
+	<div class="col">
+		<div class="card">
+		  <div class="card-body">
+		    <h3 class="card-title">Registrar Titulación</h3>
+					<form action="{{ route('titulaciones.store') }}" method="POST" class="form">
+						@include('titulaciones.fragment.form')
+					</form>
+		  </div>
+		</div>
+	</div>
+</div>
 
+@endif
 @endsection
