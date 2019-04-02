@@ -36,7 +36,7 @@
                     <?php endif; ?>
             </div>
             <div class="form-group col-md-6">
-                <label for="reticula" class="bmd-label-floating col-form-label"><?php echo e(__('Planes de Estudio de la Retícula')); ?></label>
+                <label for="reticula" class="bmd-label-floating col-form-label"><?php echo e(__('Año de la Retícula Para los Planes de Estudio')); ?></label>
                     <select id="reticula" type="text" class="form-control<?php echo e($errors->has('reticula') ? ' is-invalid' : ''); ?>" name="reticula" value="" required>
                       <?php $__currentLoopData = $Array; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option id="reticula" value="<?php echo e($item->reticula); ?>"><?php echo e($item->reticula); ?></option>

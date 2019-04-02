@@ -14,4 +14,12 @@ class OpcionesTitulacion extends Model
       ->where('id','LIKE',"%$s%")
       ->orwhere('nombre_opcion','LIKE',"%$s%");
     }
+
+    //SCOPE Opcion de Titulación
+    public function scopeOT($query,$plan)
+    {
+      $plan= mb_strtoupper($plan,'UTF-8');
+      return $query->select('*')
+                    ->where('reticula','LIKE',"%$plan%");
+    }
 }

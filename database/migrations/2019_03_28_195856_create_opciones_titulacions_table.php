@@ -18,7 +18,7 @@ class CreateOpcionesTitulacionsTable extends Migration
           $table->string('opcion_titulacion',10);
           $table->string('nombre_opcion',255);
           $table->string('detalle_opcion',255);
-          $table->string('reticula',10);
+          $table->biginteger('reticula');
           $table->timestamps();
         });
     }

@@ -9,6 +9,7 @@ use App\Personal;
 use App\OpcionesTitulacion;
 use App\Http\Requests\TitulacionRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class TitulacionController extends Controller
 {
@@ -22,10 +23,11 @@ class TitulacionController extends Controller
     {
         //$alumno=Alumno::select('no_de_control',DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))->orderBy('apellido_paterno')->get();
         $alumnos=Alumno::AL($request->busqueda)->orderBy('apellido_paterno','asc')->get();
-        $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))->orderBy('apellidos_empleado')->get();
-        $opcion=OpcionesTitulacion::select('nombre_opcion','id')->get();
-        $plan=OpcionesTitulacion::select('reticula')->groupBy('reticula')->get();
-    	return view('titulaciones.create', compact('alumnos','personal','plan','opcion'));
+        $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))
+        ->where('clave_area','=',Auth::user()->clave_area)
+        ->orderBy('apellidos_empleado')->get();
+        $planes=OpcionesTitulacion::OT($request->opc_titu)->get();
+    	return view('titulaciones.create', compact('alumnos','personal','planes'));
     }
 
     public function store(TitulacionRequest $request)
@@ -33,7 +35,6 @@ class TitulacionController extends Controller
         $titulacion = new Titulacion;
         $titulacion->alumno        = $request->alumno;
         $titulacion->nombre_proyecto      = mb_strtoupper($request->proyecto,'UTF-8');
-        $titulacion->plan               = $request->plan;
         $titulacion->opc_titu           = $request->opc_titu;
         $titulacion->asesor             = $request->asesor;
         $titulacion->presidente         = $request->presidente;
@@ -57,8 +58,8 @@ class TitulacionController extends Controller
         $alumno=Alumno::select('no_de_control',DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))->orderBy('apellido_paterno')->get();
         $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))->orderBy('apellidos_empleado')->get();
         $opcion=OpcionesTitulacion::select('nombre_opcion','id')->get();
-        $plan=OpcionesTitulacion::select('plan_de_estudios as plan')->groupBy('plan')->get();
-        return view('titulaciones.edit', compact('titulacion','alumno','personal','plan','opcion'));
+        $planes=OpcionesTitulacion::select('reticula')->groupBy('reticula')->get();
+        return view('titulaciones.edit', compact('titulacion','alumno','personal','planes','opcion'));
     }
 
     public function update(TitulacionRequest $request, $id)
@@ -66,7 +67,6 @@ class TitulacionController extends Controller
         $titulacion = Titulacion::find($id);
         $titulacion->alumno        = $request->alumno;
         $titulacion->nombre_proyecto      = mb_strtoupper($request->proyecto,'UTF-8');
-        $titulacion->plan          = $request->plan;
         $titulacion->opc_titu      = $request->opc_titu;
         $titulacion->asesor        = $request->asesor;
         $titulacion->presidente      = $request->presidente;

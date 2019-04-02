@@ -13,7 +13,7 @@ class Titulacion extends Model
   protected $table = 'titulaciones';
 
   protected $fillable = [
-      'alumno' , 'plan' , 'opc_titu' , 'asesor' , 'sinodal1', 'sinodal2' , 'sinodal3', 'Proyecto',
+      'alumno' , 'opc_titu' , 'asesor' , 'sinodal1', 'sinodal2' , 'sinodal3', 'Proyecto',
   ];
 
   protected $primaryKey = 'id';

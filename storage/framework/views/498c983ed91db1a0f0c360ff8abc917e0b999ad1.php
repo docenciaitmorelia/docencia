@@ -9,7 +9,7 @@
 				</div>
 				<form action="" method="GET" class="form-horizontal">
   				<div class="col-md-6 form-group">
-  					<input type="text" id="s" name="s" style="text-transform:uppercase;" placeholder="Buscar..." class="form-control">
+  					<input maxlength="255" type="text" id="s" name="s" style="text-transform:uppercase;" placeholder="Buscar..." class="form-control">
   				</div>
   				<div class="col-md-2">
   					<button type="submit" class="btn btn-raised btn-primary"><i class="material-icons">search</i></button>
