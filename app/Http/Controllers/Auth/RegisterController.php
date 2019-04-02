@@ -52,6 +52,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'rol' => ['required', 'string', 'max:30'],
             'clave_area' => ['required', 'string', 'max:10'],
+            'carrera' => ['required','integer'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -69,6 +70,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'rol' => $data['rol'],
             'clave_area' => $data['clave_area'],
+            'carrera' => $data['carrera'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

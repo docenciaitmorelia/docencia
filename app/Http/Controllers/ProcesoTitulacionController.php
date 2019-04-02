@@ -51,7 +51,7 @@ class ProcesoTitulacionController extends Controller
     {
         $procesotitulacion = ProcesoTitulacion::find($id);
         $procesotitulacion->id_opcion       = $request->opcion;
-    	$procesotitulacion->orden           = $request->orden;
+    	  $procesotitulacion->orden           = $request->orden;
         $procesotitulacion->descripcion     = $request->descripcion;
 
         $procesotitulacion->save();

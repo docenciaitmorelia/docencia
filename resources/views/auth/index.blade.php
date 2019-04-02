@@ -15,6 +15,7 @@
                         <p class="card-text">Id: {{ $usuario->id }}</p>
                         <p class="card-text">Rol: {{ $usuario->rol }}</p>
                         <p class="card-text">Área: {{ $usuario->descripcion_area }}</p>
+                        <p class="card-text">Carrera: {{ $usuario->carrera }}</p>
                         <p class="card-text">Email: {{ $usuario->email }}</p>
                         <a href="{{ route('usuariosCtl.edit',$usuario->id) }}" class="card-link"><i class="material-icons">create</i></a>
                         <a data-toggle="modal" data-target="#modal{{ $usuario->id }}" class="card-link modal-trigger" href="#modal{{ $usuario->id }}"><i class="material-icons">delete</i></a>

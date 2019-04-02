@@ -19,9 +19,11 @@ class CreateAlumnosTable extends Migration
           $table->string('apellido_paterno');
           $table->string('apellido_materno');
           $table->integer('carrera')->unsigned();
-          $table->foreign('carrera')->references('id')->on('carreras');
           $table->string('correo_electronico')->nullable();
           $table->string('sexo');
+          $table->string('nivel_escolar',10);
+          $table->string('estatus_alumno');
+          $table->integer('creditos_aprobados');
           $table->timestamps();
           $table->primary('no_de_control');
       });

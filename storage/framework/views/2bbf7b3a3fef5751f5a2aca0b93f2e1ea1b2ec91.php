@@ -51,6 +51,22 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="carrera" class="col-md-4 col-form-label text-md-right"><?php echo e(__('Carrera')); ?></label>
+                            <div class="col-md-6">
+                                <select id="carrera" type="text" class="form-control<?php echo e($errors->has('carrera') ? ' is-invalid' : ''); ?>" name="carrera" required>
+                                  <?php $__currentLoopData = $Carreras; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carrera): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($carrera->carrera); ?>"><?php echo e($carrera->reticula); ?>-<?php echo e($carrera->nombre_reducido); ?></option>
+                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                                <?php if($errors->has('carrera')): ?>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong><?php echo e($errors->first('carrera')); ?></strong>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right"><?php echo e(__('Dirección de E-Mail')); ?></label>
 
                             <div class="col-md-6">

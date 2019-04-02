@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\organigrama;
+use App\Carrera;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,7 +34,8 @@ class usuariosController extends Controller
     public function create()
     {
       $Areas = organigrama::select('clave_area','descripcion_area')->get();
-      return view('auth.register',['Areas' => $Areas]);
+      $Carreras = Carrera::select('carrera','reticula','nombre_reducido')->get();
+      return view('auth.register',['Areas' => $Areas,'Carreras' => $Carreras]);
     }
 
     /**
@@ -66,12 +68,14 @@ class usuariosController extends Controller
      */
     public function edit($id)
     {
-      $Usuario = User::select('users.*','organigramas.descripcion_area')
+      $Usuario = User::select('users.*','organigramas.descripcion_area','users.carrera','carreras.nombre_reducido')
       ->where('users.id','=',$id)
       ->join('organigramas','users.clave_area','=','organigramas.clave_area')
+      ->join('carreras','users.carrera','=','carreras.carrera')
       ->get();
       $Areas = organigrama::select('clave_area','descripcion_area')->get();
-      return view('auth.editar',['Usuario' => $Usuario[0],'Areas'=>$Areas]);
+      $Carreras = Carrera::select('carrera','reticula','nombre_reducido')->get();
+      return view('auth.editar',['Usuario' => $Usuario[0],'Areas'=>$Areas, 'Carreras'=>$Carreras]);
     }
 
     /**
@@ -89,6 +93,7 @@ class usuariosController extends Controller
             'name' => $request->name,
             'rol' => $request->rol,
             'clave_area' => $request->clave_area,
+            'carrera' => $request->carrera,
             'password' => Hash::make($request->password),
           ]);
 
