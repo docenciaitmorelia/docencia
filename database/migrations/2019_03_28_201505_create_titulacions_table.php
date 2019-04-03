@@ -17,7 +17,7 @@ class CreateTitulacionsTable extends Migration
           $table->increments('id');
           $table->string('alumno');
           $table->foreign('alumno')->references('no_de_control')->on('alumnos');
-          $table->string('opc_titu');
+          $table->integer('opc_titu');
           $table->string('asesor');
           $table->foreign('asesor')->references('rfc')->on('personal');
           $table->string('presidente');

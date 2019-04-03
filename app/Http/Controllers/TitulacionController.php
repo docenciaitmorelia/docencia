@@ -33,8 +33,8 @@ class TitulacionController extends Controller
     public function store(TitulacionRequest $request)
     {
         $titulacion = new Titulacion;
-        $titulacion->alumno        = $request->alumno;
-        $titulacion->nombre_proyecto      = mb_strtoupper($request->proyecto,'UTF-8');
+        $titulacion->alumno             = $request->alumno;
+        $titulacion->nombre_proyecto    = mb_strtoupper($request->proyecto,'UTF-8');
         $titulacion->opc_titu           = $request->opc_titu;
         $titulacion->asesor             = $request->asesor;
         $titulacion->presidente         = $request->presidente;
@@ -100,7 +100,7 @@ class TitulacionController extends Controller
         $ord = Titulacion::select('p.orden')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('p.descripcion','LIKE',"%$p%")->get();
         $orden =$ord[0]->orden;
         return view('titulaciones.fragment.detallestitu',compact('titulacion','alumno','estatus','proceso','orden'));
-        //return $orden;
+        //return $p;
     }
 
     public function gen_documentos(Request $request,$nc){

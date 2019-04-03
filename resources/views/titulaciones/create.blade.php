@@ -153,7 +153,7 @@
 
 						<div class="form-group col-md-6" style="display: none;" id="aediv" name="aediv">
 							<label for="ae" class="control-label">Nombre del Asesor</label>
-							<input type="text" id="ae" name="ae" class="form-control" value="" style="text-transform:uppercase;" required>
+							<input type="text" id="ae" name="ae" class="form-control" value="" style="text-transform:uppercase;">
 						</div>
 
 						<p class="form-group col-md-12">
