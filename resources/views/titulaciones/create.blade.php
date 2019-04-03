@@ -162,21 +162,30 @@
 						</p>
 
 
+						<!-- Modal Structure -->
+						<div id="modal1" class="modal" tabindex="-1" role="dialog">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h3 class="modal-title">Eliminar</h3>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form action="{{ route('procesotitulacion.index') }}" method="POST" id='form-modal1'>
+												{{ csrf_field() }}
+										</form>
+										<p>¿Seguro de que desea cancelar?</p>
+									</div>
+									<div class="modal-footer">
+										<a href="{{ route('titulaciones.index') }}" type="button" class="btn btn-primary" >Aceptar</a>
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+									</div>
+								</div>
+							</div>
+						</div> <!-- end modal structure -->
 
-					  <!-- Modal Structure -->
-						<div class="modal" id="modal1" name="modal1">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-body">
-						        <p>¿Seguro de que desea cancelar?</p>
-						      </div>
-						      <div class="modal-footer">
-						        <a href="{{ route('titulaciones.index') }}" class="btn btn-raised btn-primary">Aceptar</a>
-						      	<a href="{{ url()->current() }}" class="btn btn-raised btn-primary">Cancelar</a>
-						      </div>
-						    </div>
-						  </div>
-						</div>
 					</form>
 		  </div>
 		</div>
