@@ -26,6 +26,7 @@ class CreateAlumnosTable extends Migration
           $table->integer('creditos_aprobados');
           $table->timestamps();
           $table->primary('no_de_control');
+          $table->biginteger('reticula');
       });
     }
 

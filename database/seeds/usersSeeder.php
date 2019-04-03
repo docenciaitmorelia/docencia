@@ -15,6 +15,7 @@ class usersSeeder extends Seeder
         'name' => 'Administrador',
         'rol' => 'Administrador',
         'clave_area' => '110600',
+        'carrera' => '106',
         'email' => 'admin@itmorelia.edu.mx',
         'password' => bcrypt('admin'),
       ]);
@@ -22,6 +23,7 @@ class usersSeeder extends Seeder
         'name' => 'Jefe de Docencia',
         'rol' => 'Jefe de Docencia',
         'clave_area' => '110600',
+        'carrera' => '106',
         'email' => 'docencia@itmorelia.edu.mx',
         'password' => bcrypt('docencia'),
       ]);
@@ -29,6 +31,7 @@ class usersSeeder extends Seeder
       DB::table('users')->insert([
         'name' => 'Jefe de División de Est. Prof.',
         'rol' => 'DivEstProf',
+        'carrera' => '106',
         'clave_area' => '111000',
         'email' => 'dep@itmorelia.edu.mx',
         'password' => bcrypt('dep'),

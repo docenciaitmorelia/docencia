@@ -26,7 +26,7 @@ class TitulacionController extends Controller
         $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))
         ->where('clave_area','=',Auth::user()->clave_area)
         ->orderBy('apellidos_empleado')->get();
-        $planes=OpcionesTitulacion::OT($request->opc_titu)->get();
+        $planes=OpcionesTitulacion::OT($alumnos)->get();
     	return view('titulaciones.create', compact('alumnos','personal','planes'));
     }
 
@@ -83,7 +83,7 @@ class TitulacionController extends Controller
     }
 
     public function detalles_titu($nc,$estatus){
-         $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion','titulaciones.plan')
+         $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion')
                         ->join('personal as a','a.rfc','=','titulaciones.asesor')
                         ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
                         ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
@@ -104,7 +104,7 @@ class TitulacionController extends Controller
     }
 
     public function gen_documentos(Request $request,$nc){
-        $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion','titulaciones.plan')
+        $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion')
                         ->join('personal as a','a.rfc','=','titulaciones.asesor')
                         ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
                         ->join('personal as s2','s2.rfc','=','titulaciones.secretario')

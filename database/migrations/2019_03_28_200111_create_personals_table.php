@@ -18,7 +18,7 @@ class CreatePersonalsTable extends Migration
           $table->string('nombre_empleado');
           $table->string('apellidos_empleado');
           $table->string('especializacion');
-          $table->string('correo_electronico')->unique();
+          $table->string('correo_electronico');
           $table->char('sexo_empleado',1);
           $table->string('clave_area');
           $table->primary('rfc');

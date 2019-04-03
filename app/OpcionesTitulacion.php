@@ -16,10 +16,14 @@ class OpcionesTitulacion extends Model
     }
 
     //SCOPE Opcion de Titulación
-    public function scopeOT($query,$plan)
+    public function scopeOT($query,$alumnos)
     {
-      $plan= mb_strtoupper($plan,'UTF-8');
+      $reticulas = Array();
+      foreach($alumnos as $alumno){
+        array_push($reticulas,$alumno->reticula);
+      }
+      $reticulas=array_unique($reticulas);
       return $query->select('*')
-                    ->where('reticula','LIKE',"%$plan%");
+                    ->whereIn('reticula',$reticulas);
     }
 }
