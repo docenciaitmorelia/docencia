@@ -26,8 +26,10 @@ class ProcesoTitulacionController extends Controller
 
     public function create()
     {
-        $opcion=OpcionesTitulacion::select('nombre_opcion','id')->get();
-    	return view('procesotitulacion.create',compact('opcion'));
+        $opcion=OpcionesTitulacion::select('nombre_opcion','id','reticula')
+        ->orderBy('reticula','desc')->orderBy('nombre_opcion','asc')
+        ->get();
+    	  return view('procesotitulacion.create',compact('opcion'));
     }
 
     public function store(ProcesoTitulacionRequest $request)
@@ -43,7 +45,7 @@ class ProcesoTitulacionController extends Controller
     public function edit($id)
     {
         $procesotitulacion  = ProcesoTitulacion::find($id);
-        $opcion=OpcionesTitulacion::select('nombre_opcion','id')->get();
+        $opcion=OpcionesTitulacion::select('nombre_opcion','id','reticula')->get();
         return view('procesotitulacion.edit',compact('procesotitulacion','opcion'));
     }
 

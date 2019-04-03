@@ -14,7 +14,7 @@
           		<select id="opcion" name="opcion" class="form-control">
           			<option value="">Seleccione Opción de titulación</option>
           			@foreach($opcion as $op)
-          				<option value="{!! $op->id !!}">{!! $op->nombre_opcion !!}</option>
+          				<option value="{!! $op->id !!}">{{ $op->reticula }}/{{ $op->nombre_opcion }}</option>
           			@endforeach
           		</select>
         	  </div>

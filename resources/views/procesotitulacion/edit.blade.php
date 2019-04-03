@@ -15,7 +15,7 @@
                   <select id="opcion" name="opcion" class="form-control" required>
                       <option value="{{$procesotitulacion->id}}" selected>{{ $procesotitulacion->nombre_opcion }}</option>
                       @foreach($opcion as $op)
-                      <option value="{!! $op->id !!}" {{(old('opcion',$procesotitulacion->id_opcion)==$op->id)? 'selected':''}}>{!! $op->nombre_opcion !!}</option>
+                      <option value="{!! $op->id !!}" {{(old('opcion',$procesotitulacion->id_opcion)==$op->id)? 'selected':''}}>{{ $op->reticula }}/{!! $op->nombre_opcion !!}</option>
                       @endforeach
                   </select>
               </div>
@@ -27,8 +27,16 @@
 
               <div class="col-md-4">
                   <label class="control-label" for="descripcion">Descripción del paso:</label>
-                  <input maxlength="255" class="form-control" type="text" id="descripcion" name="descripcion" value="{{ old('descripcion', $procesotitulacion->descripcion) }}" required>
-              </div>
+                  <select id="descripcion" name="descripcion" class="form-control">
+                    <option value="" selected>Seleccione Opción de titulación</option>
+                      <option value="Registrar Opción de Titulación">Registrar Opción de Titulación</option>
+                      <option value="Asignación de Sinodales">Asignación de Sinodales</option>
+                      <option value="Impresión Definitiva">Impresión Definitiva</option>
+                      <option value="Asignación de Revisores">Asignación de Revisores</option>
+                      <option value="Liberación de Proyecto">Liberación de Proyecto</option>
+                      <option value="Invitación a Ceremonia de Titulación">Invitación a Ceremonia de Titulación</option>
+                  </select>
+                </div>
 
               <p class="col-md-12 form-group">
                   <button type="submit" class="btn btn-raised btn-primary">Guardar</button>

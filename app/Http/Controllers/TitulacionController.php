@@ -97,10 +97,11 @@ class TitulacionController extends Controller
         $pro= Titulacion::select('proceso')->where('alumno', $nc)->where('estatus','=',"$estatus")->get();
         $p=$pro[0]->proceso;
         $proceso = Titulacion::select('p.orden','p.descripcion')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.alumno','=',$nc)->where('titulaciones.estatus','=',$estatus)->get();
-        $ord = Titulacion::select('p.orden')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('p.descripcion','LIKE',"%$p%")->get();
-        //$orden =$ord[0]->orden;
-        //return view('titulaciones.fragment.detallestitu',compact('titulacion','alumno','estatus','proceso','orden'));
-        return $ord;
+        $ord = Titulacion::select('p.orden')
+        ->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')
+        ->where('p.descripcion','=',$p)->get();
+        $orden =$ord[0]->orden;
+        return view('titulaciones.fragment.detallestitu',compact('titulacion','alumno','estatus','proceso','orden'));
     }
 
     public function gen_documentos(Request $request,$nc){

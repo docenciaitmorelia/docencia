@@ -13,7 +13,7 @@
           		<select id="opcion" name="opcion" class="form-control">
           			<option value="">Seleccione Opción de titulación</option>
           			<?php $__currentLoopData = $opcion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $op): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-          				<option value="<?php echo $op->id; ?>"><?php echo $op->nombre_opcion; ?></option>
+          				<option value="<?php echo $op->id; ?>"><?php echo e($op->reticula); ?>/<?php echo e($op->nombre_opcion); ?></option>
           			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           		</select>
         	  </div>
