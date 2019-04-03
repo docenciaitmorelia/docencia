@@ -8,7 +8,7 @@
         <h3 class="card-title">Registrar los pasos de cada Opción de Titulación</h3>
         @include('procesotitulacion.fragment.error')
         <form action="{{ route('procesotitulacion.store') }}" method="POST">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}" required>
             <div class="col-md-4">
           		<label for="opcion" class="control-label">Opción de titulación</label>
           		<select id="opcion" name="opcion" class="form-control">
@@ -21,13 +21,21 @@
 
           <div class="col-md-4">
               <label class="control-label" for="orden">Paso número:</label>
-              <input maxlength="10" class="form-control" type="text" id="orden" name="orden" style="text-transform:uppercase;">
+              <input maxlength="10" class="form-control" type="text" id="orden" name="orden" style="text-transform:uppercase;" required>
           </div>
 
           <div class="col-md-4">
               <label class="control-label" for="descripcion">Descripción del paso:</label>
-              <input maxlength="255" class="form-control" type="text" id="descripcion" name="descripcion">
-          </div>
+              <select id="descripcion" name="descripcion" class="form-control">
+                <option value="" selected>Seleccione Opción de titulación</option>
+                  <option value="Registrar Opción de Titulación">Registrar Opción de Titulación</option>
+                  <option value="Asignación de Sinodales">Asignación de Sinodales</option>
+                  <option value="Impresión Definitiva">Impresión Definitiva</option>
+                  <option value="Asignación de Revisores">Asignación de Revisores</option>
+                  <option value="Liberación de Proyecto">Liberación de Proyecto</option>
+                  <option value="Invitación a Ceremonia de Titulación">Invitación a Ceremonia de Titulación</option>
+              </select>
+            </div>
 
           <p class="col-md-12 form-group">
               <button type="submit" class="btn btn-raised btn-primary">Guardar</button>
