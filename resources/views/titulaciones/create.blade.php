@@ -40,7 +40,7 @@
 							<td>{{$alumno->apellido_paterno}}</td>
 							<td>{{$alumno->apellido_materno}}</td>
 							<td>{{$alumno->nombre_alumno}}</td>
-							<td>{{$alumno->reticula}}-{{$alumno->nombre_reducido}}</td>
+							<td>{{$alumno->reticula}}/{{$alumno->nombre_reducido}}</td>
 						</tr>
 						@endforeach
 					</tbody>
@@ -85,7 +85,7 @@
 							<select id="opc_titu" name="opc_titu" class="form-control" required>
 								<option value="">Seleccione Opción de titulación</option>
 								@foreach($planes as $op)
-									<option value="{!! $op->id !!}">{!! $op->reticula !!} {!! $op->opcion_titulacion !!} {!! $op->nombre_opcion !!}</option>
+									<option value="{!! $op->id !!}">{!! $op->reticula !!}/{!! $op->opcion_titulacion !!} {!! $op->nombre_opcion !!}</option>
 								@endforeach
 							</select>
 						</div>
