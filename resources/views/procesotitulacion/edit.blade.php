@@ -28,13 +28,13 @@
               <div class="col-md-4">
                   <label class="control-label" for="descripcion">Descripción del paso:</label>
                   <select id="descripcion" name="descripcion" class="form-control">
-                    <option value="" selected>Seleccione Opción de titulación</option>
-                      <option value="Registrar Opción de Titulación">Registrar Opción de Titulación</option>
-                      <option value="Asignación de Sinodales">Asignación de Sinodales</option>
-                      <option value="Impresión Definitiva">Impresión Definitiva</option>
-                      <option value="Asignación de Revisores">Asignación de Revisores</option>
-                      <option value="Liberación de Proyecto">Liberación de Proyecto</option>
-                      <option value="Invitación a Ceremonia de Titulación">Invitación a Ceremonia de Titulación</option>
+                    <option value="">Seleccione Opción de titulación</option>
+                      <option value="Registrar Opción de Titulación" {{ (old('descripcion',$procesotitulacion->descripcion)=='Registrar Opción de Titulación')? 'selected':'' }}>Registrar Opción de Titulación</option>
+                      <option value="Asignación de Sinodales" {{ (old('descripcion',$procesotitulacion->descripcion)=='Asignación de Sinodales')? 'selected':'' }}>Asignación de Sinodales</option>
+                      <option value="Impresión Definitiva" {{ (old('descripcion',$procesotitulacion->descripcion)=='Impresión Definitiva')? 'selected':'' }}>Impresión Definitiva</option>
+                      <option value="Asignación de Revisores" {{ (old('descripcion',$procesotitulacion->descripcion)=='Asignación de Revisores')? 'selected':'' }}>Asignación de Revisores</option>
+                      <option value="Liberación de Proyecto" {{ (old('descripcion',$procesotitulacion->descripcion)=='Liberación de Proyecto')? 'selected':'' }}>Liberación de Proyecto</option>
+                      <option value="Invitación a Ceremonia de Titulación" {{ (old('descripcion',$procesotitulacion->descripcion)=='Invitación a Ceremonia de Titulación')? 'selected':'' }}>Invitación a Ceremonia de Titulación</option>
                   </select>
                 </div>
 
