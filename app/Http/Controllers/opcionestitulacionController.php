@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\OpcionesTitulacion;
 use Illuminate\Support\Facades\DB;
 use App\Carrera;
+use App\opctitxret;
 
 class opcionestitulacionController extends Controller
 {
@@ -48,8 +49,13 @@ class opcionestitulacionController extends Controller
       $opciontitulacion->opcion_titulacion = $request->opcion_titulacion;
       $opciontitulacion->nombre_opcion = $request->nombre_opcion;
       $opciontitulacion->detalle_opcion = $request->detalle_opcion;
-      $opciontitulacion->reticula = $request->reticula;
       $opciontitulacion->save();
+      foreach($request->reticulas as $reticula){
+        $opcxret = new opctitxret;
+        $opcxret->reticula = $reticula;
+        $opcxret->id_opcion_titulacion = $opciontitulacion->id;
+        $opcxret->save();
+      }
       return redirect()->route('opcionestitulacionCtl.index');
 
     }

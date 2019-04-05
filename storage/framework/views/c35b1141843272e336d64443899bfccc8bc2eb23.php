@@ -36,19 +36,17 @@
                     <?php endif; ?>
             </div>
             <div class="form-group col-md-6">
-                <label for="reticula" class="bmd-label-floating col-form-label"><?php echo e(__('Año de la Retícula Para los Planes de Estudio')); ?></label>
-                    <select id="reticula" type="text" class="form-control<?php echo e($errors->has('reticula') ? ' is-invalid' : ''); ?>" name="reticula" value="" required>
-                      <?php $__currentLoopData = $Array; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <option id="reticula" value="<?php echo e($item->reticula); ?>"><?php echo e($item->reticula); ?></option>
-                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </select>
-                    <?php if($errors->has('reticula')): ?>
-                        <span class="invalid-feedback" role="alert">
-                            <strong><?php echo e($errors->first('reticula')); ?></strong>
-                        </span>
-                    <?php endif; ?>
-            </div>
+              <label for="reticulas" class="bmd-label-floating col-form-label"><?php echo e(__('Aplica para las Retículas')); ?></label>
+              <?php $__currentLoopData = $Array; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              <div class="form-check">
+                <input name="reticulas[]" class="form-check-input" type="checkbox" value="<?php echo e($item->reticula); ?>" id="reticulas<?php echo e($item->reticula); ?>">
+                <label class="form-check-label" for="reticulas<?php echo e($item->reticula); ?>">
+                  <?php echo e($item->reticula); ?>
 
+                </label>
+              </div>
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
 
           <p class="col-md-12 form-group">
               <button type="submit" class="btn btn-raised btn-primary">Guardar</button>

@@ -15,7 +15,7 @@ class CreateProcesoTitulacionsTable extends Migration
     {
       Schema::create('proceso_titulacion', function (Blueprint $table) {
           $table->increments('id');
-          $table->integer('id_opcion')->unsigned();
+          $table->bigInteger('id_opcion')->unsigned();
           $table->foreign('id_opcion')->references('id')->on('opciones_titulacion');
           $table->string('descripcion',255);
           $table->integer('orden');
