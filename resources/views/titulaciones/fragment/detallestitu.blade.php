@@ -77,7 +77,7 @@
 						<div class="col-md-12">
 							<label for="documento" class="control-label">Tipo de Documento</label>
 							<select id="documento" type="text" class="form-control" name="documento" value="" required autofocus>
-								<option value="">Seleccione Opción de titulación</option>
+								<option value="">Seleccione documento</option>
 									@foreach($proceso as $documento)
 										<option id="documento" value="{{ $documento->id }}">{{$documento->descripcion}}</option>
 									@endforeach
