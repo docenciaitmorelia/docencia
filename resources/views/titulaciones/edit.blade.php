@@ -20,16 +20,6 @@
 			</div>
 
 			<div class="col-md-4">
-				<label for="plan" class="control-label">Plan de estudios</label>
-				<select id="plan" name="plan" class="form-control" required="">
-					<option value="plan">Seleccione Plan de estudios</option>
-					@foreach($plan as $p)
-					<option value="{!! $p->plan !!}" {{(old('plan',$titulacion->plan)==$p->plan)? 'selected':''}}>{!! $p->plan !!}</option>
-					@endforeach
-				</select>
-			</div>
-
-			<div class="col-md-4">
 				<label for="opc_titu" class="control-label">Opción de titulación</label>
 				<select id="opc_titu" name="opc_titu" class="form-control" required="">
 					<option value="opc_titu">Seleccione Opción de titulación</option>

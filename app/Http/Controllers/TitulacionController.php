@@ -7,6 +7,7 @@ use App\Titulacion;
 use App\Alumno;
 use App\Personal;
 use App\OpcionesTitulacion;
+use App\ProcesoTitulacion;
 use App\Http\Requests\TitulacionRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,7 @@ class TitulacionController extends Controller
         $titulacion->vocal_propietario  = $request->vocal_propietario;
         $titulacion->vocal_suplente     = $request->vocal_suplente;
         $titulacion->estatus            = "ACTIVO";
-        $titulacion->proceso            = "Registrar opción de Titulación";
+        $titulacion->proceso            = "Alta";
         $titulacion->fecha_cer          = "";
         $titulacion->lugar              = "";
         $titulacion->hora               = "";
@@ -94,14 +95,21 @@ class TitulacionController extends Controller
                         ->where('titulaciones.estatus','=',"$estatus")
                         ->get();
         $alumno = Alumno::where('no_de_control','LIKE',"%$nc%")->get();
-        $pro= Titulacion::select('proceso')->where('alumno', $nc)->where('estatus','=',"$estatus")->get();
+        $pro= Titulacion::select('proceso','opc_titu')->where('alumno', $nc)->where('estatus','=',"$estatus")->get();
         $p=$pro[0]->proceso;
-        $proceso = Titulacion::select('p.orden','p.descripcion')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.alumno','=',$nc)->where('titulaciones.estatus','=',$estatus)->get();
-        $ord = Titulacion::select('p.orden')
-        ->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')
-        ->where('p.descripcion','=',$p)->get();
-        $orden =$ord[0]->orden;
-        return view('titulaciones.fragment.detallestitu',compact('titulacion','alumno','estatus','proceso','orden'));
+        $opc=$pro[0]->opc_titu;
+        $proceso = Titulacion::select('p.orden','p.descripcion','p.id')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.alumno','=',$nc)->where('titulaciones.estatus','=',$estatus)->get();
+        if($p=='Alta'){
+          $orden = 'Alta';
+
+        }
+        else {
+          $ord = Titulacion::select('p.orden')
+          ->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')
+          ->where('p.descripcion','=',$p)->get();
+          $orden =$ord[0]->orden;
+        }
+        return view('titulaciones.fragment.detallestitu',compact('titulacion','alumno','estatus','proceso','orden','documentos'));
     }
 
     public function gen_documentos(Request $request,$nc){

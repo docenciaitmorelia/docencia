@@ -60,10 +60,15 @@
 				@endforeach
 				    <div class="col-md-6">
 				    <p>Proceso de titulación: </p>
-
+						@if($orden=='Alta')
+							<p>
+								No hay documentos generados
+							</p>
+						@else
 				    @foreach($proceso as $p)
 				        <input type="checkbox" name="proceso" value="{{$p->orden}}" @if($orden >= $p->orden) checked='' disabled=''> <p class="label label-success">{{$p->descripcion}} @else disabled=''> <p class="label label-default">{{$p->descripcion}}@endif</p><br>
 				    @endforeach
+						@endif
 				    </div>
 				    <div class="col-md-6">
 				    @if($estatus=='ACTIVO')
@@ -71,14 +76,12 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div class="col-md-12">
 							<label for="documento" class="control-label">Tipo de Documento</label>
-							<select id="documento" name="documento" class="form-control">
-				      			<option value="">Seleccione documento a generar</option>
-						      	<option value="1">Asignación de Sinodales</option>
-						      	<option value="2">Impresión definitiva</option>
-						      	<option value="3">Asignación de revisor</option>
-						      	<option value="4">Liberación de proyecto</option>
-				                <option value="5">Cambio de Sinodales</option>
-						    </select>
+							<select id="documento" type="text" class="form-control" name="documento" value="" required autofocus>
+								<option value="">Seleccione Opción de titulación</option>
+									@foreach($proceso as $documento)
+										<option id="documento" value="{{ $documento->id }}">{{$documento->descripcion}}</option>
+									@endforeach
+						  </select>
 						</div>
 						<p class="col-md-12">
 							<button type="submit" class="btn btn-raised btn-primary">Generar Documento</button>

@@ -13,7 +13,7 @@ class procesotitulacionSeeder extends Seeder
     {
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '1',
-        'descripcion' => 'Registrar Opción de Titulación',
+        'descripcion' => 'Registro de Opción de Titulación',
         'orden' => '1',
       ]);
 
@@ -49,7 +49,7 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '3',
-        'descripcion' => 'Registrar Opción de Titulación',
+        'descripcion' => 'Registro de Opción de Titulación',
         'orden' => '1',
       ]);
 
@@ -109,7 +109,7 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '7',
-        'descripcion' => 'Registrar Opción de Titulación',
+        'descripcion' => 'Registro de Opción de Titulación',
         'orden' => '1',
       ]);
 
@@ -157,7 +157,7 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '10',
-        'descripcion' => 'Registrar Opción de Titulación',
+        'descripcion' => 'Registro de Opción de Titulación',
         'orden' => '1',
       ]);
 
@@ -181,7 +181,7 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '11',
-        'descripcion' => 'Registrar Opción de Titulación',
+        'descripcion' => 'Registro de Opción de Titulación',
         'orden' => '1',
       ]);
 
@@ -217,7 +217,7 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '12',
-        'descripcion' => 'Registrar Opción de Titulación',
+        'descripcion' => 'Registro de Opción de Titulación',
         'orden' => '1',
       ]);
 
@@ -289,7 +289,7 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '16',
-        'descripcion' => 'Registrar Opción de Titulación',
+        'descripcion' => 'Registro de Opción de Titulación',
         'orden' => '1',
       ]);
 
@@ -325,7 +325,7 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '17',
-        'descripcion' => 'Registrar Opción de Titulación',
+        'descripcion' => 'Registro de Opción de Titulación',
         'orden' => '1',
       ]);
 
@@ -361,7 +361,7 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '18',
-        'descripcion' => 'Registrar Opción de Titulación',
+        'descripcion' => 'Registro de Opción de Titulación',
         'orden' => '1',
       ]);
 
@@ -397,7 +397,7 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '19',
-        'descripcion' => 'Registrar Opción de Titulación',
+        'descripcion' => 'Registro de Opción de Titulación',
         'orden' => '1',
       ]);
 
@@ -445,7 +445,7 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '21',
-        'descripcion' => 'Registrar Opción de Titulación',
+        'descripcion' => 'Registro de Opción de Titulación',
         'orden' => '1',
       ]);
 
