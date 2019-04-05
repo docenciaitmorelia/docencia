@@ -58,7 +58,7 @@ class TitulacionController extends Controller
         $titulacion  = Titulacion::find($id);
         $alumno=Alumno::select('no_de_control',DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))->orderBy('apellido_paterno')->get();
         $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))->orderBy('apellidos_empleado')->get();
-        $opcion=OpcionesTitulacion::select('nombre_opcion','id')->get();
+        $opcion=OpcionesTitulacion::OT($alumno)->get();
         $planes=OpcionesTitulacion::select('reticula')->groupBy('reticula')->get();
         return view('titulaciones.edit', compact('titulacion','alumno','personal','planes','opcion'));
     }

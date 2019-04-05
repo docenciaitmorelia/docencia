@@ -5,7 +5,7 @@
 	<div class="col">
 		<div class="card">
 		  <div class="card-body">
-		    <h3 class="card-title">Detalles de titulación</h3>
+		    <h3 class="card-title">Expediente de proceso de titulación</h3>
 
 				@foreach($alumno as $al)
 				<center>

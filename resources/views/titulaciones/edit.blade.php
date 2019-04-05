@@ -24,7 +24,7 @@
 				<select id="opc_titu" name="opc_titu" class="form-control" required="">
 					<option value="opc_titu">Seleccione Opción de titulación</option>
 					@foreach($opcion as $op)
-						<option value="{!! $op->id !!}" {{(old('opc_titu',$titulacion->opc_titu)==$op->id)? 'selected':''}}>{!! $op->nombre_opcion !!}</option>
+						<option value="{!! $op->id !!}" {{(old('opc_titu',$titulacion->opc_titu)==$op->id)? 'selected':''}}> {{ $op->reticula }} / {!! $op->nombre_opcion !!}</option>
 					@endforeach
 				</select>
 			</div>
