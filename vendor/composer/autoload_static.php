@@ -3909,6 +3909,7 @@ class ComposerStaticInit0c167154e6ecef74aacfc59d27dca1c8
         'phpDocumentor\\Reflection\\Types\\String_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/String_.php',
         'phpDocumentor\\Reflection\\Types\\This' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/This.php',
         'phpDocumentor\\Reflection\\Types\\Void_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/Void_.php',
+        'procesotitulacionSeeder' => __DIR__ . '/../..' . '/database/seeds/procesotitulacionSeeder.php',
         'usersSeeder' => __DIR__ . '/../..' . '/database/seeds/usersSeeder.php',
     );
 

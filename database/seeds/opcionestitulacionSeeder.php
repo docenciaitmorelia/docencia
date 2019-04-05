@@ -14,7 +14,7 @@ class opcionestitulacionSeeder extends Seeder
       DB::table('opciones_titulacion')->insert([
         'opcion_titulacion' => 'I',
         'nombre_opcion' => 'Tesis Profesional',
-        'detalle_opcion' => 'Examen',
+        'detalle_opcion' => 'Recepcional',
         'reticula' => '1993',
       ]);
 
@@ -28,7 +28,7 @@ class opcionestitulacionSeeder extends Seeder
       DB::table('opciones_titulacion')->insert([
         'opcion_titulacion' => 'III',
         'nombre_opcion' => 'Proyecto de Investigación',
-        'detalle_opcion' => 'Examen',
+        'detalle_opcion' => 'Recepcional',
         'reticula' => '1993',
       ]);
 
@@ -56,7 +56,7 @@ class opcionestitulacionSeeder extends Seeder
       DB::table('opciones_titulacion')->insert([
         'opcion_titulacion' => 'VII',
         'nombre_opcion' => 'Memoria de experiencia profesional',
-        'detalle_opcion' => 'Examen',
+        'detalle_opcion' => 'Recepcional',
         'reticula' => '1993',
       ]);
 
@@ -77,21 +77,21 @@ class opcionestitulacionSeeder extends Seeder
       DB::table('opciones_titulacion')->insert([
         'opcion_titulacion' => 'X',
         'nombre_opcion' => 'Memoria de residencia profesional',
-        'detalle_opcion' => 'Examen',
+        'detalle_opcion' => 'Recepcional',
         'reticula' => '1993',
       ]);
 
       DB::table('opciones_titulacion')->insert([
         'opcion_titulacion' => 'I',
         'nombre_opcion' => 'Tesis profesional',
-        'detalle_opcion' => 'Examen',
+        'detalle_opcion' => 'Recepcional',
         'reticula' => '2004',
       ]);
 
       DB::table('opciones_titulacion')->insert([
         'opcion_titulacion' => 'III',
         'nombre_opcion' => 'Proyecto de Investigación',
-        'detalle_opcion' => 'Examen',
+        'detalle_opcion' => 'Recepcional',
         'reticula' => '2004',
       ]);
 
@@ -119,7 +119,7 @@ class opcionestitulacionSeeder extends Seeder
       DB::table('opciones_titulacion')->insert([
         'opcion_titulacion' => 'X',
         'nombre_opcion' => 'Informe de Residencia Profesional',
-        'detalle_opcion' => 'Examen',
+        'detalle_opcion' => 'Recepcional',
         'reticula' => '2004',
       ]);
 
@@ -133,14 +133,14 @@ class opcionestitulacionSeeder extends Seeder
       DB::table('opciones_titulacion')->insert([
         'opcion_titulacion' => '1',
         'nombre_opcion' => 'Titulación Integral por Tesis',
-        'detalle_opcion' => 'Examen',
+        'detalle_opcion' => 'Recepcional',
         'reticula' => '2010',
       ]);
 
       DB::table('opciones_titulacion')->insert([
         'opcion_titulacion' => '2',
         'nombre_opcion' => 'Titulación Integral por Proyecto de Investigación',
-        'detalle_opcion' => 'Examen',
+        'detalle_opcion' => 'Recepcional',
         'reticula' => '2010',
       ]);
 
@@ -154,7 +154,7 @@ class opcionestitulacionSeeder extends Seeder
       DB::table('opciones_titulacion')->insert([
         'opcion_titulacion' => '4',
         'nombre_opcion' => 'Titulación Integral por Informe Técnico de Residencia Profesional',
-        'detalle_opcion' => 'Examen',
+        'detalle_opcion' => 'Recepcional',
         'reticula' => '2010',
       ]);
     }
