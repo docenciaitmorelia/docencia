@@ -28,8 +28,8 @@
     					<tr>
     						<th>Opción de Titulación</th>
     						<th>Nombre</th>
-    			      <th>Detalle</th>
-    						<th>Plan de Estudios</th>
+    			      <th>Tipo</th>
+    						<th>Retícula(s)</th>
     					</tr>
     				</thead>
     				<tbody>
@@ -45,7 +45,11 @@
                       <strong><?php echo e($item->detalle_opcion); ?></strong>
                   </td>
                   <td>
-                      <strong><?php echo e($item->reticula); ?></strong>
+                    <?php $__currentLoopData = $Reticulas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ret): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                      <?php if($ret->id_opcion_titulacion == $item->id): ?>
+                        <strong><?php echo e($ret->reticula); ?></strong>
+                      <?php endif; ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                   </td>
     							<td width="20px">
     								<a href="<?php echo e(route('opcionestitulacionCtl.edit', $item->id)); ?>"class="btn btn-raised btn-primary">

@@ -5,27 +5,35 @@
   <div class="col">
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title"> Editar Etapa para Proceso de Titulación</h3>
+        <h3 class="card-title"> Editar Etapa del Proceso de Titulación</h3>
           <form action="{{ route('procesotitulacion.update', $procesotitulacion->id) }}" method="POST">
               {{ csrf_field() }}
               {{ method_field('PUT')}}
 
-              <div class="col-md-4">
+              <div class="col-md-12">
                   <label for="opcion" class="control-label">Opción de titulación</label>
-                  <select id="opcion" name="opcion" class="form-control" required>
+                  <select disabled id="opcion" name="opcion" class="form-control" required>
                       <option value="{{$procesotitulacion->id}}" selected>{{ $procesotitulacion->nombre_opcion }}</option>
-                      @foreach($opcion as $op)
-                      <option value="{!! $op->id !!}" {{(old('opcion',$procesotitulacion->id_opcion)==$op->id)? 'selected':''}}>{{ $op->reticula }}/{!! $op->nombre_opcion !!}</option>
+                      @foreach($opciones as $op)
+                      <option value="{!! $op->id !!}" {{(old('opcion',$procesotitulacion->id_opcion)==$op->id)? 'selected':''}}>
+                        {!! $op->nombre_opcion !!} (
+                          @foreach($reticulas as $ret)
+                            @if($ret->id_opcion_titulacion == $op->id)
+                              {{$ret->reticula}}
+                            @endif
+                          @endforeach
+                        )
+                      </option>
                       @endforeach
                   </select>
               </div>
 
-              <div class="col-md-4">
+              <div class="col-md-6">
                   <label class="control-label" for="orden">Paso número:</label>
                   <input maxlength="10" class="form-control" type="number" id="orden" name="orden" value="{{ old('orden', $procesotitulacion->orden) }}" required>
               </div>
 
-              <div class="col-md-4">
+              <div class="col-md-6">
                   <label class="control-label" for="descripcion">Descripción del paso:</label>
                   <select id="descripcion" name="descripcion" class="form-control">
                     <option value="">Seleccione Opción de titulación</option>

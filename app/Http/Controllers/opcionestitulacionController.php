@@ -18,8 +18,8 @@ class opcionestitulacionController extends Controller
     public function index(Request $request)
     {
       $Array = OpcionesTitulacion::PT($request->s)->orderBy('id','ASC')->paginate();
-      return view('opcionestitulacion.index',['Array' => $Array]);
-
+      $Reticulas = DB::table('opctitxrets')->select('id_opcion_titulacion','reticula')->orderby('reticula','desc')->get();
+      return view('opcionestitulacion.index',['Array' => $Array,'Reticulas'=>$Reticulas]);
     }
 
     /**
@@ -45,19 +45,20 @@ class opcionestitulacionController extends Controller
      */
     public function store(Request $request)
     {
-      $opciontitulacion = new OpcionesTitulacion;
-      $opciontitulacion->opcion_titulacion = $request->opcion_titulacion;
-      $opciontitulacion->nombre_opcion = $request->nombre_opcion;
-      $opciontitulacion->detalle_opcion = $request->detalle_opcion;
-      $opciontitulacion->save();
-      foreach($request->reticulas as $reticula){
-        $opcxret = new opctitxret;
-        $opcxret->reticula = $reticula;
-        $opcxret->id_opcion_titulacion = $opciontitulacion->id;
-        $opcxret->save();
-      }
+      DB::beginTransaction();
+        $opciontitulacion = new OpcionesTitulacion;
+        $opciontitulacion->opcion_titulacion = $request->opcion_titulacion;
+        $opciontitulacion->nombre_opcion = $request->nombre_opcion;
+        $opciontitulacion->detalle_opcion = $request->detalle_opcion;
+        $opciontitulacion->save();
+        foreach($request->reticulas as $reticula){
+          $opcxret = new opctitxret;
+          $opcxret->reticula = $reticula;
+          $opcxret->id_opcion_titulacion = $opciontitulacion->id;
+          $opcxret->save();
+        }
+      DB::commit();
       return redirect()->route('opcionestitulacionCtl.index');
-
     }
 
     /**
@@ -79,15 +80,20 @@ class opcionestitulacionController extends Controller
      */
     public function edit($id)
     {
-      $Array = OpcionesTitulacion::select('opciones_titulacion.*')
-      ->where('id','=',$id)
+      $Array = OpcionesTitulacion::select('opciones_titulacion.*','opctitxrets.reticula')
+      ->join('opctitxrets','opciones_titulacion.id','opctitxrets.id_opcion_titulacion')
+      ->where('opciones_titulacion.id','=',$id)
       ->get();
+      $RetSel = Array();
+      foreach ($Array as $item) {
+        array_push($RetSel,$item->reticula);
+      }
       $Reticulas = Carrera::select('reticula')
       ->distinct()
       ->where('nivel_escolar','=','L')
       ->orderBy('reticula','desc')
       ->get();
-      return view('opcionestitulacion.edit',['Array' => $Array[0], 'Reticulas' => $Reticulas]);
+      return view('opcionestitulacion.edit',['Array' => $Array[0], 'Reticulas' => $Reticulas, 'RetSel' => $RetSel]);
 
     }
 
@@ -100,14 +106,23 @@ class opcionestitulacionController extends Controller
      */
     public function update(Request $request, $id)
     {
-      DB::table('opciones_titulacion')
+      DB::beginTransaction();
+        DB::table('opciones_titulacion')
           ->where('id', $id)
           ->update([
             'opcion_titulacion' => $request->opcion_titulacion,
             'nombre_opcion' => $request->nombre_opcion,
             'detalle_opcion' => $request->detalle_opcion,
-            'reticula' => $request->reticula,
           ]);
+        DB::table('opctitxrets')
+          ->where('id_opcion_titulacion',$id)->delete();
+        foreach($request->reticulas as $reticula){
+            $opcxret = new opctitxret;
+            $opcxret->reticula = $reticula;
+            $opcxret->id_opcion_titulacion = $id;
+            $opcxret->save();
+        }
+      DB::commit();
       return redirect()->route('opcionestitulacionCtl.index');
     }
 
@@ -119,6 +134,13 @@ class opcionestitulacionController extends Controller
      */
     public function destroy($id)
     {
-        //
+      DB::beginTransaction();
+      DB::table('opctitxrets')
+        ->where('id_opcion_titulacion',$id)->delete();
+      DB::table('opciones_titulacion')
+        ->where('id',$id)->delete();
+      DB::commit();
+      return redirect()->route('opcionestitulacionCtl.index');
+
     }
 }

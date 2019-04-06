@@ -11,7 +11,7 @@ class OpcionesTitulacion extends Model
     public function scopePT($query,$s)
     {
       return $query->select('opciones_titulacion.*')
-      ->where('id','LIKE',"%$s%")
+      ->where('opciones_titulacion.id','LIKE',"%$s%")
       ->orwhere('nombre_opcion','LIKE',"%$s%");
     }
 

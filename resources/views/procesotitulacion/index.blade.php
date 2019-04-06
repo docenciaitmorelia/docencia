@@ -22,43 +22,31 @@
   			<br>
         @include('procesotitulacion.fragment.info')
   			<h3>Proceso de Titulaciones</h3>
-        <?php $idr=0; ?>
-        <div id="accordion2">
-        @foreach($reticulas as $reticula)
-          <?php $idr=$idr+1; ?>
-            <div class="card">
-              <div class="card-header" id="headingr{{$idr}}">
-                <h3 class="mb-0">
-                  <a class="btn btn-link" data-toggle="collapse" data-target="#collapser{{$idr}}" aria-expanded="true" aria-controls="collapser{{$idr}}">
-                    Retícula: <b>{{$reticula}}</b>
-                  </a>
-                </h3>
-              </div>
-              <div id="collapser{{$idr}}" class="collapse" aria-labelledby="headingr{{$idr}}" data-parent="#accordion2">
-                <div class="card-body">
+
                   <!--Acordion para planes de estudio -->
-                  <div id="accordion{{$idr}}">
+                  <div id="accordion1">
                     <?php $id=0; ?>
                     @foreach($opciones as $item)
-                      @if($reticula != $item['reticula'])
-                        @continue
-                      @endif
-                      <?php $id=$id+1 ?>
+                      <?php $id++; ?>
                       <div class="card">
                         <div class="card-header" id="heading{{$id}}">
                           <h3 class="mb-0">
-                            <a class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$idr}}{{$id}}" aria-expanded="true" aria-controls="collapse{{$idr}}{{$id}}">
-                              {{$item['nombre_opcion']}}
+                            <a class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$id}}" aria-expanded="true" aria-controls="collapse{{$id}}">
+                              {{$item->opcion_titulacion}}. {{$item->nombre_opcion}}
+                              ( @foreach($reticulas as $ret)
+                                  @if($item->id == $ret->id_opcion_titulacion)
+                                    {{$ret->reticula}}
+                                  @endif
+                              @endforeach )
                             </a>
                           </h3>
                         </div>
 
-                        <div id="collapse{{$idr}}{{$id}}" class="collapse" aria-labelledby="heading{{$id}}" data-parent="#accordion{{$idr}}">
+                        <div id="collapse{{$id}}" class="collapse" aria-labelledby="heading{{$id}}" data-parent="#accordion1">
                           <div class="card-body">
                             <table class="table table-striped table-hover ">
                               <thead>
                                 <tr>
-                                  <th>Retícula</th>
                                   <th>No. Paso</th>
                                   <th>Descripción</th>
                                   <th colspan="1">&nbsp;</th>
@@ -67,13 +55,10 @@
                               </thead>
                               <tbody>
                                 @foreach($procesotitulacion as $procesot)
-                                  @if($item['nombre_opcion'] != $procesot->nombre_opcion || $reticula != $procesot->reticula)
+                                  @if($item->nombre_opcion != $procesot->nombre_opcion)
                                     @continue
                                   @endif
                                   <tr>
-                                    <td>
-                                      <strong>{{ $procesot->reticula }}</strong>
-                                    </td>
                                     <td>
                                       <strong>{{ $procesot->orden }}</strong>
                                     </td>
@@ -101,11 +86,6 @@
                     </div>
                     @endforeach
                   </div> <!--end accordion-->
-                </div>
-              </div>
-          </div>
-        @endforeach
-      </div> <!--end accordion2-->
 
 
 

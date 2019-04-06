@@ -29,8 +29,8 @@
     					<tr>
     						<th>Opción de Titulación</th>
     						<th>Nombre</th>
-    			      <th>Detalle</th>
-    						<th>Plan de Estudios</th>
+    			      <th>Tipo</th>
+    						<th>Retícula(s)</th>
     					</tr>
     				</thead>
     				<tbody>
@@ -46,7 +46,11 @@
                       <strong>{{ $item->detalle_opcion}}</strong>
                   </td>
                   <td>
-                      <strong>{{ $item->reticula}}</strong>
+                    @foreach($Reticulas as $ret)
+                      @if($ret->id_opcion_titulacion == $item->id)
+                        <strong>{{ $ret->reticula}}</strong>
+                      @endif
+                    @endforeach
                   </td>
     							<td width="20px">
     								<a href="{{ route('opcionestitulacionCtl.edit', $item->id) }}"class="btn btn-raised btn-primary">

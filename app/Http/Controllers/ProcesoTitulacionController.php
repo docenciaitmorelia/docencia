@@ -12,22 +12,25 @@ class ProcesoTitulacionController extends Controller
 {
     public function index(Request $request)
     {
-    	 $procesotitulacion= ProcesoTitulacion::PT($request->s)->orderBy('reticula', 'desc')->orderBy('nombre_opcion','asc')->orderBy('proceso_titulacion.orden','asc')->paginate();
-       $opciones=Array();
-       foreach ($procesotitulacion as $item) {
-         $op = array_column($opciones,'nombre_opcion');
-         if((string)array_search($item->nombre_opcion,$op) != "0") {
-           array_push($opciones,['nombre_opcion'=>$item->nombre_opcion,'reticula'=>$item->reticula]);
-         }
-       }
-       $reticulas = array_unique(array_column($opciones,'reticula'));
+    	 $procesotitulacion= ProcesoTitulacion::PT($request->s)
+       ->orderBy('nombre_opcion','asc')
+       ->orderBy('proceso_titulacion.orden','asc')
+       ->get();
+       $opciones=DB::table('opciones_titulacion')
+       ->select('id','opcion_titulacion','nombre_opcion')
+       ->orderBy('opcion_titulacion','asc')
+       ->get();
+       $reticulas = DB::table('opctitxrets')->select('id_opcion_titulacion','reticula')->orderby('reticula','desc')->get();
+
        return view('procesotitulacion.index',compact('procesotitulacion','opciones','reticulas'));
     }
 
     public function create()
     {
-        $opcion=OpcionesTitulacion::select('nombre_opcion','id','reticula')
-        ->orderBy('reticula','desc')->orderBy('nombre_opcion','asc')
+        $opcion=OpcionesTitulacion::select('nombre_opcion','opciones_titulacion.id','reticula')
+        ->join('opctitxrets','opciones_titulacion.id','opctitxrets.id_opcion_titulacion')
+        ->orderBy('reticula','desc')
+        ->orderBy('nombre_opcion','asc')
         ->get();
     	  return view('procesotitulacion.create',compact('opcion'));
     }
@@ -45,8 +48,9 @@ class ProcesoTitulacionController extends Controller
     public function edit($id)
     {
         $procesotitulacion  = ProcesoTitulacion::find($id);
-        $opcion=OpcionesTitulacion::select('nombre_opcion','id','reticula')->get();
-        return view('procesotitulacion.edit',compact('procesotitulacion','opcion'));
+        $opciones=OpcionesTitulacion::select('nombre_opcion','id')->get();
+        $reticulas = DB::table('opctitxrets')->select('id_opcion_titulacion','reticula')->orderby('reticula','desc')->get();
+        return view('procesotitulacion.edit',compact('procesotitulacion','opciones','reticulas'));
     }
 
     public function update(ProcesoTitulacionRequest $request, $id)

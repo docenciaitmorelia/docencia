@@ -21,44 +21,33 @@
   			<br>
         <?php echo $__env->make('procesotitulacion.fragment.info', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
   			<h3>Proceso de Titulaciones</h3>
-        <?php $idr=0; ?>
-        <div id="accordion2">
-        <?php $__currentLoopData = $reticulas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $reticula): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-          <?php $idr=$idr+1; ?>
-            <div class="card">
-              <div class="card-header" id="headingr<?php echo e($idr); ?>">
-                <h3 class="mb-0">
-                  <a class="btn btn-link" data-toggle="collapse" data-target="#collapser<?php echo e($idr); ?>" aria-expanded="true" aria-controls="collapser<?php echo e($idr); ?>">
-                    Retícula: <b><?php echo e($reticula); ?></b>
-                  </a>
-                </h3>
-              </div>
-              <div id="collapser<?php echo e($idr); ?>" class="collapse" aria-labelledby="headingr<?php echo e($idr); ?>" data-parent="#accordion2">
-                <div class="card-body">
+
                   <!--Acordion para planes de estudio -->
-                  <div id="accordion<?php echo e($idr); ?>">
+                  <div id="accordion1">
                     <?php $id=0; ?>
                     <?php $__currentLoopData = $opciones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                      <?php if($reticula != $item['reticula']): ?>
-                        <?php continue; ?>
-                      <?php endif; ?>
-                      <?php $id=$id+1 ?>
+                      <?php $id++; ?>
                       <div class="card">
                         <div class="card-header" id="heading<?php echo e($id); ?>">
                           <h3 class="mb-0">
-                            <a class="btn btn-link" data-toggle="collapse" data-target="#collapse<?php echo e($idr); ?><?php echo e($id); ?>" aria-expanded="true" aria-controls="collapse<?php echo e($idr); ?><?php echo e($id); ?>">
-                              <?php echo e($item['nombre_opcion']); ?>
+                            <a class="btn btn-link" data-toggle="collapse" data-target="#collapse<?php echo e($id); ?>" aria-expanded="true" aria-controls="collapse<?php echo e($id); ?>">
+                              <?php echo e($item->opcion_titulacion); ?>. <?php echo e($item->nombre_opcion); ?>
 
+                              ( <?php $__currentLoopData = $reticulas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ret): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                  <?php if($item->id == $ret->id_opcion_titulacion): ?>
+                                    <?php echo e($ret->reticula); ?>
+
+                                  <?php endif; ?>
+                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> )
                             </a>
                           </h3>
                         </div>
 
-                        <div id="collapse<?php echo e($idr); ?><?php echo e($id); ?>" class="collapse" aria-labelledby="heading<?php echo e($id); ?>" data-parent="#accordion<?php echo e($idr); ?>">
+                        <div id="collapse<?php echo e($id); ?>" class="collapse" aria-labelledby="heading<?php echo e($id); ?>" data-parent="#accordion1">
                           <div class="card-body">
                             <table class="table table-striped table-hover ">
                               <thead>
                                 <tr>
-                                  <th>Retícula</th>
                                   <th>No. Paso</th>
                                   <th>Descripción</th>
                                   <th colspan="1">&nbsp;</th>
@@ -67,13 +56,10 @@
                               </thead>
                               <tbody>
                                 <?php $__currentLoopData = $procesotitulacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $procesot): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                  <?php if($item['nombre_opcion'] != $procesot->nombre_opcion || $reticula != $procesot->reticula): ?>
+                                  <?php if($item->nombre_opcion != $procesot->nombre_opcion): ?>
                                     <?php continue; ?>
                                   <?php endif; ?>
                                   <tr>
-                                    <td>
-                                      <strong><?php echo e($procesot->reticula); ?></strong>
-                                    </td>
                                     <td>
                                       <strong><?php echo e($procesot->orden); ?></strong>
                                     </td>
@@ -102,11 +88,6 @@
                     </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                   </div> <!--end accordion-->
-                </div>
-              </div>
-          </div>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-      </div> <!--end accordion2-->
 
 
 

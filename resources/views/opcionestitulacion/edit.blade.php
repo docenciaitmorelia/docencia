@@ -37,21 +37,22 @@
                         </span>
                     @endif
             </div>
-            <div class="form-group col-md-6">
-                <label for="reticula" class="bmd-label-floating col-form-label">{{ __('Año de la Retícula Para los Planes de Estudio') }}</label>
-                    <select id="reticula" type="text" class="form-control{{ $errors->has('reticula') ? ' is-invalid' : '' }}" name="reticula" value="" required>
-                      <option id="reticula" value="{{$Array->reticula}}" selected>{{$Array->reticula}}</option>
-                      @foreach($Reticulas as $item)
-                        <option id="reticula" value="{{ $item->reticula }}">{{$item->reticula}}</option>
-                      @endforeach
-                    </select>
-                    @if ($errors->has('reticula'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('reticula') }}</strong>
-                        </span>
-                    @endif
-            </div>
 
+            <div class="form-group col-md-6">
+              <label for="gruporeticulas" class="bmd-label-floating col-form-label">{{ __('Aplica para las Retículas') }}</label>
+              @foreach($Reticulas as $reticula)
+                <div class="form-check" id="gruporeticulas">
+                  @if(in_array($reticula->reticula,$RetSel))
+                    <input checked name="reticulas[]" class="form-check-input" type="checkbox" value="{{$reticula->reticula}}" id="reticulas{{$reticula->reticula}}">
+                  @else
+                    <input name="reticulas[]" class="form-check-input" type="checkbox" value="{{$reticula->reticula}}" id="reticulas{{$reticula->reticula}}">
+                  @endif
+                  <label class="form-check-label" for="reticulas{{$reticula->reticula}}">
+                    {{$reticula->reticula}}
+                  </label>
+                </div>
+              @endforeach
+            </div>
 
           <p class="col-md-12 form-group">
               <button type="submit" class="btn btn-raised btn-primary">Guardar</button>
