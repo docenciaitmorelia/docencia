@@ -114,7 +114,7 @@ class TitulacionController extends Controller
         }
         return view('titulaciones.fragment.detallestitu',compact('titulacion','alumno','estatus','proceso','orden'));
     }
-    
+
     private string obtener_siglas($estudios){
       $salutation="";
       if(stristr("maestr",$estudios)){
@@ -124,6 +124,9 @@ class TitulacionController extends Controller
       }
       if(stristr("ciencias",$estudios){
         $salutation = $salutation . "C.";
+      }
+      if(stristr("ingenier",$estudios)){
+        $salutation = "Ing.";
       }
       return $salutation;
     }
