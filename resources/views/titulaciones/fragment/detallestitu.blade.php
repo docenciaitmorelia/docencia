@@ -79,7 +79,7 @@
 							<select id="documento" type="text" class="form-control" name="documento" value="" required autofocus>
 								<option value="">Seleccione documento</option>
 									@foreach($proceso as $documento)
-										<option id="documento" value="{{ $documento->id }}">{{$documento->descripcion}}</option>
+										<option id="documento" value="{{ $documento->descripcion }}">{{$documento->descripcion}}</option>
 									@endforeach
 						  </select>
 						</div>

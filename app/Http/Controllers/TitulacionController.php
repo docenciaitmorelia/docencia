@@ -8,9 +8,11 @@ use App\Alumno;
 use App\Personal;
 use App\OpcionesTitulacion;
 use App\ProcesoTitulacion;
+use App\Organigrama;
 use App\Http\Requests\TitulacionRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\Snappy;
 
 class TitulacionController extends Controller
 {
@@ -56,10 +58,11 @@ class TitulacionController extends Controller
     public function edit($id)
     {
         $titulacion  = Titulacion::find($id);
-        $alumno=Alumno::select('no_de_control',DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))->orderBy('apellido_paterno')->get();
+        //$alumno=Alumno::select('no_de_control',DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))->orderBy('apellido_paterno')->get();
+        $alumnos=Alumno::AL($request->busqueda)->orderBy('apellido_paterno','asc')->get();
         $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))->orderBy('apellidos_empleado')->get();
         $opcion=OpcionesTitulacion::OT($alumno)->get();
-        $planes=OpcionesTitulacion::select('reticula')->groupBy('reticula')->get();
+        $planes=OpcionesTitulacion::OT($alumno)->get();
         return view('titulaciones.edit', compact('titulacion','alumno','personal','planes','opcion'));
     }
 
@@ -109,7 +112,7 @@ class TitulacionController extends Controller
           ->where('p.descripcion','=',$p)->get();
           $orden =$ord[0]->orden;
         }
-        return view('titulaciones.fragment.detallestitu',compact('titulacion','alumno','estatus','proceso','orden','documentos'));
+        return view('titulaciones.fragment.detallestitu',compact('titulacion','alumno','estatus','proceso','orden'));
     }
 
     public function gen_documentos(Request $request,$nc){
@@ -124,21 +127,34 @@ class TitulacionController extends Controller
                         ->where('titulaciones.estatus','=',"ACTIVO")
                         ->get();
         $alumno = Alumno::where('no_de_control','LIKE',"%$nc%")->get();
-        if ($request->documento == 1) {
+
+        if ($request->documento == 'Registro de Opción de Titulación'){
+          return $this->gen_registro($titulacion,$alumno,$nc);
+        }
+        if ($request->documento == "Asignación de Sinodales") {
             return $this->gen_asignacion_s($titulacion,$alumno,$nc);
         }
 
-        if ($request->documento == 2) {
+        if ($request->documento == "Impresión Definitiva") {
             return $this->gen_impresion_d($titulacion,$alumno,$nc);
         }
 
-        if ($request->documento == 3) {
+        if ($request->documento == "Asignación de Revisores") {
             return $this->gen_asignacion_r($titulacion,$alumno,$nc);
         }
 
-        if ($request->documento == 4) {
+        if ($request->documento == "Liberación de Proyecto") {
             return $this->gen_liberacion_p($titulacion,$alumno,$nc);
         }
+
+        if($request->documento == "Invitación a Ceremonia de Titulación"){
+          return $this->gen_invitacion($titulacion,$alumno,$nc);
+        }
+
+    }
+
+    public function gen_registro($titulacion,$alumno,$nc){
+        return view('titulaciones.fragment.gen_registro',compact('titulacion','alumno'));
 
     }
 
@@ -161,6 +177,12 @@ class TitulacionController extends Controller
         return view('titulaciones.fragment.gen_liberacion_p',compact('titulacion','alumno'));
 
     }
+
+    public function gen_invitacion($titulacion,$alumno,$nc){
+        return view('titulaciones.fragment.gen_invitacion',compact('titulacion','alumno'));
+
+    }
+
 
     public function gen_reporte_a(){
         return view('titulaciones.fragment.gen_reporte_a');
