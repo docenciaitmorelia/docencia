@@ -12,6 +12,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url('css/estilo.css') }}">
 </head>
 <body>
-
+			
 </body>
 </html>

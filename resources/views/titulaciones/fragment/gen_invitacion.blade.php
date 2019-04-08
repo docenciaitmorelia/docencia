@@ -56,6 +56,13 @@
 				@endforeach
 					<form action="{{ route('crear_invitacion', $al->no_de_control)}}" method="POST" target="_blank">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+						<div class="col-md-12">
+						<div class="col-md-6">
+							<label for="depto" class="control-label">Departamento</label>
+							<input type="text" id="depto" name="depto" class="form-control" placeholder="DEPARTAMENTO DE..." style="text-transform:uppercase;" required>
+						</div>
+						</div>
 						<div class="col-md-12">
 						<div class="col-md-4">
 							<label for="fecha" class="control-label">Fecha de Ceremonia</label>
@@ -63,11 +70,11 @@
 						</div>
 						<div class="col-md-4">
 							<label for="lugar" class="control-label">Lugar</label>
-							<input type="text" id="lugar" name="lugar" class="form-control" placeholder="SALA DE TITULACIÓN 1" required>
+							<input type="text" id="lugar" name="lugar" class="form-control" placeholder="SALA DE TITULACIÓN 1" style="text-transform:uppercase;" required>
 						</div>
            <div class="col-md-4">
              <label for="hora" class="control-label">Hora</label>
-             <input type="text" id="hora" name="hora" class="form-control" placeholder="9:00" required>
+             <input type="text" id="hora" name="hora" class="form-control" placeholder="9:00 HORAS" style="text-transform:uppercase;" required>
            </div>
           </div>
 						<p class="col-md-12">

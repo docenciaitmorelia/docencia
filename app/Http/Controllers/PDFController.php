@@ -208,7 +208,7 @@ class PDFController extends Controller
 
     public function crear_asignacion_s(Request $request,$nc){
         $oficio = $request->input('oficio');
-        $seccion = $request->input('seccion');
+        $seccion = mb_strtoupper($request->input('seccion'),'UTF-8');
         $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))
                         ->where('no_de_control','LIKE',"%$nc%")->get();
         $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.id')
@@ -260,7 +260,7 @@ class PDFController extends Controller
 
     public function crear_impresion_d(Request $request,$nc){
         $oficio     = $request->input('oficio');
-        $seccion = $request->input('seccion');
+        $seccion = mb_strtoupper($request->input('seccion'),'UTF-8');
         $nomb       = Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"),'reticula')
                         ->where('no_de_control','LIKE',"%$nc%")->get();
         $ret        = $nomb[0]->reticula;
@@ -307,7 +307,7 @@ class PDFController extends Controller
     }
 
     public function crear_asignacion_r(Request $request,$nc){
-        $depto = $request->input('depto');
+        $depto = mb_strtoupper($request->input('depto'),'UTF-8');
         $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))
                         ->where('no_de_control','LIKE',"%$nc%")->get();
         $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.id')
@@ -345,7 +345,7 @@ class PDFController extends Controller
 
     public function crear_liberacion_p(Request $request,$nc){
         $oficio = $request->input('oficio');
-        $seccion = $request->input('seccion');
+        $seccion = mb_strtoupper($request->input('seccion'),'UTF-8');
         $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))
                         ->where('no_de_control','LIKE',"%$nc%")->get();
         $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.id')
@@ -432,6 +432,7 @@ class PDFController extends Controller
     }
 
     public function crear_invitacion(Request $request,$nc){
+        $depto = mb_strtoupper($request->input('depto'),'UTF-8');
         $fecha = strtotime($request->input('fecha'));
         $lugar = $request->input('lugar');
         $hora  = $request->input('hora');
@@ -451,21 +452,21 @@ class PDFController extends Controller
                         ->get();
         $vistaurl="pdfs.invitacion";
         $t=Titulacion::where('alumno', $nc)->where('estatus','=',"ACTIVO")->update(array('proceso' => 'Liberación de Proyecto'));
-        return $this->crearPDFINV($titulacion,$c,$nomb,$vistaurl,$nc,$fecha,$lugar,$hora);
+        return $this->crearPDFINV($titulacion,$c,$nomb,$vistaurl,$nc,$fecha,$lugar,$hora,$depto);
     }
 
-    public function crearPDFINV($titulacion,$c,$nomb,$vistaurl,$nc,$fecha,$lugar,$hora){
+    public function crearPDFINV($titulacion,$c,$nomb,$vistaurl,$nc,$fecha,$lugar,$hora,$depto){
         $fecha = $fecha;
         $lugar = $lugar;
         $hora  = $hora;
+        $dep   =$depto;
         $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
         $dia = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
         $data   = $titulacion;
         $data2  = $c;
         $data3  = $nomb;
-        $date   = $dia[date('w',$fecha)]." ".date('d',$fecha)." DE ".$meses[date('m',$fecha)-1]." DEL ".date('Y') ;
-        $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
-        $view   = \View::make($vistaurl, compact('data', 'data2','data3','date','nof','nc','jefediv','gjdiv','secc'))->render();
+        $date   = $dia[date('w',$fecha)]." ".date('d',$fecha)." DE ".$meses[date('m',$fecha)-1]." DE ".date('Y') ;
+        $view   = \View::make($vistaurl, compact('data', 'data2','data3','date','nof','nc','fecha','lugar','hora','dep'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
         $pdf    ->loadHTML($view);
         //return $date;
