@@ -16,7 +16,7 @@
                       @foreach($opciones as $op)
                       <option value="{{$op->id}}" {{(old('opcion',$procesotitulacion->id_opcion)==$op->id)? 'selected':''}}>
                         {{$op->id}}{!! $op->nombre_opcion !!} (
-                          @foreach($reticulas as $ret)
+                         @foreach($reticulas as $ret)
                             @if($ret->id_opcion_titulacion == $op->id)
                               {{$ret->reticula}}
                             @endif

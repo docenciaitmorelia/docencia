@@ -114,6 +114,19 @@ class TitulacionController extends Controller
         }
         return view('titulaciones.fragment.detallestitu',compact('titulacion','alumno','estatus','proceso','orden'));
     }
+    
+    private string obtener_siglas($estudios){
+      $salutation="";
+      if(stristr("maestr",$estudios)){
+        $salutation = "M.";
+      } else if (stristr("doctor",$estudios)){
+        $satutation = "D.";
+      }
+      if(stristr("ciencias",$estudios){
+        $salutation = $salutation . "C.";
+      }
+      return $salutation;
+    }
 
     public function gen_documentos(Request $request,$nc){
         $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion')
