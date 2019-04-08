@@ -118,7 +118,8 @@ class TitulacionController extends Controller
       $salutation="";
       if(stristr("maestr",$estudios)){
         $salutation = "M.";
-      } else if (stristr("doctor",$estudios)){
+      }
+      if (stristr("doctor",$estudios)){
         $satutation = "D.";
       }
       if(stristr("ciencias",$estudios){
