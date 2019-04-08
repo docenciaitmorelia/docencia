@@ -12,11 +12,10 @@
 
               <div class="col-md-12">
                   <label for="opcion" class="control-label">Opción de titulación</label>
-                  <select disabled id="opcion" name="opcion" class="form-control" required>
-                      <option value="{{$procesotitulacion->id}}" selected>{{ $procesotitulacion->nombre_opcion }}</option>
+                  <select readonly id="opcion" name="opcion" class="form-control" required>
                       @foreach($opciones as $op)
-                      <option value="{!! $op->id !!}" {{(old('opcion',$procesotitulacion->id_opcion)==$op->id)? 'selected':''}}>
-                        {!! $op->nombre_opcion !!} (
+                      <option value="{{$op->id}}" {{(old('opcion',$procesotitulacion->id_opcion)==$op->id)? 'selected':''}}>
+                        {{$op->id}}{!! $op->nombre_opcion !!} (
                           @foreach($reticulas as $ret)
                             @if($ret->id_opcion_titulacion == $op->id)
                               {{$ret->reticula}}

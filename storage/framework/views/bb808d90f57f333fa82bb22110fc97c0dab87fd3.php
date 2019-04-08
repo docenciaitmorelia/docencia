@@ -12,15 +12,24 @@
           		<label for="opcion" class="control-label">Opción de titulación</label>
           		<select id="opcion" name="opcion" class="form-control">
           			<option value="">Seleccione Opción de titulación</option>
-          			<?php $__currentLoopData = $opcion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $op): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-          				<option value="<?php echo $op->id; ?>"><?php echo e($op->reticula); ?>/<?php echo e($op->nombre_opcion); ?></option>
+          			<?php $__currentLoopData = $opciones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $op): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+          				<option value="<?php echo $op->id; ?>">
+                    <?php echo e($op->opcion_titulacion); ?>. <?php echo e($op->nombre_opcion); ?>(
+                      <?php $__currentLoopData = $reticulas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ret): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($ret->id_opcion_titulacion == $op->id): ?>
+                          <?php echo e($ret->reticula); ?>
+
+                        <?php endif; ?>
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    )
+                  </option>
           			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           		</select>
         	  </div>
 
           <div class="col-md-4">
               <label class="control-label" for="orden">Paso número:</label>
-              <input maxlength="10" class="form-control" type="text" id="orden" name="orden" style="text-transform:uppercase;" required>
+              <input maxlength="10" class="form-control" type="number" id="orden" name="orden" style="text-transform:uppercase;" required>
           </div>
 
           <div class="col-md-4">

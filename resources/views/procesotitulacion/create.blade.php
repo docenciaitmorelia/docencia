@@ -9,22 +9,30 @@
         @include('procesotitulacion.fragment.error')
         <form action="{{ route('procesotitulacion.store') }}" method="POST">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" required>
-            <div class="col-md-4">
+            <div class="col-md-12">
           		<label for="opcion" class="control-label">Opción de titulación</label>
           		<select id="opcion" name="opcion" class="form-control">
           			<option value="">Seleccione Opción de titulación</option>
-          			@foreach($opcion as $op)
-          				<option value="{!! $op->id !!}">{{ $op->reticula }}/{{ $op->nombre_opcion }}</option>
+          			@foreach($opciones as $op)
+          				<option value="{!! $op->id !!}">
+                    {{$op->opcion_titulacion}}. {{ $op->nombre_opcion }}(
+                      @foreach($reticulas as $ret)
+                        @if($ret->id_opcion_titulacion == $op->id)
+                          {{$ret->reticula}}
+                        @endif
+                      @endforeach
+                    )
+                  </option>
           			@endforeach
           		</select>
         	  </div>
 
-          <div class="col-md-4">
+          <div class="col-md-6">
               <label class="control-label" for="orden">Paso número:</label>
-              <input maxlength="10" class="form-control" type="text" id="orden" name="orden" style="text-transform:uppercase;" required>
+              <input maxlength="10" class="form-control" type="number" id="orden" name="orden" style="text-transform:uppercase;" required>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-6">
               <label class="control-label" for="descripcion">Descripción del paso:</label>
               <select id="descripcion" name="descripcion" class="form-control">
                 <option value="" selected>Seleccione Opción de titulación</option>

@@ -27,12 +27,9 @@ class ProcesoTitulacionController extends Controller
 
     public function create()
     {
-        $opcion=OpcionesTitulacion::select('nombre_opcion','opciones_titulacion.id','reticula')
-        ->join('opctitxrets','opciones_titulacion.id','opctitxrets.id_opcion_titulacion')
-        ->orderBy('reticula','desc')
-        ->orderBy('nombre_opcion','asc')
-        ->get();
-    	  return view('procesotitulacion.create',compact('opcion'));
+        $opciones=OpcionesTitulacion::select('nombre_opcion','id','opcion_titulacion')->orderBy('opcion_titulacion','asc')->get();
+        $reticulas = DB::table('opctitxrets')->select('id_opcion_titulacion','reticula')->orderby('reticula','desc')->get();
+    	  return view('procesotitulacion.create',compact('opciones','reticulas'));
     }
 
     public function store(ProcesoTitulacionRequest $request)
@@ -59,7 +56,6 @@ class ProcesoTitulacionController extends Controller
         $procesotitulacion->id_opcion       = $request->opcion;
     	  $procesotitulacion->orden           = $request->orden;
         $procesotitulacion->descripcion     = $request->descripcion;
-
         $procesotitulacion->save();
         return redirect()->route('procesotitulacion.index')->with('info', 'El paso para el proceso de titulación fue editado');
     }
