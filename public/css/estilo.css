@@ -3,7 +3,7 @@
     src: url(../fonts/SoberanaSans-Light.otf) format("opentype");
 }
 
-html, body { 
+html, body {
     margin: -3; padding: 0;
 }
 
@@ -13,8 +13,8 @@ body{
     background-position: top left;
     background-size: 99.8% 100%;
     width: 100%;
-    height: 100%;
-	
+    height: 99%;
+
 }
 
 #contenido{
