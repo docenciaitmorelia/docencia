@@ -54,7 +54,7 @@
 					</table>
 					<br>
 				@endforeach
-					<form action="" method="POST" target="_blank">
+					<form action="{{ route('crear_invitacion', $al->no_de_control)}}" method="POST" target="_blank">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div class="col-md-12">
 						<div class="col-md-4">
@@ -66,7 +66,7 @@
 							<input type="text" id="lugar" name="lugar" class="form-control" placeholder="SALA DE TITULACIÓN 1" required>
 						</div>
            <div class="col-md-4">
-             <label for="lugar" class="control-label">Hora</label>
+             <label for="hora" class="control-label">Hora</label>
              <input type="text" id="hora" name="hora" class="form-control" placeholder="9:00" required>
            </div>
           </div>

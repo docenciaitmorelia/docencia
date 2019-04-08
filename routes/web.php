@@ -76,27 +76,31 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('crear_liberacion_p/{nc}', 'PDFController@crear_liberacion_p')->name('crear_liberacion_p');
 
-    Route::get('detalles_titu/{nc}/{estatus}', 'TitulacionController@detalles_titu')->name('detalles_titu');
+    Route::post('crear_invitacion/{nc}', 'PDFController@crear_invitacion')->name('crear_invitacion');
+
+    Route::post('crear_registro/{nc}', 'PDFController@crear_registro')->name('crear_registro');
+
+    Route::get('expediente_titulacion/{nc}/{estatus}', 'TitulacionController@expediente_titulacion')->name('expediente_titulacion');
 
     Route::post('gen_documentos/{nc}', 'TitulacionController@gen_documentos')->name('gen_documentos');
 
     Route::get('gen_reporte_a','TitulacionController@gen_reporte_a')->name('gen_reporte_a');
 
-    Route::get('gen_asignacion_s','TitulacionController@gen_asignacion_s');
+    Route::get('gen_asignacion_s','TitulacionController@gen_asignacion_s')->name('gen_asignacion_s');
 
-    Route::get('gen_invitacion','TitulacionController@gen_invitacion');
+    Route::get('gen_invitacion','TitulacionController@gen_invitacion')->name('gen_invitacion');
 
-    Route::get('gen_registro','TitulacionController@gen_registro');
+    Route::get('gen_registro','TitulacionController@gen_registro')->name('gen_registro');
 
-    Route::get('gen_impresion_d','TitulacionController@gen_asignacion_s');
+    Route::get('gen_impresion_d','TitulacionController@gen_asignacion_s')->name('gen_impresion_d');
 
-    Route::get('gen_asignacion_r','TitulacionController@gen_asignacion_s');
+    Route::get('gen_asignacion_r','TitulacionController@gen_asignacion_s')->name('gen_asignacion_r');
 
-    Route::get('gen_liberacion_p','TitulacionController@gen_asignacion_s');
+    Route::get('gen_liberacion_p','TitulacionController@gen_asignacion_s')->name('gen_liberacion_p');
 
     Route::get('gen_reporte_d','TitulacionController@gen_reporte_d')->name('gen_reporte_d');
 
-    Route::post('gen_asignacion_s', 'TitulacionController@gen_asignacion_s');
+    Route::post('gen_asignacion_s', 'TitulacionController@gen_asignacion_s')->name('gen_asignacion_s');
 
 });
 

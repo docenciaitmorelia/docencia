@@ -1,7 +1,7 @@
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
-	<title>Control de Borrador</title>
+	<title>Invitacion a Ceremonia de Titulación</title>
   <link rel="stylesheet" type="text/css" href="{{ url('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url('bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url('bower_components/bootstrap-material-design/dist/css/ripples.min.css') }}">
@@ -12,5 +12,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url('css/estilo.css') }}">
 </head>
 <body>
+
 </body>
 </html>

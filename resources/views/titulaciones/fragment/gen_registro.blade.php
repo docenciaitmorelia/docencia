@@ -46,7 +46,7 @@
 										{{ $titu->vocal_suplente }}
 									</td>
 
-				                    <td>
+				         <td>
 										{{ $titu->vocal_suplente }}
 									</td>
 								</tr>
@@ -54,22 +54,8 @@
 					</table>
 					<br>
 				@endforeach
-					<form action="" method="POST" target="_blank">
+					<form action="{{ route('crear_registro', $al->no_de_control)}}" method="POST" target="_blank">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-						<div class="col-md-12">
-						<div class="col-md-4">
-							<label for="fecha" class="control-label">Fecha de Ceremonia</label>
-							<input type="date" name="fecha" class="form-control">
-						</div>
-						<div class="col-md-4">
-							<label for="lugar" class="control-label">Lugar</label>
-							<input type="text" id="lugar" name="lugar" class="form-control" placeholder="SALA DE TITULACIÓN 1" required>
-						</div>
-           <div class="col-md-4">
-             <label for="lugar" class="control-label">Hora</label>
-             <input type="text" id="hora" name="hora" class="form-control" placeholder="9:00" required>
-           </div>
-          </div>
 						<p class="col-md-12">
 							<button type="submit" class="btn btn-raised btn-primary">Generar PDF</button>
 							<a href="{{ route('titulaciones.index') }}" class="btn btn-raised btn-primary">Regresar</a>
