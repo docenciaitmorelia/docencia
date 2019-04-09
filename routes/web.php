@@ -24,9 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
 
   //Módulo de Administración de Usuarios
   Route::get('/admin', 'usuariosController@index')->name('admin');
-  Route::resource('usuariosCtl','usuariosController',[
-                  'except' => ['destroy']
-  ]);
+  Route::resource('usuariosCtl','usuariosController');
 
   //Módulo de Actividades Complementarias
     Route::resource('actividadescomp','ActividadesCompController',[
