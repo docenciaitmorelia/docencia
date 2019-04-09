@@ -20,8 +20,8 @@ class usuariosController extends Controller
      */
     public function index()
     {
-      $Usuarios = User::select('users.*','organigramas.descripcion_area')
-      ->join('organigramas','users.clave_area','=','organigramas.clave_area')
+      $Usuarios = User::select('users.*','organigrama.descripcion_area')
+      ->join('organigrama','users.clave_area','=','organigrama.clave_area')
       ->get();
       return view('auth.index',['Usuarios' => $Usuarios]);
     }
@@ -70,9 +70,9 @@ class usuariosController extends Controller
      */
     public function edit($id)
     {
-      $Usuario = User::select('users.*','organigramas.descripcion_area','users.carrera','carreras.nombre_reducido')
+      $Usuario = User::select('users.*','organigrama.descripcion_area','users.carrera','carreras.nombre_reducido')
       ->where('users.id','=',$id)
-      ->join('organigramas','users.clave_area','=','organigramas.clave_area')
+      ->join('organigrama','users.clave_area','=','organigrama.clave_area')
       ->join('carreras','users.carrera','=','carreras.carrera')
       ->get();
       $Areas = organigrama::select('clave_area','descripcion_area')->get();
