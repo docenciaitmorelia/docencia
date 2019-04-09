@@ -4,7 +4,7 @@
 }
 
 html, body {
-    margin: -3; padding: 0;
+    margin: 0; padding: 0;
 }
 
 
@@ -19,7 +19,7 @@ body{
 
 #contenido{
     font-family: Verdana;
-    padding-top: 195px;
+    padding-top: 250px;
 	margin-left: 1.5cm;
 	margin-right: 1.5cm;
 }

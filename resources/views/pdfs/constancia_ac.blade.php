@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
@@ -13,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url('css/estilo.css') }}">
 </head>
   <body>
-    
+
     <div id="contenido">
         <div id="datos1">
             <table align="right">
@@ -21,7 +20,7 @@
                   <td colspan="2" align="right"><b>DEPENDENCIA:&nbsp;</b>SUB. ACADÉMICA</td>
                 </tr>
                 <tr>
-                  <td colspan="2" align="right"><b>SECCIÓN:&nbsp;</b></td>
+                  <td colspan="2" align="right"><b>SECCIÓN:&nbsp;</b>{$secc}}</td>
                 </tr>
                 <tr>
                   <td colspan="2" align="right"><b>OFICIO:&nbsp;</b>{{$nof}}</td>
@@ -76,7 +75,7 @@
                   <tr>
                     <td>{{ $acomplementaria->actividad }}</td>
                     <td align="center">
-                      @if($acomplementaria->fecha_del != $acomplementaria->fecha_al) 
+                      @if($acomplementaria->fecha_del != $acomplementaria->fecha_al)
                       {{ $acomplementaria->fecha_del }} A {{$acomplementaria->fecha_al }}
                       @elseif($acomplementaria->fecha_del == $acomplementaria->fecha_al)
                       {{ $acomplementaria->fecha_del }}
@@ -84,7 +83,7 @@
                     </td>
                     <td align="center">
                       {{ $acomplementaria->creditos }}
-                    </td>                
+                    </td>
                     <td align="center">
                       {{ $acomplementaria->calificacion }}
                     </td>
@@ -145,15 +144,7 @@
         <br>
         <div id="cp">
             <p id="cp">Cp. Archivo</p>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
               </div>
-    </div>      
+    </div>
   </body>
 </html>

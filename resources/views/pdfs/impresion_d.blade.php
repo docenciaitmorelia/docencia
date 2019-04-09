@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Impresión Definitiva</title>
@@ -42,13 +41,13 @@
     <br>
     <div class="col-md-12" id="den">
       <p>
-        <strong>
-          @foreach($jefediv as $div) @endforeach @foreach($data as $docente) {{ $docente->completo}} @endforeach
-          <br>
-          @foreach($gjdiv as $genero) @if($genero->sexo_empleado=='M') JEFE @else JEFA @endif @endforeach DE LA DIVISIÓN DE ESTUDIOS PROFESIONALES
-          <br>
-        </strong>
-      </p>
+  			<strong>
+  				@foreach($jefediv as $div) {{ $div->jefe_area}} @endforeach
+  				<br>
+  				@foreach($gjdiv as $genero) @if($genero->sexo_empleado=='M') JEFE @else JEFA @endif @endforeach DE LA DIVISIÓN DE ESTUDIOS PROFESIONALES
+  				<br>
+  			</strong>
+  		</p>
       <p align="justify">
         Los que suscriben, integrantes del Jurado de Examen Recepcional del egresado (a) cuyos datos se especifican a continuación:
       </p>
@@ -111,9 +110,9 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="center">{{$t->presidente}}</td>
+                    <td align="center">{{$t_presidente}}{{$t->presidente}}</td>
                     <td align="center">&nbsp;</td>
-                    <td align="center">{{$t->secretario}}</td>
+                    <td align="center">{{$t_secretario}}{{$t->secretario}}</td>
                   </tr>
                   <tr>
                     <td align="center" id="titulo">PRESIDENTE</td>
@@ -136,9 +135,9 @@
                     <td>&nbsp;</td>
                   </tr>
                   <tr>
-                    <td align="center">{{$t->vocal_propietario}}</td>
+                    <td align="center">{{$t_vocalp}}{{$t->vocal_propietario}}</td>
                     <td align="center">&nbsp;</td>
-                    <td align="center">{{$t->vocal_suplente}}</td>
+                    <td align="center">{{$t_vocals}}{{$t->vocal_suplente}}</td>
                   </tr>
                   <tr>
                     <td align="center" id="titulo">VOCAL PROPIETARIO</td>

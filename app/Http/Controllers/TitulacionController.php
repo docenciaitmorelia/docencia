@@ -54,15 +54,15 @@ class TitulacionController extends Controller
         return redirect()->route('titulaciones.index');
     }
 
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
         $titulacion  = Titulacion::find($id);
         //$alumno=Alumno::select('no_de_control',DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))->orderBy('apellido_paterno')->get();
         $alumnos=Alumno::AL($request->busqueda)->orderBy('apellido_paterno','asc')->get();
         $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))->orderBy('apellidos_empleado')->get();
-        $opcion=OpcionesTitulacion::OT($alumno)->get();
-        $planes=OpcionesTitulacion::OT($alumno)->get();
-        return view('titulaciones.edit', compact('titulacion','alumno','personal','planes','opcion'));
+        $opcion=OpcionesTitulacion::OT($alumnos)->get();
+        $planes=OpcionesTitulacion::OT($alumnos)->get();
+        return view('titulaciones.edit', compact('titulacion','alumnos','personal','planes','opcion'));
     }
 
     public function update(TitulacionRequest $request, $id)
@@ -147,11 +147,13 @@ class TitulacionController extends Controller
                         ->get();
         $alumno = Alumno::where('no_de_control','LIKE',"%$nc%")->get();
 
+        $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))->where('nombramiento','=','D')->orderBy('apellidos_empleado')->get();
+
         if ($request->documento == 'Registro de Opción de Titulación'){
           return $this->gen_registro($titulacion,$alumno,$nc);
         }
         if ($request->documento == "Asignación de Sinodales") {
-            return $this->gen_asignacion_s($titulacion,$alumno,$nc);
+            return $this->gen_asignacion_s($titulacion,$alumno,$nc,$personal);
         }
 
         if ($request->documento == "Impresión Definitiva") {
@@ -159,11 +161,11 @@ class TitulacionController extends Controller
         }
 
         if ($request->documento == "Asignación de Revisores") {
-            return $this->gen_asignacion_r($titulacion,$alumno,$nc);
+            return $this->gen_asignacion_r($titulacion,$alumno,$nc,$personal);
         }
 
         if ($request->documento == "Liberación de Proyecto") {
-            return $this->gen_liberacion_p($titulacion,$alumno,$nc);
+            return $this->gen_liberacion_p($titulacion,$alumno,$nc,$personal);
         }
 
         if($request->documento == "Invitación a Ceremonia de Titulación"){
@@ -177,8 +179,8 @@ class TitulacionController extends Controller
 
     }
 
-    public function gen_asignacion_s($titulacion,$alumno,$nc){
-        return view('titulaciones.fragment.gen_asignacion_s',compact('titulacion','alumno'));
+    public function gen_asignacion_s($titulacion,$alumno,$nc,$personal){
+        return view('titulaciones.fragment.gen_asignacion_s',compact('titulacion','alumno','personal'));
 
     }
 
@@ -187,13 +189,13 @@ class TitulacionController extends Controller
 
     }
 
-    public function gen_asignacion_r($titulacion,$alumno,$nc){
-        return view('titulaciones.fragment.gen_asignacion_r',compact('titulacion','alumno'));
+    public function gen_asignacion_r($titulacion,$alumno,$nc,$personal){
+        return view('titulaciones.fragment.gen_asignacion_r',compact('titulacion','alumno','personal'));
 
     }
 
-    public function gen_liberacion_p($titulacion,$alumno,$nc){
-        return view('titulaciones.fragment.gen_liberacion_p',compact('titulacion','alumno'));
+    public function gen_liberacion_p($titulacion,$alumno,$nc,$personal){
+        return view('titulaciones.fragment.gen_liberacion_p',compact('titulacion','alumno','personal'));
 
     }
 
@@ -201,7 +203,6 @@ class TitulacionController extends Controller
         return view('titulaciones.fragment.gen_invitacion',compact('titulacion','alumno'));
 
     }
-
 
     public function gen_reporte_a(){
         return view('titulaciones.fragment.gen_reporte_a');

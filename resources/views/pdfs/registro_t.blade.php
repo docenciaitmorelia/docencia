@@ -12,5 +12,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url('css/estilo.css') }}">
 </head>
 <body>
+	<center>
+		<h3>INSTITUTO TECNOLÓGICO DE MORELIA <br> SUBDIRECCIÓN ACADÉMICA<br>DEPARTAMENTO....<br><br>PROYECTO DOCENCIA<br>PROPUESTA</h3>
+	</center>
 </body>
 </html>

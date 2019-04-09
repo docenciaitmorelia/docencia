@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
@@ -13,7 +12,7 @@
           <td colspan="2" align="right"><b>DEPENDENCIA:&nbsp;</b>SUB. ACADÉMICA</td>
         </tr>
         <tr>
-          <td colspan="2" align="right"><b>SECCIÓN:&nbsp;</b>SISTEMAS Y COMPUTACIÓN</td>
+          <td colspan="2" align="right"><b>SECCIÓN:&nbsp;</b>{$secc}}</td>
         </tr>
         <tr>
           <td colspan="2" align="right"><b>OFICIO:&nbsp;</b>{{$nof}}</td>
@@ -47,7 +46,7 @@
       <p align="justify">
         Por medio de la presente se hace <strong>CONSTAR</strong> que el <strong>C. @foreach($data as $alumno) {{$alumno->completo}}&nbsp; @endforeach</strong> de la carrera @foreach($data4 as $carrera) {{$carrera->nombre}}, @endforeach &nbsp;con número de control {{$nc}}, apoyó como ASESOR(A) de Círculos de estudio en la(s) materia(s) @foreach($data2 as $materia) {{$materia->nombre}}, @endforeach &nbsp;en el periodo @foreach($data3 as $ciclo) @if($ciclo->ciclo_escolar==1) ENERO-JUNIO @else AGOSTO-DICIEMBRE @endif @endforeach{{$anio}}.
       </p>
-        
+
      <br>
 
       <p align="justify">

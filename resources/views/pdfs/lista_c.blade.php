@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
@@ -14,7 +13,7 @@
 </head>
 <body>
 	<div id="contenido">
-          
+
 			<legend>Lista de asistencia de asesores de círculos de estudios</legend>
 			<table class="table table-bordered table-sm"">
 				<thead>

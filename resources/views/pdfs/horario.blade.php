@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
@@ -16,7 +15,7 @@
 
 	<div class="panel panel-default">
 		<div class="panel-body">
-          
+
 			<legend>Horario</legend>
 			<table class="table table-bordered table-sm">
 				<thead>

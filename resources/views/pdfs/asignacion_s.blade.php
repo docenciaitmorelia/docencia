@@ -40,27 +40,27 @@
     <br>
     <br>
     <div class="col-md-12" id="den">
-      <p>
-        <strong>
-          L.A. Martha Alicia Lupercio Moreno
-          <br>
-          JEFA DE LA DIVISIÓN DE ESTUDIOS PROFESIONALES
-          <br>
-        </strong>
-      </p>
+			<p>
+				<strong>
+					@foreach($jefediv as $div) {{ $div->jefe_area}} @endforeach
+					<br>
+					@foreach($gjdiv as $genero) @if($genero->sexo_empleado=='M') JEFE @else JEFA @endif @endforeach DE LA DIVISIÓN DE ESTUDIOS PROFESIONALES
+					<br>
+				</strong>
+			</p>
       <p align="justify">
         De acuerdo a la solicitud presentada por el (la) alumno(a) <strong>@foreach($data3 as $alumno) {{$alumno->completo}} @endforeach</strong>, con número de control {{$nc}} pasante de la carrera de: @foreach($data2 as $carrera) {{$carrera->nombre}} @endforeach con registro de la opción @foreach($data as $opc) {{$opc->opcion}}; @endforeach se le informa a usted que la asignación de sinodales queda de la siguiente manera:
         </p>
         <p align="justify">
         <br>
         @foreach($data as $revisores)
-        PRESIDENTE:     {{$revisores->presidente}} <br>
-        SECRETARIO:     {{$revisores->secretario}} <br>
-        VOCAL PROP.:    {{$revisores->vocal_propietario}} <br>
-        VOCAL SUPL.:    {{$revisores->vocal_suplente}} <br>
-        ASESOR:         {{$revisores->asesor}} <br>
+        PRESIDENTE:     {{$t_presidente}}{{$revisores->presidente}} <br>
+        SECRETARIO:     {{$t_secretario}}{{$revisores->secretario}} <br>
+        VOCAL PROP.:    {{$t_vocalp}}{{$revisores->vocal_propietario}} <br>
+        VOCAL SUPL.:    {{$t_vocals}}{{$revisores->vocal_suplente}} <br>
+        ASESOR:         {{$t_asesor}}{{$revisores->asesor}} <br>
         @endforeach
-      </p>
+      	</p>
         <br>
         <p align="justify">
           Agradezco la atención al presente y aprovecho para enviar un afectuoso saludo.
@@ -71,22 +71,11 @@
               <i id="tec">"Técnica, progreso de México"</i>
             </p>
             <br>
-            <div class="col-md-12">
-              <table align="left">
-                <thead>
-                  <tr>
-                    <th>&nbsp;</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td align="center">NOMBRE</td>
-                  </tr>
-                  <tr>
-                    <td align="center" id="titulo">Jefe del Depto</td>
-                  </tr>
-                </tbody>
-                </table>
+						<br>
+						<br>
+            {{$jefedepto}}
+						<br>
+						Jefe del {{ mb_convert_case($dep, MB_CASE_TITLE, "utf8")}}</td>
             </div>
           <br>
           <br>

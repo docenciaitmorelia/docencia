@@ -42,7 +42,7 @@
 	<div class="col-md-12" id="den">
 		<p>
 			<strong>
-				@foreach($jefediv as $div) @endforeach @foreach($data as $docente) {{ $docente->completo}} @endforeach
+				@foreach($jefediv as $div) {{ $div->jefe_area}} @endforeach
 				<br>
 				@foreach($gjdiv as $genero) @if($genero->sexo_empleado=='M') JEFE @else JEFA @endif @endforeach DE LA DIVISIÓN DE ESTUDIOS PROFESIONALES
 				<br>
@@ -54,10 +54,10 @@
 			<p align="justify">
 			<br>
 			@foreach($data as $revisores)
-			PRESIDENTE:     {{$revisores->presidente}} <br>
-			SECRETARIO:     {{$revisores->secretario}} <br>
-			VOCAL PROP.:    {{$revisores->vocal_propietario}} <br>
-			VOCAL SUPL.:    {{$revisores->vocal_suplente}} <br>
+			PRESIDENTE:    {{$t_presidente}} {{$revisores->presidente}} <br>
+			SECRETARIO:    {{$t_secretario}}{{$revisores->secretario}} <br>
+			VOCAL PROP.:   {{$t_vocalp}}{{$revisores->vocal_propietario}} <br>
+			VOCAL SUPL.:   {{$t_vocals}}{{$revisores->vocal_suplente}} <br>
 			@endforeach
 		</p>
 			<br>
@@ -70,22 +70,11 @@
 						<i id="tec">"Técnica, progreso de México"</i>
 					</p>
 					<br>
-					<div class="col-md-12">
-						<table align="left">
-							<thead>
-								<tr>
-									<th>&nbsp;</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td align="center">NOMBRE</td>
-								</tr>
-								<tr>
-									<td align="center" id="titulo">Jefe del Depto</td>
-								</tr>
-							</tbody>
-							</table>
+					<br>
+					<br>
+					{{$jefedepto}}
+					<br>
+					Jefe del {{ mb_convert_case($dep, MB_CASE_TITLE, "utf8")}}</td>
 					</div>
 				<br>
 				<br>

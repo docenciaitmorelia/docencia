@@ -17,7 +17,13 @@ class Alumno extends Model
     {
       $carreras = DB::table('carreras')
       ->select('carrera','nombre_reducido','reticula')
-      ->where('carrera', '=', Auth::user()->carrera);
+      ->where('carrera', '=', 108)
+      ->orwhere('carrera','=',109)
+      ->orwhere('carrera','=',112)
+      ->orwhere('carrera','=',111);
+      /*$carreras = DB::table('carreras')
+      ->select('carrera','nombre_reducido','reticula')
+      ->where('carrera', '=', Auth::user()->carrera);*/
       $busqueda= mb_strtoupper($busqueda,'UTF-8');
       return $query->select('alumnos.reticula as alreticula','no_de_control','nombre_alumno','apellido_paterno','apellido_materno','carreras.nombre_reducido','carreras.reticula')
         ->joinSub($carreras, 'carreras', function ($join) {

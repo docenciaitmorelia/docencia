@@ -65,6 +65,7 @@
 						<div class="form-group col-md-6">
 								<label for="alumno" class="bmd-label-floating col-form-label">{{ __('Alumno') }}</label>
 										<select id="alumno" type="text" class="form-control{{ $errors->has('alumno') ? ' is-invalid' : '' }}" name="alumno" value="" required autofocus>
+											<option id="alumno" value="">Seleccione alumno...</option>
 											@foreach($alumnos as $alumno)
 												<option id="alumno" value="{{ $alumno->no_de_control }}">{{$alumno->apellido_paterno}} {{$alumno->apellido_materno}} {{$alumno->nombre_alumno}}</option>
 											@endforeach
@@ -112,7 +113,7 @@
 							<select id="presidente" name="presidente" class="form-control" required>
 								<option value="">Seleccione Presidente</option>
 								@foreach($personal as $doc)
-								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}</option>
+								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}, {{ $doc->rfc}}</option>
 								@endforeach
 							</select>
 						</div>
@@ -122,7 +123,7 @@
 							<select id="secretario" name="secretario" class="form-control" required>
 								<option value="">Seleccione Secretario</option>
 								@foreach($personal as $doc)
-								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}</option>
+								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}, {{ $doc->rfc}}</option>
 								@endforeach
 							</select>
 						</div>
@@ -132,7 +133,7 @@
 							<select id="vocal_propietario" name="vocal_propietario" class="form-control" required>
 								<option value="">Seleccione Vocal Propietario</option>
 								@foreach($personal as $doc)
-								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}</option>
+								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}, {{ $doc->rfc}}</option>
 								@endforeach
 							</select>
 						</div>
@@ -142,7 +143,7 @@
 							<select id="vocal_suplente" name="vocal_suplente" class="form-control" required>
 								<option value="">Seleccione Vocal Suplente</option>
 								@foreach($personal as $doc)
-								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}</option>
+								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}, {{ $doc->rfc}}</option>
 								@endforeach
 							</select>
 						</div>

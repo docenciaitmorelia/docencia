@@ -52,6 +52,7 @@
                 @endif
             @else
               @if(Auth::user()->rol == "Jefe de Docencia")
+              <!--
                 <li class="dropdown">
                   <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Círc. Estudios
                     <b class="caret"></b></a>
@@ -61,19 +62,21 @@
                     <li><a href="{{ route('gen_horario')}}">Horario </a></li>
                   </ul>
                 </li>
-
+-->
                 <li class="dropdown">
                   <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Titulaciones
                     <b class="caret"></b></a>
                   <ul class="dropdown-menu">
                     <li><a href="{{ route('titulaciones.index') }}">Titulaciones </a></li>
-                    <li><a href="{{ route('gen_reporte_a')}}">Reporte por año </a></li>
+                    <!--<li><a href="{{ route('gen_reporte_a')}}">Reporte por año </a></li>
                     <li><a href="{{ route('gen_reporte_d')}}">Reporte por docente </a></li>
-                    <li><a href="{{ route('revisiones.index') }}">Revisiones </a></li>
+                    <li><a href="{{ route('revisiones.index') }}">Revisiones </a></li> -->
                   </ul>
                 </li>
+                <!--
                 <li><a href="{{ route('actividadescomp.index') }}">Actividades Complementarias</a></li>
                 <li><a href="{{ route('catalogoac.index') }}">Catalogo Act.</a></li>
+              -->
               @endif
               @if(Auth::user()->rol == "DivEstProf")
                 <li><a href="{{ route('procesotitulacion.index') }}">Proceso de Titulacion </a></li>

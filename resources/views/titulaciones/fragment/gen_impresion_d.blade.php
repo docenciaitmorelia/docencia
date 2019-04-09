@@ -17,59 +17,56 @@
 				@foreach($titulacion as $titu)
 				<hr>
 				<center><h5><i>{{$titu->nombre_opcion}}</i></h5></center>
+				<form action="../crear_impresion_d/{{$al->no_de_control}}" method="POST" target="_blank">
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+				<table class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th colspan="2"><center>Asesor</center></th>
+							<th colspan="2"> <center>Presidente</center></th>
+							<th colspan="2"> <center>Secretario</center></th>
+							<th colspan="2"> <center>Vocal Propietario</center></th>
+							<th colspan="2"> <center>Vocal Suplente</center></th>
+							<th colspan="1"></th>
+						</tr>
+					</thead>
+					<tbody>
 
-					<table class="table table-striped table-hover">
-						<thead>
 							<tr>
-								<th><center>Asesor</center></th>
-								<th> <center>Presidente</center></th>
-								<th> <center>Secretario</center></th>
-								<th> <center>Vocal Propietario</center></th>
-								<th> <center>Vocal Suplente</center></th>
-								<th colspan="1"></th>
+								<td><input type="t_asesor" name="t_asesor" class="form-control" placeholder="DR."></td><td> {{ $titu->asesor }}</td>
+
+								<td><input type="t_presidente" name="t_presidente" class="form-control" placeholder="DR."></td><td>{{ $titu->presidente }}
+								</td>
+
+								<td><input type="t_secretario" name="t_secretario" class="form-control" placeholder="DR."></td><td>{{ $titu->secretario }}
+								</td>
+
+								<td><input type="t_vocalp" name="t_vocalp" class="form-control" placeholder="DR."></td><td>{{ $titu->vocal_propietario }}
+								</td>
+
+								 <td><input type="t_vocals" name="t_vocals" class="form-control" placeholder="DR."></td><td>{{ $titu->vocal_suplente }}
+								</td>
 							</tr>
-						</thead>
-						<tbody>
-
-								<tr>
-									<td>
-				                        {{ $titu->asesor }}
-				                    </td>
-
-									<td>
-										{{ $titu->presidente }}
-									</td>
-
-									<td>
-										{{ $titu->secretario }}
-									</td>
-
-									<td>
-										{{ $titu->vocal_propietario }}
-									</td>
-
-				                    <td>
-										{{ $titu->vocal_suplente }}
-									</td>
-								</tr>
-						</tbody>
-					</table>
+					</tbody>
+				</table>
 					<br>
 				@endforeach
-					<form action="../crear_impresion_d/{{$al->no_de_control}}" method="POST" target="_blank">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
 						<div class="col-md-12">
-							<div class="col-md-6">
+					<div class="col-md-4">
+						<label for="oficio" class="control-label">Oficio</label>
+						<input type="text" id="oficio" name="oficio" class="form-control" placeholder="DSC-D-001/2018" required>
+					</div>
+						<div class="col-md-4">
+							<label for="depto" class="control-label">Departamento</label>
+							<input type="text" id="depto" name="depto" class="form-control" placeholder="DEPARTAMENTO DE..." style="text-transform:uppercase;" required>
+						</div>
+							<div class="col-md-4">
 								<label for="seccion" class="control-label">Sección</label>
 								<input type="text" id="seccion" name="seccion" class="form-control" placeholder="SISTEMAS Y COMPUTACIÓN" style="text-transform:uppercase;" required>
 							</div>
 							</div>
-								<div class="col-md-12">
-							<div class="col-md-6">
-								<label for="oficio" class="control-label">Oficio</label>
-								<input type="text" id="oficio" name="oficio" class="form-control" placeholder="DSC-D-001/2018" required>
-							</div>
-						</div>
+
 						<p class="col-md-12">
 							<button type="submit" class="btn btn-raised btn-primary">Generar PDF</button>
 							<a href="{{ route('titulaciones.index') }}" class="btn btn-raised btn-primary">Regresar</a>

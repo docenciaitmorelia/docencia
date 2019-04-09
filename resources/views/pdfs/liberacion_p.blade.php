@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -40,15 +39,17 @@
     <br>
     <br>
     <br>
+    <br>
+    <br>
     <div class="col-md-12" id="den">
       <p>
-        <strong>
-          @foreach($data as $docente) {{ $docente->grado}} @endforeach @foreach($data as $docente) {{ $docente->completo}} @endforeach
-          <br>
-          @foreach($data as $docente) @if($docente->sexo=='M') JEFE @else JEFA @endif @endforeach DE LA DIVISIÓN DE ESTUDIOS PROFESIONALES
-          <br>
-        </strong>
-      </p>
+  			<strong>
+  				@foreach($jefediv as $div) {{ $div->jefe_area}} @endforeach
+  				<br>
+  				@foreach($gjdiv as $genero) @if($genero->sexo_empleado=='M') JEFE @else JEFA @endif @endforeach DE LA DIVISIÓN DE ESTUDIOS PROFESIONALES
+  				<br>
+  			</strong>
+  		</p>
       <p align="justify">
         Por este medio, le informo que ha sido liberado el siguiente proyecto para la Titulación Integral.
       </p>
@@ -95,27 +96,36 @@
               <table align="center">
                 <thead>
                   <tr>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <th width='30%'>&nbsp;</th>
+                    <th width='30%'>&nbsp;</th>
+                    <th width='30%'>&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="center">NOMBRE</td>
-                    <td align="center">Nombre</td>
-                    <td align="center">NOMBRE</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
                   </tr>
                   <tr>
-                    <td align="center" id="titulo">Jefe del Depto</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td align="center">{{$jefedepto}}</td>
+                    <td align="center">{{$t_asesor}}{{$t->asesor}}</td>
+                    <td align="center">{{$presac}}</td>
+                  </tr>
+                  <tr>
+                    <td align="center" id="titulo">Jefe del {{ mb_convert_case($dep, MB_CASE_TITLE, "utf8")}}</td>
                     <td align="center">Asesor</td>
                     <td align="center" id="titulo">Presidente de Academia</td>
                   </tr>
                 </tbody>
                 </table>
             </div>
-            <p id="cp">C.p. Asesor<br>Alumno interesado<br>Archivo</p>
-    </div>
+  </div>
     </div>
   </body>
 </html>

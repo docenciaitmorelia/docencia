@@ -40,7 +40,7 @@
             </tr>
             <tr>
               <td>Asesor</td>
-              <td>{{$t->asesor}}</td>
+              <td>{{$t_asesor}}{{$t->asesor}}</td>
             </tr>
           </tbody>
         </table>
@@ -58,22 +58,22 @@
           <tbody>
             <tr>
               <td>Presidente:</td>
-              <td>{{$t->presidente}}</td>
+              <td> {{$t_presidente}} {{$t->presidente}}</td>
               <td></td>
             </tr>
             <tr>
               <td>Secretario</td>
-              <td>{{$t->secretario}}</td>
+              <td>{{$t_secretario}}{{$t->secretario}}</td>
               <td></td>
             </tr>
             <tr>
               <td>Vocal Propietario</td>
-              <td>{{$t->vocal_propietario}}</td>
+              <td>{{$t_vocalp}}{{$t->vocal_propietario}}</td>
               <td></td>
             </tr>
             <tr>
               <td>Vocal Suplente</td>
-              <td>{{$t->vocal_suplente}}</td>
+              <td>{{$t_vocals}}{{$t->vocal_suplente}}</td>
               <td></td>
             </tr>
           </tbody>
@@ -82,38 +82,44 @@
       <p align="justify">
           Después que revisen su proyecto y realice las correcciones necesarias, los revisores firmaran de conformidad. Entonces solicita el Oficio de Liberación de Proyecto.
         </p>
-      <div class="col-md-12" id="firmas">
-            <br>
-            <div class="col-md-12">
-              <table align="center">
-                <thead>
-                  <tr>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td colspan="1" align="center">NOMBRE</td>
-                    <th colspan="1">&nbsp;&nbsp;&nbsp;</th>
-                    <td colspan="1" align="center">Nombre</td>
-                    <th colspan="1">&nbsp;&nbsp;&nbsp;</th>
-                    <td colspan="1" align="center">NOMBRE</td>
-                  </tr>
-                  <tr>
-                    <td align="center" id="titulo">Jefe del Depto</td>
-                    <th>&nbsp;</th>
-                    <td align="center">Asesor</td>
-                    <th>&nbsp;</th>
-                    <td align="center" id="titulo">Presidente de Academia</td>
-                  </tr>
-                </tbody>
-                </table>
-            </div>
-    </div>
+				<div id="firmas">
+	            <p align="center"><strong>ATENTAMENTE</strong><br>
+	              <i id="tec">"Técnica, progreso de México"</i>
+	            </p>
+	            <br>
+	            <div class="col-md-12">
+	              <table align="center">
+	                <thead>
+	                  <tr>
+	                    <th width='30%'>&nbsp;</th>
+	                    <th width='30%'>&nbsp;</th>
+	                    <th width='30%'>&nbsp;</th>
+	                  </tr>
+	                </thead>
+	                <tbody>
+										<tr>
+	                    <td>&nbsp;</td>
+	                    <td>&nbsp;</td>
+	                    <td>&nbsp;</td>
+	                  </tr>
+										<tr>
+	                    <td>&nbsp;</td>
+	                    <td>&nbsp;</td>
+	                    <td>&nbsp;</td>
+	                  </tr>
+	                  <tr>
+	                    <td align="center">{{$jefedepto}}</td>
+	                    <td align="center">{{$t_asesor}}{{$t->asesor}}</td>
+	                    <td align="center">{{$presac}}</td>
+	                  </tr>
+	                  <tr>
+	                    <td align="center" id="titulo">Jefe del {{ mb_convert_case($dep, MB_CASE_TITLE, "utf8")}}</td>
+	                    <td align="center">Asesor</td>
+	                    <td align="center" id="titulo">Presidente de Academia</td>
+	                  </tr>
+	                </tbody>
+	                </table>
+	            </div>
     </div>
   </body>
 </html>

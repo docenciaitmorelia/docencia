@@ -18,40 +18,36 @@
 				<hr>
 				<center><h5><i>{{$titu->nombre_opcion}}</i></h5></center>
 
-					<table class="table table-striped table-hover">
-						<thead>
+				<table class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th colspan="2"><center>Asesor</center></th>
+							<th colspan="2"> <center>Presidente</center></th>
+							<th colspan="2"> <center>Secretario</center></th>
+							<th colspan="2"> <center>Vocal Propietario</center></th>
+							<th colspan="2"> <center>Vocal Suplente</center></th>
+							<th colspan="1"></th>
+						</tr>
+					</thead>
+					<tbody>
+
 							<tr>
-								<th><center>Asesor</center></th>
-								<th> <center>Presidente</center></th>
-								<th> <center>Secretario</center></th>
-								<th> <center>Vocal Propietario</center></th>
-								<th> <center>Vocal Suplente</center></th>
-								<th colspan="1"></th>
+								<td><input type="t_asesor" name="t_asesor" class="form-control" placeholder="DR."></td><td> {{ $titu->asesor }}</td>
+
+								<td><input type="t_presidente" name="t_presidente" class="form-control" placeholder="DR."></td><td>{{ $titu->presidente }}
+								</td>
+
+								<td><input type="t_secretario" name="t_secretario" class="form-control" placeholder="DR."></td><td>{{ $titu->secretario }}
+								</td>
+
+								<td><input type="t_vocalp" name="t_vocalp" class="form-control" placeholder="DR."></td><td>{{ $titu->vocal_propietario }}
+								</td>
+
+								 <td><input type="t_volcals" name="t_volcals" class="form-control" placeholder="DR."></td><td>{{ $titu->vocal_suplente }}
+								</td>
 							</tr>
-						</thead>
-						<tbody>
-
-								<tr>
-									<td>{{ $titu->asesor }}</td>
-
-									<td>
-										{{ $titu->presidente }}
-									</td>
-
-									<td>
-										{{ $titu->secretario }}
-									</td>
-
-									<td>
-										{{ $titu->vocal_suplente }}
-									</td>
-
-				         <td>
-										{{ $titu->vocal_suplente }}
-									</td>
-								</tr>
-						</tbody>
-					</table>
+					</tbody>
+				</table>
 					<br>
 				@endforeach
 					<form action="{{ route('crear_registro', $al->no_de_control)}}" method="POST" target="_blank">
