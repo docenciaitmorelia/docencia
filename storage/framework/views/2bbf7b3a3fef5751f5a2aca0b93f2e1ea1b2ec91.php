@@ -23,6 +23,7 @@
                             <div class="col-md-6">
                                 <select id="rol" type="text" class="form-control<?php echo e($errors->has('rol') ? ' is-invalid' : ''); ?>" name="rol">
                                   <option value="Jefe de Docencia" selected>Jefe de Docencia</option>
+                                  <option value="Docente">Docente</option>
                                   <option value="Administrador">Administrador</option>
                                   <option value="DivEstProf">Jefe de División de Estudios Profesionales</option>
                                 </select>
@@ -125,4 +126,3 @@
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php /* /Users/aapintor/laravel/docencia/resources/views/auth/register.blade.php */ ?>

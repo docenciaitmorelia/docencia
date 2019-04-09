@@ -51,7 +51,8 @@
                     </li>
                 @endif
             @else
-              @if(Auth::user()->rol == "Jefe de Docencia")
+              @switch(Auth::user()->rol)
+              @case("Jefe de Docencia")
               <!--
                 <li class="dropdown">
                   <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Círc. Estudios
@@ -77,14 +78,18 @@
                 <li><a href="{{ route('actividadescomp.index') }}">Actividades Complementarias</a></li>
                 <li><a href="{{ route('catalogoac.index') }}">Catalogo Act.</a></li>
               -->
-              @endif
-              @if(Auth::user()->rol == "DivEstProf")
+              @break
+              @case("DivEstProf")
                 <li><a href="{{ route('procesotitulacion.index') }}">Proceso de Titulacion </a></li>
                 <li><a href="{{ route('opcionestitulacionCtl.index') }}">Opciones de Titulacion </a></li>
-              @endif
-              @if(Auth::user()->rol == "Administrador")
+              @break
+              @case("Docente")
+                <li><a href="{{ route('proyectoTitulacionCtl.index')}}">Proyectos de Titulación Asignados</a></li>
+              @break
+              @case("Administrador")
                 <li><a href="{{ route('usuariosCtl.index') }}">Usuarios</a></li>
-              @endif
+              @break
+              @endswitch
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }} <span class="caret"></span>

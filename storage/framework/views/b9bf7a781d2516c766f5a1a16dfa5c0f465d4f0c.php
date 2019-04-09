@@ -51,7 +51,9 @@
                     </li>
                 <?php endif; ?>
             <?php else: ?>
-              <?php if(Auth::user()->rol == "Jefe de Docencia"): ?>
+              <?php switch(Auth::user()->rol):
+              case ("Jefe de Docencia"): ?>
+              <!--
                 <li class="dropdown">
                   <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Círc. Estudios
                     <b class="caret"></b></a>
@@ -61,27 +63,33 @@
                     <li><a href="<?php echo e(route('gen_horario')); ?>">Horario </a></li>
                   </ul>
                 </li>
-
+-->
                 <li class="dropdown">
                   <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Titulaciones
                     <b class="caret"></b></a>
                   <ul class="dropdown-menu">
                     <li><a href="<?php echo e(route('titulaciones.index')); ?>">Titulaciones </a></li>
-                    <li><a href="<?php echo e(route('gen_reporte_a')); ?>">Reporte por año </a></li>
+                    <!--<li><a href="<?php echo e(route('gen_reporte_a')); ?>">Reporte por año </a></li>
                     <li><a href="<?php echo e(route('gen_reporte_d')); ?>">Reporte por docente </a></li>
-                    <li><a href="<?php echo e(route('revisiones.index')); ?>">Revisiones </a></li>
+                    <li><a href="<?php echo e(route('revisiones.index')); ?>">Revisiones </a></li> -->
                   </ul>
                 </li>
+                <!--
                 <li><a href="<?php echo e(route('actividadescomp.index')); ?>">Actividades Complementarias</a></li>
                 <li><a href="<?php echo e(route('catalogoac.index')); ?>">Catalogo Act.</a></li>
-              <?php endif; ?>
-              <?php if(Auth::user()->rol == "DivEstProf"): ?>
+              -->
+              <?php break; ?>
+              <?php case ("DivEstProf"): ?>
                 <li><a href="<?php echo e(route('procesotitulacion.index')); ?>">Proceso de Titulacion </a></li>
                 <li><a href="<?php echo e(route('opcionestitulacionCtl.index')); ?>">Opciones de Titulacion </a></li>
-              <?php endif; ?>
-              <?php if(Auth::user()->rol == "Administrador"): ?>
+              <?php break; ?>
+              <?php case ("Docente"): ?>
+                <li><a href="<?php echo e(route('proyectoTitulacionCtl.index')); ?>">Proyectos de Titulación Asignados</a></li>
+              <?php break; ?>
+              <?php case ("Administrador"): ?>
                 <li><a href="<?php echo e(route('usuariosCtl.index')); ?>">Usuarios</a></li>
-              <?php endif; ?>
+              <?php break; ?>
+              <?php endswitch; ?>
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         <?php echo e(Auth::user()->name); ?> <span class="caret"></span>
@@ -124,5 +132,3 @@
     </script>
 </body>
 </html>
-
-<?php /* /Users/aapintor/laravel/docencia/resources/views/layouts/app.blade.php */ ?>

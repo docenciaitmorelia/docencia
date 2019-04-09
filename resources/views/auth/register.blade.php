@@ -24,6 +24,7 @@
                             <div class="col-md-6">
                                 <select id="rol" type="text" class="form-control{{ $errors->has('rol') ? ' is-invalid' : '' }}" name="rol">
                                   <option value="Jefe de Docencia" selected>Jefe de Docencia</option>
+                                  <option value="Docente">Docente</option>
                                   <option value="Administrador">Administrador</option>
                                   <option value="DivEstProf">Jefe de División de Estudios Profesionales</option>
                                 </select>

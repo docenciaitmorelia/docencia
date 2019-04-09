@@ -33,7 +33,9 @@ class usuariosController extends Controller
      */
     public function create()
     {
-      $Areas = organigrama::select('clave_area','descripcion_area')->get();
+      $Areas = organigrama::select('clave_area','descripcion_area')
+      ->where('tipo_area','D')
+      ->get();
       $Carreras = Carrera::select('carrera','reticula','nombre_reducido')->get();
       return view('auth.register',['Areas' => $Areas,'Carreras' => $Carreras]);
     }

@@ -17,10 +17,16 @@ Route::get('/', function () {
 
 
 Route::group(['middleware' => ['auth']], function () {
+  //Módulo de Revisión y Autorización de Proyectos de Titulación por proyectosDocentes
+  Route::resource('proyectoTitulacionCtl','proyectoTitulacionController',[
+                  'except' => ['destroy']
+  ]);
 
   //Módulo de Administración de Usuarios
   Route::get('/admin', 'usuariosController@index')->name('admin');
-  Route::resource('usuariosCtl','usuariosController');
+  Route::resource('usuariosCtl','usuariosController',[
+                  'except' => ['destroy']
+  ]);
 
   //Módulo de Actividades Complementarias
     Route::resource('actividadescomp','ActividadesCompController',[
