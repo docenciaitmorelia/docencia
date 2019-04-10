@@ -35,8 +35,10 @@ class Titulacion extends Model
   public function scopeBT2($query,$s)
   {
     $s= mb_strtoupper($s,'UTF-8');
-    return $query->join('alumnos','titulaciones.alumno','=','alumnos.no_de_control')
-          ->where('alumnos.carrera',Auth::user()->carrera)
+    return $query
+          ->join('alumnos','titulaciones.alumno','=','alumnos.no_de_control')
+          ->join('permisos','permisos.carrera','=','alumnos.carrera')
+          ->where('permisos.clave_area','=',Auth::user()->clave_area)
           ->where('titulaciones.alumno','LIKE',"%$s%")
           ->orwhere(DB::raw("CONCAT(alumnos.nombre_alumno,' ',alumnos.apellido_paterno,' ',alumnos.apellido_materno)"), 'LIKE', "%$s%");
   }
