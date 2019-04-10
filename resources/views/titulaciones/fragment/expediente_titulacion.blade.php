@@ -6,16 +6,13 @@
 		  <div class="card-body">
 		    <h3 class="card-title">Expediente de proceso de titulación</h3>
 
-				@foreach($alumno as $al)
 				<center>
 				<div class="col-md-12">
-					<h3> <b>{{$al->no_de_control}} — {{$al->apellido_paterno}} {{$al->apellido_materno}} {{$al->nombre_alumno}}</b></h3>
+					<h3> <b>{{$alumno->no_de_control}} — {{$alumno->apellido_paterno}} {{$alumno->apellido_materno}} {{$alumno->nombre_alumno}}</b></h3>
 				</div>
 				</center>
-				@endforeach
-				@foreach($titulacion as $titu)
 				<hr>
-				<center><h5><i>{{$titu->nombre_opcion}}<br>Estatus de proceso de Titulación: {{$estatus}}</i></h5></center>
+				<center><h5><i>{{$titulacion->nombre_opcion}}<br>Estatus de proceso de Titulación: {{$estatus}}</i></h5></center>
 
 					<table class="table table-striped table-hover">
 						<thead>
@@ -31,32 +28,31 @@
 						<tbody>
 
 								<tr>
-									<td>{{ $titu->asesor }}</td>
+									<td>{{ $titulacion->asesor }}</td>
 
 									<td>
-										{{ $titu->presidente }}
+										{{ $titulacion->presidente }}
 									</td>
 
 									<td>
-										{{ $titu->secretario }}
+										{{ $titulacion->secretario }}
 									</td>
 
 									<td>
-										{{ $titu->vocal_propietario}}
+										{{ $titulacion->vocal_propietario}}
 									</td>
 
 				                    <td>
-										{{ $titu->vocal_suplente}}
+										{{ $titulacion->vocal_suplente}}
 									</td>
 
 									<td>
-										<a href="{{ route('titulaciones.edit', $titu->id) }}" class="btn btn-raised btn-primary"><i class="material-icons">create</i></a>
+										<a href="{{ route('titulaciones.edit', $titulacion->id) }}" class="btn btn-raised btn-primary"><i class="material-icons">create</i></a>
 									</td>
 								</tr>
 						</tbody>
 					</table>
 					<br>
-				@endforeach
 				    <div class="col-md-6">
 				    <p>Proceso de titulación: </p>
 						@if($orden=='Alta')
@@ -64,14 +60,20 @@
 								No hay documentos generados
 							</p>
 						@else
-				    @foreach($proceso as $p)
-				        <input type="checkbox" name="proceso" value="{{$p->orden}}" @if($orden >= $p->orden) checked='' disabled=''> <p class="label label-success">{{$p->descripcion}} @else disabled=''> <p class="label label-default">{{$p->descripcion}}@endif</p><br>
-				    @endforeach
+				        <input type="checkbox" name="proceso" value="{{$proceso->orden}}"
+								@if($orden >= $proceso->orden)
+								 checked='' disabled=''>
+								 <p class="label label-success">
+							  @else
+								 disabled=''>
+								 <p class="label label-default">
+								@endif
+							  {{$proceso->descripcion}}</p><br>
 						@endif
 				    </div>
 				    <div class="col-md-6">
 				    @if($estatus=='ACTIVO')
-					<form action="{{ route('gen_documentos', $al->no_de_control) }}" method="POST">
+					<form action="{{ route('gen_documentos', $alumno->no_de_control) }}" method="POST">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div class="col-md-12">
 							<label for="documento" class="control-label">Tipo de Documento</label>

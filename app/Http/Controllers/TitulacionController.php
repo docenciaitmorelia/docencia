@@ -95,11 +95,11 @@ class TitulacionController extends Controller
                         ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
                         ->where('titulaciones.alumno','LIKE',"%$nc%")
                         ->where('titulaciones.estatus','=',"$estatus")
-                        ->get();
-        $alumno = Alumno::where('no_de_control','LIKE',"%$nc%")->get();
-        $pro= Titulacion::select('proceso','opc_titu')->where('alumno', $nc)->where('estatus','=',"$estatus")->get();
-        $p=$pro[0]->proceso;
-        $opc=$pro[0]->opc_titu;
+                        ->first();
+        $alumno = Alumno::where('no_de_control','LIKE',"%$nc%")->first();
+        $pro= Titulacion::select('proceso','opc_titu')->where('alumno', $nc)->where('estatus','=',$estatus)->first();
+        $p=$pro->proceso;
+        $opc=$pro->opc_titu;
         $proceso = Titulacion::select('p.orden','p.descripcion','p.id')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.alumno','=',$nc)->where('titulaciones.estatus','=',$estatus)->get();
         if($p=='Alta'){
           $orden = 'Alta';
@@ -108,8 +108,8 @@ class TitulacionController extends Controller
         else {
           $ord = Titulacion::select('p.orden')
           ->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')
-          ->where('p.descripcion','=',$p)->get();
-          $orden =$ord[0]->orden;
+          ->where('p.descripcion','=',$p)->first();
+          $orden =$ord->orden;
         }
         return view('titulaciones.fragment.expediente_titulacion',compact('titulacion','alumno','estatus','proceso','orden'));
     }
