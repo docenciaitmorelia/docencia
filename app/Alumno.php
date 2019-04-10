@@ -16,9 +16,9 @@ class Alumno extends Model
     public function scopeAL($query,$busqueda)
     {
       $carreras = DB::table('carreras')
-      ->select('carrera','nombre_reducido','reticula')
-      ->join('permisos','permisos.carrera','=','alumnos.carrera')
-      ->where('permisos.clave_area','=',Auth::user()->clave_area)
+      ->select('carreras.carrera','nombre_reducido','reticula')
+      ->join('permisos','permisos.carrera','=','carreras.carrera')
+      ->where('permisos.clave_area','=',Auth::user()->clave_area);
       $busqueda= mb_strtoupper($busqueda,'UTF-8');
       return $query->select('alumnos.reticula as alreticula','no_de_control','nombre_alumno','apellido_paterno','apellido_materno','carreras.nombre_reducido','carreras.reticula')
         ->joinSub($carreras, 'carreras', function ($join) {
