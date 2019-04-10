@@ -92,7 +92,7 @@
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
                                 <small id="passwordHelpBlock" class="form-text text-muted">
-                                  Tu contraseña debe tener, al menos 6 caracteres.
+                                  Tu contraseña debe tener, al menos 8 caracteres.
                                 </small>
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">

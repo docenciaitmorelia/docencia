@@ -6,10 +6,15 @@
                     <h3 class="card-title"><?php echo e(__('Registrar Nuevo Usuario')); ?></h3>
                     <form method="POST" action="<?php echo e(route('register')); ?>">
                         <?php echo csrf_field(); ?>
+
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right"><?php echo e(__('Nombre')); ?></label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right"><?php echo e(__('Nombre/RFC de Personal')); ?></label>
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control<?php echo e($errors->has('name') ? ' is-invalid' : ''); ?>" name="name" value="<?php echo e(old('name')); ?>" placeholder="Introduzca Su Nombre Completo" required autofocus>
+                                <select id="name" type="text" class="form-control<?php echo e($errors->has('name') ? ' is-invalid' : ''); ?>" name="name">
+                                  <?php $__currentLoopData = $Docentes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $docente): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($docente->rfc); ?>"><?php echo e($docente->apellidos_empleado); ?> <?php echo e($docente->nombre_empleado); ?>, <?php echo e($docente->rfc); ?></option>
+                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
                                 <?php if($errors->has('name')): ?>
                                     <span class="invalid-feedback" role="alert">
                                         <strong><?php echo e($errors->first('name')); ?></strong>
@@ -87,7 +92,7 @@
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control<?php echo e($errors->has('password') ? ' is-invalid' : ''); ?>" name="password" required>
                                 <small id="passwordHelpBlock" class="form-text text-muted">
-                                  Tu contraseña debe tener, al menos 6 caracteres.
+                                  Tu contraseña debe tener, al menos 8 caracteres.
                                 </small>
                                 <?php if($errors->has('password')): ?>
                                     <span class="invalid-feedback" role="alert">

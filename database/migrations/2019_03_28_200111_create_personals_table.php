@@ -21,6 +21,7 @@ class CreatePersonalsTable extends Migration
           $table->string('correo_electronico');
           $table->char('sexo_empleado',1);
           $table->string('clave_area');
+          $table->string('clave_centro_seit',20);
           $table->primary('rfc');
           $table->timestamps();
       });

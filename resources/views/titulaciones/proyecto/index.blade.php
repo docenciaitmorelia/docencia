@@ -18,15 +18,13 @@
 				</form>
 
 				<div class="col-md-12">
-					<h3>Titulaciones</h3>
+					<h3>Proyectos de Titulación Asignados</h3>
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
 								<th>Numero de Control</th>
-								<th>Paterno</th>
-								<th>Materno</th>
-								<th>Nombre</th>
-				                <th>Estatus Titulación</th>
+								<th>Alumno</th>
+								<th>Proyecto</th>
 								<th colspan="1">&nbsp;</th>
 							</tr>
 						</thead>
@@ -35,19 +33,13 @@
 								<tr>
 									<td>{{ $alumno->no_de_control }}</td>
 									<td>
-										<strong>{{ $alumno->apellido_paterno }}</strong>
+										{{ $alumno->apellido_paterno }} {{ $alumno->apellido_materno }} {{ $alumno->nombre_alumno }}
 									</td>
 									<td>
-										<strong>{{ $alumno->apellido_materno }}</strong>
+										{{ $alumno->nombre_proyecto }}
 									</td>
 									<td>
-										<strong>{{ $alumno->nombre_alumno }}</strong>
-									</td>
-				                    <td>
-				                        {{ $alumno->estatus }}
-				                    </td>
-									<td>
-										<a href="{{route('expediente_titulacion',[$alumno->no_de_control, $alumno->estatus]) }}" data-target="titulacion" class="btn btn-raised btn-primary">Expediente</a>
+										<a href="{{route('proyectoTitulacionCtl.show',$alumno->no_de_control) }}" data-target="titulacion" class="btn btn-raised btn-primary">Expediente</a>
 									</td>
 								</tr>
 							@endforeach

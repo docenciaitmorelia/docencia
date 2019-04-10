@@ -25,6 +25,7 @@
                             <div class="col-md-6">
                                 <select id="rol" type="text" class="form-control<?php echo e($errors->has('rol') ? ' is-invalid' : ''); ?>" name="rol">
                                   <option value="<?php echo e($Usuario->rol); ?>" selected><?php echo e($Usuario->rol); ?></option>
+                                  <option value="Docente">Docente</option>
                                   <option value="Jefe de Docencia">Jefe de Docencia</option>
                                   <option value="Administrador">Administrador</option>
                                   <option value="DivEstProf">Jefe de División de Estudios Profesionales</option>
@@ -91,7 +92,7 @@
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control<?php echo e($errors->has('password') ? ' is-invalid' : ''); ?>" name="password" required>
                                 <small id="passwordHelpBlock" class="form-text text-muted">
-                                  Tu contraseña debe tener, al menos 6 caracteres.
+                                  Tu contraseña debe tener, al menos 8 caracteres.
                                 </small>
                                 <?php if($errors->has('password')): ?>
                                     <span class="invalid-feedback" role="alert">
@@ -130,4 +131,3 @@
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php /* /Users/aapintor/laravel/docencia/resources/views/auth/editar.blade.php */ ?>

@@ -7,10 +7,15 @@
                     <h3 class="card-title">{{ __('Registrar Nuevo Usuario') }}</h3>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
+
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre/RFC de Personal') }}</label>
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" placeholder="Introduzca Su Nombre Completo" required autofocus>
+                                <select id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name">
+                                  @foreach($Docentes as $docente)
+                                    <option value="{{$docente->rfc}}">{{$docente->apellidos_empleado}} {{$docente->nombre_empleado}}, {{$docente->rfc}}</option>
+                                  @endforeach
+                                </select>
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -88,7 +93,7 @@
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
                                 <small id="passwordHelpBlock" class="form-text text-muted">
-                                  Tu contraseña debe tener, al menos 6 caracteres.
+                                  Tu contraseña debe tener, al menos 8 caracteres.
                                 </small>
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">

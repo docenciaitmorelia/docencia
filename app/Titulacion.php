@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Connection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 use App\Alumno;
 use App\Titulacion;
 
@@ -22,8 +24,13 @@ class Titulacion extends Model
   {
     $s= mb_strtoupper($s,'UTF-8');
     return $query->join('alumnos','titulaciones.alumno','=','alumnos.no_de_control')
-                  ->where('titulaciones.alumno','LIKE',"%$s%")
-                  ->orwhere(DB::raw("CONCAT(alumnos.nombre_alumno,' ',alumnos.apellido_paterno,' ',alumnos.apellido_materno)"), 'LIKE', "%$s%");
+                  ->where('secretario',Auth::user()->name)
+                  ->where('estatus','ACTIVO')
+                  ->orWhere('presidente',Auth::user()->name)
+                  ->orWhere('vocal_propietario',Auth::user()->name)
+                  ->orWhere('vocal_suplente',Auth::user()->name)
+                  ->where('titulaciones.alumno','LIKE',"%$s%");
+                  //->orwhere(DB::raw("CONCAT(alumnos.nombre_alumno,' ',alumnos.apellido_paterno,' ',alumnos.apellido_materno)"), 'LIKE', "%$s%");
   }
 
 }

@@ -14,14 +14,14 @@ class CreateRevisionsTable extends Migration
     public function up()
     {
       Schema::create('revisiones', function (Blueprint $table) {
-          $table->increments('id');
+          $table->bigIncrements('id');
           $table->integer('id_titulacion')->unsigned();
           $table->foreign('id_titulacion')->references('id')->on('titulaciones');
-          $table->string('revisor');
+          $table->string('revisor',13);
           $table->foreign('revisor')->references('rfc')->on('personal');
-          $table->string('tipo_revision');
-          $table->string('fecha_revision');
-          $table->string('veredicto');
+          $table->string('tipo_revision',20);
+          $table->date('fecha_revision');
+          $table->string('veredicto',20);
           $table->string('comentarios');
           $table->timestamps();
       });

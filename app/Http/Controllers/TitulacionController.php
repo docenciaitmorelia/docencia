@@ -135,32 +135,7 @@ class TitulacionController extends Controller
     }
 
     public function proyectosDocentes(Request $request){
-      $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion')
-                     ->join('personal as a','a.rfc','=','titulaciones.asesor')
-                     ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
-                     ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
-                     ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
-                     ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
-                     ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
-                     ->where('titulaciones.alumno','LIKE',"%$nc%")
-                     ->where('titulaciones.estatus','=',"$estatus")
-                     ->get();
-      $alumno = Alumno::where('no_de_control','LIKE',"%$nc%")->get();
-      $pro= Titulacion::select('proceso','opc_titu')->where('alumno', $nc)->where('estatus','=',"$estatus")->get();
-      $p=$pro[0]->proceso;
-      $opc=$pro[0]->opc_titu;
-      $proceso = Titulacion::select('p.orden','p.descripcion','p.id')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.alumno','=',$nc)->where('titulaciones.estatus','=',$estatus)->get();
-      if($p=='Alta'){
-       $orden = 'Alta';
 
-      }
-      else {
-       $ord = Titulacion::select('p.orden')
-       ->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')
-       ->where('p.descripcion','=',$p)->get();
-       $orden =$ord[0]->orden;
-      }
-      return view('titulaciones.fragment.expediente_titulacion',compact('titulacion','alumno','estatus','proceso','orden'));
     }
 
     public function autorizarProyecto(){
