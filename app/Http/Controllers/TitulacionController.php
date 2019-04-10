@@ -17,7 +17,7 @@ class TitulacionController extends Controller
 {
     public function index(Request $request)
     {
-        $alumnos= Titulacion::BT($request->busqueda)->orderBy('estatus','ASC')->paginate();
+        $alumnos= Titulacion::BT2($request->busqueda)->orderBy('estatus','ASC')->paginate();
         return view('titulaciones.index',compact('alumnos'));
     }
 
