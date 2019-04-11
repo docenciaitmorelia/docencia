@@ -65,7 +65,7 @@
 							<label for="seccion" class="control-label">Sección</label>
 							<input type="text" id="seccion" name="seccion" class="form-control" placeholder="SISTEMAS Y COMPUTACIÓN" style="text-transform:uppercase;" required>
 						</div>
-						</div>
+					</div>
 						<div class="col-md-12">
 							<div class="col-md-1">
 								<label>&nbsp;</label>

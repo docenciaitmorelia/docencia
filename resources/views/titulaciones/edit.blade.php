@@ -61,7 +61,8 @@
 		  <div class="card-body">
 		    <h3 class="card-title">Editar Titulación</h3>
 					<form id="formTitulacion" action="{{ route('titulaciones.update', $titulacion->id) }}" method="POST" class="form">
-						@csrf
+						{{ csrf_field() }}
+						{{ method_field('PUT')}}
 						<div class="form-group col-md-6">
 								<label for="alumno" class="bmd-label-floating col-form-label">{{ __('Alumno') }}</label>
 										<select id="alumno" type="text" class="form-control{{ $errors->has('alumno') ? ' is-invalid' : '' }}" name="alumno" value="" required autofocus>

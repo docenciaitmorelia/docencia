@@ -11,8 +11,9 @@
 					<h3> <b>{{$alumno->no_de_control}} — {{$alumno->apellido_paterno}} {{$alumno->apellido_materno}} {{$alumno->nombre_alumno}}</b></h3>
 				</div>
 				</center>
+				@foreach($titulacion as $titu)
 				<hr>
-				<center><h5><i>{{$titulacion->nombre_opcion}}<br>Estatus de proceso de Titulación: {{$estatus}}</i></h5></center>
+				<center><h5><i>{{$titu->nombre_opcion}}<br>Estatus de proceso de Titulación: {{$estatus}}</i></h5></center>
 
 					<table class="table table-striped table-hover">
 						<thead>
@@ -28,31 +29,32 @@
 						<tbody>
 
 								<tr>
-									<td>{{ $titulacion->asesor }}</td>
+									<td>{{ $titu->asesor }}</td>
 
 									<td>
-										{{ $titulacion->presidente }}
+										{{ $titu->presidente }}
 									</td>
 
 									<td>
-										{{ $titulacion->secretario }}
+										{{ $titu->secretario }}
 									</td>
 
 									<td>
-										{{ $titulacion->vocal_propietario}}
+										{{ $titu->vocal_propietario}}
 									</td>
 
 				                    <td>
-										{{ $titulacion->vocal_suplente}}
+										{{ $titu->vocal_suplente}}
 									</td>
 
 									<td>
-										<a href="{{ route('titulaciones.edit', $titulacion->id) }}" class="btn btn-raised btn-primary"><i class="material-icons">create</i></a>
+										<a href="{{ route('titulaciones.edit', $titu->id) }}" class="btn btn-raised btn-primary"><i class="material-icons">create</i></a>
 									</td>
 								</tr>
 						</tbody>
 					</table>
 					<br>
+				@endforeach
 				    <div class="col-md-6">
 				    <p>Proceso de titulación: </p>
 						@if($orden=='Alta')
@@ -60,15 +62,9 @@
 								No hay documentos generados
 							</p>
 						@else
-				        <input type="checkbox" name="proceso" value="{{$proceso->orden}}"
-								@if($orden >= $proceso->orden)
-								 checked='' disabled=''>
-								 <p class="label label-success">
-							  @else
-								 disabled=''>
-								 <p class="label label-default">
-								@endif
-							  {{$proceso->descripcion}}</p><br>
+				    @foreach($proceso as $p)
+				        <input type="checkbox" name="proceso" value="{{$p->orden}}" @if($orden >= $p->orden) checked='' disabled=''> <p class="label label-success">{{$p->descripcion}} @else disabled=''> <p class="label label-default">{{$p->descripcion}}@endif</p><br>
+				    @endforeach
 						@endif
 				    </div>
 				    <div class="col-md-6">
@@ -80,7 +76,7 @@
 							<select id="documento" type="text" class="form-control" name="documento" value="" required autofocus>
 								<option value="">Seleccione documento</option>
 									@foreach($proceso as $documento)
-										<option id="documento" value="{{ $documento->descripcion }}">{{$documento->descripcion}}</option>
+										<option id="documento" value="{{ $documento->descripcion }}" @if($ol!= 0 && $documento->orden >= $ol && $a == 'A' && $v == 0) @if($b == 'N') disabled @endif @endif @if($oi!= 0 && $documento->orden >= $oi && $b == 'N') disabled @endif>{{$documento->descripcion}}</option>
 									@endforeach
 						  </select>
 						</div>

@@ -9,6 +9,7 @@ use App\Personal;
 use App\OpcionesTitulacion;
 use App\ProcesoTitulacion;
 use App\Organigrama;
+use App\Revision;
 use App\Http\Requests\TitulacionRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -24,12 +25,14 @@ class TitulacionController extends Controller
     public function create(Request $request)
     {
         //$alumno=Alumno::select('no_de_control',DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))->orderBy('apellido_paterno')->get();
-        $alumnos=Alumno::AL($request->busqueda)->orderBy('apellido_paterno','asc')->get();
+        $alumnos=Alumno::AL($request->busqueda)->where('estatus_alumno','=','EGR')
+        ->orWhere([['estatus_alumno', '=','ACT'],['creditos_aprobados','>=',350],])->orderBy('apellido_paterno','asc')->get();
         $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))
         ->where('clave_area','=',Auth::user()->clave_area)
         ->orderBy('apellidos_empleado')->get();
         $planes=OpcionesTitulacion::OT($alumnos)->get();
-    	return view('titulaciones.create', compact('alumnos','personal','planes'));
+        //return $alumnos;
+      return view('titulaciones.create', compact('alumnos','personal','planes'));
     }
 
     public function store(TitulacionRequest $request)
@@ -86,21 +89,61 @@ class TitulacionController extends Controller
     }
 
     public function expediente_titulacion($nc,$estatus){
-         $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion')
+         $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion')
                         ->join('personal as a','a.rfc','=','titulaciones.asesor')
                         ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
                         ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
                         ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
                         ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
                         ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
-                        ->where('titulaciones.alumno','LIKE',"%$nc%")
+                        ->where('titulaciones.alumno','=',"$nc")
                         ->where('titulaciones.estatus','=',"$estatus")
-                        ->first();
+                        ->get();
+        $id_t = $titulacion[0]->id;
         $alumno = Alumno::where('no_de_control','LIKE',"%$nc%")->first();
         $pro= Titulacion::select('proceso','opc_titu')->where('alumno', $nc)->where('estatus','=',$estatus)->first();
         $p=$pro->proceso;
         $opc=$pro->opc_titu;
         $proceso = Titulacion::select('p.orden','p.descripcion','p.id')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.alumno','=',$nc)->where('titulaciones.estatus','=',$estatus)->get();
+        $propuesta = Revision::select('veredicto')->where('id_titulacion','=',"$id_t")->where('tipo_revision','=','Propuesta')->get();
+        $ordenL = Titulacion::select('p.orden')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.alumno','=',$nc)->where('titulaciones.estatus','=',$estatus)->where('descripcion','=',"Liberación de Proyecto")->get();
+        if(count($propuesta) > 0){
+          $a = 'A';
+          $veredicto = $propuesta[0]->veredicto;
+          if($veredicto == "Aceptado" || $veredicto=="Aceptado con modificaciones"){
+            $v=1;
+          }
+          else{
+            $v=0;
+          }
+        }
+        else{
+          $a= 'A';
+          $veredicto='';
+          $v=0;
+        }
+        if(count($ordenL) > 0){
+          $ol= $ordenL[0]->orden;
+        }
+        else {
+          $ol=0;
+
+        }
+        $borrador = Revision::select('veredicto')->where('id_titulacion','=',"$id_t")->where('tipo_revision','=','Borrador')->get();
+        $ordenI = Titulacion::select('p.orden')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.alumno','=',$nc)->where('titulaciones.estatus','=',$estatus)->where('descripcion','=',"Impresión Definitiva")->get();
+        if(count($borrador) > 0){
+          $b = 'A';
+        }
+        else{
+          $b= 'N';
+        }
+        if(count($ordenI) > 0){
+          $oi= $ordenI[0]->orden;
+        }
+        else {
+          $oi=0;
+
+        }
         if($p=='Alta'){
           $orden = 'Alta';
 
@@ -111,7 +154,8 @@ class TitulacionController extends Controller
           ->where('p.descripcion','=',$p)->first();
           $orden =$ord->orden;
         }
-        return view('titulaciones.fragment.expediente_titulacion',compact('titulacion','alumno','estatus','proceso','orden'));
+        //return $id_t;
+        return view('titulaciones.fragment.expediente_titulacion',compact('titulacion','alumno','estatus','proceso','orden','a','b','ol','veredicto','v','oi'));
     }
 
     private function obtener_siglas($estudios){
