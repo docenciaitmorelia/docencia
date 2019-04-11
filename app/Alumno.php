@@ -20,15 +20,15 @@ class Alumno extends Model
       ->join('permisos','permisos.carrera','=','carreras.carrera')
       ->where('permisos.clave_area','=',Auth::user()->clave_area);
       $busqueda= mb_strtoupper($busqueda,'UTF-8');
-      return $query->select('alumnos.reticula as alreticula','no_de_control','nombre_alumno','apellido_paterno','apellido_materno','carreras.nombre_reducido','carreras.reticula')
-
-        ->joinSub($carreras, 'carreras', function ($join) {
-            $join->on('alumnos.carrera','=','carreras.carrera')
-            ->on('alumnos.reticula','=','carreras.reticula')
-            ->where('estatus_alumno','EGR')
-            ->orWhere([['estatus_alumno','ACT'],['creditos_aprobados','>=',350],]);
+      return $query->joinSub($carreras, 'carreras', function ($join) {
+            $join->on([['alumnos.carrera','carreras.carrera'],['alumnos.reticula','carreras.reticula'],]);
         })
+        ->where('estatus_alumno','EGR')
+        ->orWhere([['estatus_alumno','ACT'],['creditos_aprobados','>=',350],])
         ->where('no_de_control','LIKE',"'%$busqueda%'")
-        ->orwhere(DB::raw("CONCAT(alumnos.nombre_alumno,' ',alumnos.apellido_paterno,' ',alumnos.apellido_materno)"), 'LIKE', "%$busqueda%");
+        ->orwhere(DB::raw("CONCAT(alumnos.nombre_alumno,' ',alumnos.apellido_paterno,' ',alumnos.apellido_materno)"), 'LIKE', "%$busqueda%")
+        ->orderBy('apellido_paterno','asc')
+        ->orderBy('apellido_materno','asc')
+        ->orderBy('nombre_alumno','asc');
     }
 }

@@ -15,7 +15,8 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form id="modalform1" action="" method="GET" class="form-horizontal">
+				<form role="form" role="form" id="modalform1" action="#" method="GET">
+					@csrf
 					<div class="col-md-6 form-group">
 						<input type="text" id="busqueda" name="busqueda" style="text-transform:uppercase;" placeholder="Nombre o número de control..." class="form-control">
 					</div>
