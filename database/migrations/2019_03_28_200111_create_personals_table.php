@@ -22,7 +22,9 @@ class CreatePersonalsTable extends Migration
           $table->char('sexo_empleado',1);
           $table->string('clave_area');
           $table->string('clave_centro_seit',20);
+          $table->string('nombramiento',1);
           $table->primary('rfc');
+          $table->string('estudios',255);
           $table->timestamps();
       });
     }

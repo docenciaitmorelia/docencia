@@ -85,5 +85,3 @@
         </div>
     </body>
 </html>
-
-<?php /* /Users/aapintor/laravel/docencia/resources/views/welcome.blade.php */ ?>

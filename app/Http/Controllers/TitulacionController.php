@@ -158,7 +158,7 @@ class TitulacionController extends Controller
                         ->get();
         $alumno = Alumno::where('no_de_control','LIKE',"%$nc%")->get();
 
-        $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))->where('nombramiento','=','D')->orderBy('apellidos_empleado')->get();
+        $personal=Personal::select('rfc',DB::raw(),DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))->where('nombramiento','=','D')->orderBy('apellidos_empleado')->get();
 
         if ($request->documento == 'Registro de Opción de Titulación'){
           return $this->gen_registro($titulacion,$alumno,$nc);
