@@ -86,6 +86,9 @@
               <?php case ("Docente"): ?>
                 <li><a href="<?php echo e(route('proyectoTitulacionCtl.index')); ?>">Proyectos de Titulación Asignados</a></li>
               <?php break; ?>
+              <?php case ("Alumno"): ?>
+                <li><a href="<?php echo e(route('showRevisiones',Auth::user()->name)); ?>">Ver el Status de Mi Proyecto de Titulación</a></li>
+              <?php break; ?>
               <?php case ("Administrador"): ?>
                 <li><a href="<?php echo e(route('usuariosCtl.index')); ?>">Usuarios</a></li>
               <?php break; ?>

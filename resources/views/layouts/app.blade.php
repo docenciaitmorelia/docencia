@@ -86,6 +86,9 @@
               @case("Docente")
                 <li><a href="{{ route('proyectoTitulacionCtl.index')}}">Proyectos de Titulación Asignados</a></li>
               @break
+              @case("Alumno")
+                <li><a href="{{ route('showRevisiones',Auth::user()->name)}}">Ver el Status de Mi Proyecto de Titulación</a></li>
+              @break
               @case("Administrador")
                 <li><a href="{{ route('usuariosCtl.index') }}">Usuarios</a></li>
               @break

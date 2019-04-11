@@ -28,10 +28,11 @@
                             <label for="rol" class="col-md-4 col-form-label text-md-right">{{ __('Rol') }}</label>
                             <div class="col-md-6">
                                 <select id="rol" type="text" class="form-control{{ $errors->has('rol') ? ' is-invalid' : '' }}" name="rol">
-                                  <option value="Jefe de Docencia" selected>Jefe de Docencia</option>
+                                  <option value="Alumno">Alumno</option>
                                   <option value="Docente">Docente</option>
-                                  <option value="Administrador">Administrador</option>
+                                  <option value="Jefe de Docencia" selected>Jefe de Docencia</option>
                                   <option value="DivEstProf">Jefe de División de Estudios Profesionales</option>
+                                  <option value="Administrador">Administrador</option>
                                 </select>
                                 @if ($errors->has('rol'))
                                     <span class="invalid-feedback" role="alert">
