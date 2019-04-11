@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::resource('proyectoTitulacionCtl','proyectoTitulacionController',[
                   'except' => ['destroy']
   ]);
+  Route::get('showRevisiones/{nc}', 'proyectoTitulacionController@showRevisiones')->name('showRevisiones');
 
   //Módulo de Administración de Usuarios
   Route::get('/admin', 'usuariosController@index')->name('admin');
@@ -32,6 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
     ]);
     //Opciones de Titulaciónote
     Route::resource('opcionestitulacionCtl','opcionestitulacionController');
+
 
     Route::get('listar_ac/{nc}', 'ActividadesCompController@listar_ac')->name('listar_ac');
 

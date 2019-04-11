@@ -71,7 +71,7 @@
                     <li><a href="<?php echo e(route('titulaciones.index')); ?>">Titulaciones </a></li>
                     <!--<li><a href="<?php echo e(route('gen_reporte_a')); ?>">Reporte por año </a></li>
                     <li><a href="<?php echo e(route('gen_reporte_d')); ?>">Reporte por docente </a></li>
-                    <li><a href="<?php echo e(route('revisiones.index')); ?>">Revisiones </a></li> -->
+                    <li><a href="<?php echo e(route('revisiones.index')); ?>">Revisiones </a></li>-->
                   </ul>
                 </li>
                 <!--

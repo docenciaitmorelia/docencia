@@ -36,7 +36,9 @@ class Titulacion extends Model
   {
     $s= mb_strtoupper($s,'UTF-8');
     $alumnos = DB::table('alumnos')
-    ->where('alumnos.estatus_alumno','=','ACT');
+    ->where('estatus_alumno','EGR')
+    ->orWhere([['estatus_alumno','ACT'],['creditos_aprobados','>=',350],])
+    ->groupBy('no_de_control');
     return $query
           ->joinSub($alumnos,'alumnos',function ($join) {
             $join->on('titulaciones.alumno','=','alumnos.no_de_control');

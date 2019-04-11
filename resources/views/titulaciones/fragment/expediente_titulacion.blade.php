@@ -48,7 +48,8 @@
 									</td>
 
 									<td>
-										<a href="{{ route('titulaciones.edit', $titu->id) }}" class="btn btn-raised btn-primary"><i class="material-icons">create</i></a>
+										<a href="{{ route('titulaciones.edit', $titu->id) }}" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Editar Expediente"><i class="material-icons">create</i></a>
+										<a href="{{route('showRevisiones',$alumno->no_de_control) }}" data-target="titulacion" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Ver Status de Revisiones"><i class="material-icons">find_in_page</i></a>
 									</td>
 								</tr>
 						</tbody>

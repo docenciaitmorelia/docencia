@@ -25,8 +25,12 @@ class TitulacionController extends Controller
     public function create(Request $request)
     {
         //$alumno=Alumno::select('no_de_control',DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))->orderBy('apellido_paterno')->get();
-        $alumnos=Alumno::AL($request->busqueda)->where('estatus_alumno','=','EGR')
-        ->orWhere([['estatus_alumno', '=','ACT'],['creditos_aprobados','>=',350],])->orderBy('apellido_paterno','asc')->get();
+        $alumnos=Alumno::AL($request->busqueda)
+                ->orderBy('apellido_paterno','asc')
+                ->orderBy('apellido_materno','asc')
+                ->orderBy('nombre_alumno','asc')
+                ->get();
+
         $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))
         ->where('clave_area','=',Auth::user()->clave_area)
         ->orderBy('apellidos_empleado')->get();
