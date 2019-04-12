@@ -95,7 +95,7 @@ class TitulacionController extends Controller
     }
 
     public function expediente_titulacion($nc){
-        $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion')
+        $titulacion=Titulacion::select('a.estudios as estudios_asesor','titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion')
                   ->join('personal as a','a.rfc','=','titulaciones.asesor')
                   ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
                   ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
@@ -160,19 +160,20 @@ class TitulacionController extends Controller
 
     private function obtener_siglas($estudios){
       $salutation="";
-      if(stristr("maestr",$estudios)){
+      $estudios = strtoupper($estudios);
+      if(stristr($estudios,"MAESTR")){
         $salutation = "M.";
       }
-      if (stristr("doctor",$estudios)){
+      if (stristr($estudios,"DOCTOR")){
         $satutation = "D.";
       }
-      if(stristr("ciencias",$estudios)){
+      if(stristr($estudios,"CIENCIAS")){
         $salutation = $salutation . "C.";
       }
-      if(stristr("ingenier",$estudios)){
+      if(stristr($estudios,"INGENIER")){
         $salutation = "Ing.";
       }
-      if(stristr("licenciad",$estudios)){
+      if(stristr($estudios,"LICENCIAD")){
         $salutation = "Lic.";
       }
       return $salutation;

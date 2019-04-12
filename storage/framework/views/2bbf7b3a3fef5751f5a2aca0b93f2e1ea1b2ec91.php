@@ -2,16 +2,19 @@
     <div class="row justify-content-center">
         <div class="col-md-10 col-md-offset-1">
           <div class="card">
+            <div class="card-header">
+              <ul class="nav nav-pills card-header-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="personal-tab" data-toggle="tab" href="#personal" role="tab" aria-controls="personal" aria-selected="true">Personal</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" id="alumnos-tab" data-toggle="tab" href="#alumnos" role="tab" aria-controls="alumnos" aria-selected="false">Alumnos</a>
+                </li>
+              </ul>
+            </div>
               <div class="card-body">
                 <h3 class="card-title"><?php echo e(__('Registrar Nuevo Usuario')); ?></h3>
-                  <ul class="nav nav-pills" id="myTab" role="tablist">
-                    <li class="nav-item">
-                      <a class="nav-link active" id="personal-tab" data-toggle="tab" href="#personal" role="tab" aria-controls="personal" aria-selected="true">Personal</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" id="alumnos-tab" data-toggle="tab" href="#alumnos" role="tab" aria-controls="alumnos" aria-selected="false">Alumnos</a>
-                    </li>
-                  </ul>
+
                   <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
                       <form method="POST" action="<?php echo e(route('register')); ?>">
@@ -61,22 +64,6 @@
                                   <?php if($errors->has('clave_area')): ?>
                                       <span class="invalid-feedback" role="alert">
                                           <strong><?php echo e($errors->first('clave_area')); ?></strong>
-                                      </span>
-                                  <?php endif; ?>
-                              </div>
-                          </div>
-
-                          <div class="form-group row">
-                              <label for="carrera" class="col-md-4 col-form-label text-md-right"><?php echo e(__('Carrera')); ?></label>
-                              <div class="col-md-6">
-                                  <select id="carrera" type="text" class="form-control<?php echo e($errors->has('carrera') ? ' is-invalid' : ''); ?>" name="carrera" required>
-                                    <?php $__currentLoopData = $Carreras; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carrera): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                      <option value="<?php echo e($carrera->carrera); ?>"><?php echo e($carrera->reticula); ?>-<?php echo e($carrera->nombre_reducido); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                  </select>
-                                  <?php if($errors->has('carrera')): ?>
-                                      <span class="invalid-feedback" role="alert">
-                                          <strong><?php echo e($errors->first('carrera')); ?></strong>
                                       </span>
                                   <?php endif; ?>
                               </div>
@@ -262,7 +249,7 @@
         </div> <!-- fin col -->
     </div> <!-- fin row -->
     <script type="text/javascript">
-    $('#myTab a').on('click', function (e) {
+    $('#myTab personal').on('click', function (e) {
       e.preventDefault()
       $(this).tab('show');
     });

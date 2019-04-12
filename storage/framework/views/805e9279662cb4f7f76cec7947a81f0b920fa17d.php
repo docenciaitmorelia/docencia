@@ -25,10 +25,11 @@
                             <div class="col-md-6">
                                 <select id="rol" type="text" class="form-control<?php echo e($errors->has('rol') ? ' is-invalid' : ''); ?>" name="rol">
                                   <option value="<?php echo e($Usuario->rol); ?>" selected><?php echo e($Usuario->rol); ?></option>
+                                  <option value="Alumno">Alumno</option>
                                   <option value="Docente">Docente</option>
+                                  <option value="DivEstProf">Jefe de División de Estudios Profesionales</option>
                                   <option value="Jefe de Docencia">Jefe de Docencia</option>
                                   <option value="Administrador">Administrador</option>
-                                  <option value="DivEstProf">Jefe de División de Estudios Profesionales</option>
                                 </select>
                                 <?php if($errors->has('rol')): ?>
                                     <span class="invalid-feedback" role="alert">
@@ -50,23 +51,6 @@
                                 <?php if($errors->has('clave_area')): ?>
                                     <span class="invalid-feedback" role="alert">
                                         <strong><?php echo e($errors->first('clave_area')); ?></strong>
-                                    </span>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="carrera" class="col-md-4 col-form-label text-md-right"><?php echo e(__('Carrera')); ?></label>
-                            <div class="col-md-6">
-                                <select id="carrera" type="text" class="form-control<?php echo e($errors->has('carrera') ? ' is-invalid' : ''); ?>" name="carrera" required>
-                                  <option value="<?php echo e($Usuario->carrera); ?>" selected><?php echo e($Usuario->carrera); ?>-<?php echo e($Usuario->nombre_reducido); ?></option>
-                                  <?php $__currentLoopData = $Carreras; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $carrera): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($carrera->carrera); ?>"><?php echo e($carrera->reticula); ?>-<?php echo e($carrera->nombre_reducido); ?></option>
-                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                                <?php if($errors->has('carrera')): ?>
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong><?php echo e($errors->first('carrera')); ?></strong>
                                     </span>
                                 <?php endif; ?>
                             </div>
