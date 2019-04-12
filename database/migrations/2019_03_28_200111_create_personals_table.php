@@ -20,7 +20,8 @@ class CreatePersonalsTable extends Migration
           $table->string('especializacion');
           $table->string('correo_electronico');
           $table->char('sexo_empleado',1);
-          $table->string('clave_area');
+          $table->string('clave_area',11);
+          $table->string('area_academica',11);
           $table->string('clave_centro_seit',20);
           $table->string('nombramiento',1);
           $table->primary('rfc');

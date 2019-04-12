@@ -24,14 +24,14 @@ class TitulacionController extends Controller
 
     public function create(Request $request)
     {
-        $alumnos=Alumno::AL($request->busqueda)
+        $alumnos=Alumno::al()->orWhere->filtrar($request->busqueda)
                 ->orderBy('apellido_paterno','asc')
                 ->orderBy('apellido_materno','asc')
                 ->orderBy('nombre_alumno','asc')
                 ->get();
 
         $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))
-        ->where('clave_area','=',Auth::user()->clave_area)
+        ->where('area_academica','=',Auth::user()->clave_area)
         ->orderBy('apellidos_empleado')->get();
         $planes=OpcionesTitulacion::OT($alumnos)->get();
         //return $alumnos;
