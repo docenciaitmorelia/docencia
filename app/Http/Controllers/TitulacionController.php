@@ -64,17 +64,20 @@ class TitulacionController extends Controller
     {
         $titulacion  = Titulacion::find($id);
         //$alumno=Alumno::select('no_de_control',DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))->orderBy('apellido_paterno')->get();
-        $alumnos=Alumno::AL($request->busqueda)->orderBy('apellido_paterno','asc')->get();
-        $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))->orderBy('apellidos_empleado')->get();
-        $opcion=OpcionesTitulacion::OT($alumnos)->get();
-        $planes=OpcionesTitulacion::OT($alumnos)->get();
-        return view('titulaciones.edit', compact('titulacion','alumnos','personal','planes','opcion'));
+        $alumno=DB::table('alumnos')->where('no_de_control',$titulacion->alumno)
+                ->first();
+        $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))
+        ->where('area_academica','=',Auth::user()->clave_area)
+        ->orderBy('apellidos_empleado')->get();
+        $opcion=OpcionesTitulacion::OT($alumno)->get();
+        $planes=OpcionesTitulacion::OT($alumno)->get();
+        return view('titulaciones.edit', compact('titulacion','alumno','personal','planes','opcion'));
     }
 
     public function update(TitulacionRequest $request, $id)
     {
         $titulacion = Titulacion::find($id);
-        $titulacion->alumno        = $request->alumno;
+        //$titulacion->alumno        = $request->alumno;
         $titulacion->nombre_proyecto      = mb_strtoupper($request->proyecto,'UTF-8');
         $titulacion->opc_titu      = $request->opc_titu;
         $titulacion->asesor        = $request->asesor;

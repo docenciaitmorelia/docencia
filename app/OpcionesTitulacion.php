@@ -18,15 +18,10 @@ class OpcionesTitulacion extends Model
     }
 
     //SCOPE Opcion de Titulación
-    public function scopeOT($query,$alumnos)
+    public function scopeOT($query,$alumno)
     {
-      $reticulas = Array();
-      foreach($alumnos as $alumno){
-        array_push($reticulas,$alumno->reticula);
-      }
-      $reticulas=array_unique($reticulas);
       return $query->select('opciones_titulacion.id','r.reticula','opciones_titulacion.nombre_opcion')
                     ->join('opctitxrets as r','r.id_opcion_titulacion','=','opciones_titulacion.id')
-                    ->whereIn('reticula',$reticulas);
+                    ->where('reticula',$alumno->reticula);
     }
 }

@@ -3,58 +3,7 @@
 
 @if(Auth::user()->rol == 'Jefe de Docencia')
 @include('titulaciones.fragment.error')
-<div class="row">
-	<div class="col">
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="modal-title" id="exampleModalLabel">Filtrar Alumnos</h3>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form id="modalform1" action="" method="GET" class="form-horizontal">
-					<div class="col-md-6 form-group">
-						<input type="text" id="busqueda" name="busqueda" style="text-transform:uppercase;" placeholder="Nombre o número de control..." class="form-control">
-					</div>
-					<div class="col-md-2">
-						<button type="submit" class="btn btn-raised btn-primary"><i class="material-icons">search</i></button>
-					</div>
-				</form>
-				<table style="width:100%" class="table table-striped table-hover">
-					<thead class="thead-dark">
-						<tr>
-							<th>No. Control</th>
-							<th>Apellido Paterno</th>
-							<th>Apellido Materno</th>
-							<th>Nombre(s)</th>
-							<th>Carrera</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach($alumnos as $alumno)
-						<tr>
-							<td>{{$alumno->no_de_control}}</td>
-							<td>{{$alumno->apellido_paterno}}</td>
-							<td>{{$alumno->apellido_materno}}</td>
-							<td>{{$alumno->nombre_alumno}}</td>
-							<td>{{$alumno->reticula}}/{{$alumno->nombre_reducido}}</td>
-						</tr>
-						@endforeach
-					</tbody>
-			</table>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-primary">Aceptar</button>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
-</div>
+
 <div class="row">
 	<div class="col">
 		<div class="card">
@@ -65,22 +14,13 @@
 						{{ method_field('PUT')}}
 						<div class="form-group col-md-6">
 								<label for="alumno" class="bmd-label-floating col-form-label">{{ __('Alumno') }}</label>
-										<select id="alumno" type="text" class="form-control{{ $errors->has('alumno') ? ' is-invalid' : '' }}" name="alumno" value="" required autofocus>
-											@foreach($alumnos as $alumno)
-												<option id="alumno" value="{{ $alumno->no_de_control }}" {{(old('alumno',$titulacion->alumno)==$alumno->no_de_control)? 'selected':''}}>{{$alumno->apellido_paterno}} {{$alumno->apellido_materno}} {{$alumno->nombre_alumno}}</option>
-											@endforeach
-										</select>
+								<input readonly type="text" id="alumno" name="alumno" class="form-control" value="{{$alumno->apellido_paterno}} {{$alumno->apellido_materno}} {{$alumno->nombre_alumno}}" style="text-transform:uppercase;">
 										@if ($errors->has('alumno'))
 												<span class="invalid-feedback" role="alert">
 														<strong>{{ $errors->first('alumno') }}</strong>
 												</span>
 										@endif
 						</div>
-						<div class="form-group col-md-1 inline">
-							<a type="button" for="alumno" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="material-icons">search</i></a>
-						</div>
-
-
 						<div class="form-group col-md-5">
 							<label for="opc_titu" class="control-label">Opción de titulación</label>
 							<select id="opc_titu" name="opc_titu" class="form-control" required>
