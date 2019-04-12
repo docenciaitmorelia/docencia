@@ -439,7 +439,7 @@ class PDFController extends Controller
         $oficio = $request->input('oficio');
         $seccion = $request->input('seccion');
         $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))
-                        ->where('no_de_control','LIKE',"%$nc%")->get();
+                        ->where('no_de_control',$nc)->get();
                         $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
                                             ->where('alumnos.no_de_control','=',"$nc")->groupBy('nombre')->get();
         $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto as proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as opcion')
@@ -449,7 +449,7 @@ class PDFController extends Controller
                         ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
                         ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
                         ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
-                        ->where('titulaciones.alumno','LIKE',"%$nc%")
+                        ->where('titulaciones.alumno',$nc)
                         ->where('titulaciones.estatus','=',"ACTIVO")
                         ->get();
 

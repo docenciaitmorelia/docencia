@@ -171,10 +171,10 @@ class TitulacionController extends Controller
         $salutation = $salutation . "C.";
       }
       if(stristr($estudios,"INGENIER")){
-        $salutation = "Ing.";
+        $salutation = "ING.";
       }
       if(stristr($estudios,"LICENCIAD")){
-        $salutation = "Lic.";
+        $salutation = "LIC.";
       }
       return $salutation;
     }
@@ -191,7 +191,8 @@ class TitulacionController extends Controller
 
     }
     public function gen_documentos(Request $request,$nc){
-      $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion')
+      $titulacion=Titulacion::select('a.estudios as estudios_asesor', 's1.estudios as estudios_presidente','s2.estudios as estudios_secretario','s3.estudios as estudios_vocal_propietario','s4.estudios as estudios_vocal_suplente',
+      'titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion')
                 ->join('personal as a','a.rfc','=','titulaciones.asesor')
                 ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
                 ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
@@ -200,6 +201,11 @@ class TitulacionController extends Controller
                 ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
                 ->where('titulaciones.id',$nc)
                 ->first();
+      $titulacion->estudios_asesor=$this->obtener_siglas($titulacion->estudios_asesor);
+      $titulacion->estudios_presidente=$this->obtener_siglas($titulacion->estudios_presidente);
+      $titulacion->estudios_secretario=$this->obtener_siglas($titulacion->estudios_secretario);
+      $titulacion->estudios_vocal_propietario=$this->obtener_siglas($titulacion->estudios_vocal_propietario);
+      $titulacion->estudios_vocal_suplente=$this->obtener_siglas($titulacion->estudios_vocal_suplente);
       $alumno = Alumno::where('no_de_control','=',"$titulacion->alumno")->first();
 
         $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))->where('nombramiento','=','D')->orderBy('apellidos_empleado')->get();

@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-@foreach($alumno as $al)
 <div class="row">
 	<div class="col">
 		<div class="card">
@@ -10,13 +8,11 @@
 				<center>
 				<div class="col-md-12">
 				<br>
-				<h4> <b>{{$al->no_de_control}} — {{$al->apellido_paterno}} {{$al->apellido_materno}} {{$al->nombre_alumno}}</b></h4>
+				<h4> <b>{{$alumno->no_de_control}} — {{$alumno->apellido_paterno}} {{$alumno->apellido_materno}} {{$alumno->nombre_alumno}}</b></h4>
 				</div>
 				</center>
-				@endforeach
-				@foreach($titulacion as $titu)
 				<hr>
-				<center><h5><i>{{$titu->nombre_opcion}}</i></h5></center>
+				<center><h5><i>{{$titulacion->nombre_opcion}}</i></h5></center>
 
 				<table class="table table-striped table-hover">
 					<thead>
@@ -32,25 +28,24 @@
 					<tbody>
 
 							<tr>
-								<td><input type="t_asesor" name="t_asesor" class="form-control" placeholder="DR."></td><td> {{ $titu->asesor }}</td>
+								<td>{{$titulacion->estudios_asesor}}</td><td> {{ $titulacion->asesor }}</td>
 
-								<td><input type="t_presidente" name="t_presidente" class="form-control" placeholder="DR."></td><td>{{ $titu->presidente }}
+								<td>{{$titulacion->estudios_presidente}}</td><td>{{ $titulacion->presidente }}
 								</td>
 
-								<td><input type="t_secretario" name="t_secretario" class="form-control" placeholder="DR."></td><td>{{ $titu->secretario }}
+								<td>{{$titulacion->estudios_secretario}}</td><td>{{ $titulacion->secretario }}
 								</td>
 
-								<td><input type="t_vocalp" name="t_vocalp" class="form-control" placeholder="DR."></td><td>{{ $titu->vocal_propietario }}
+								<td>{{$titulacion->estudios_vocal_propietario}}</td><td>{{ $titulacion->vocal_propietario }}
 								</td>
 
-								 <td><input type="t_volcals" name="t_volcals" class="form-control" placeholder="DR."></td><td>{{ $titu->vocal_suplente }}
+								 <td>{{$titulacion->estudios_vocal_suplente}}</td><td>{{ $titulacion->vocal_suplente }}
 								</td>
 							</tr>
 					</tbody>
 				</table>
 					<br>
-				@endforeach
-					<form action="{{ route('crear_registro', $al->no_de_control)}}" method="POST" target="_blank">
+					<form action="{{ route('crear_registro', $alumno->no_de_control)}}" method="POST" target="_blank">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<p class="col-md-12">
 							<button type="submit" class="btn btn-raised btn-primary">Generar PDF</button>

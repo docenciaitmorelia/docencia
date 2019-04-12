@@ -3,14 +3,16 @@
         <div class="col-md-10 col-md-offset-1">
           <div class="card">
             <div class="card-header">
-              <ul class="nav nav-pills card-header-tabs" id="myTab" role="tablist">
+              <div class="container">
+              <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
                 <li class="nav-item">
                   <a class="nav-link active" id="personal-tab" data-toggle="tab" href="#personal" role="tab" aria-controls="personal" aria-selected="true">Personal</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" id="alumnos-tab" data-toggle="tab" href="#alumnos" role="tab" aria-controls="alumnos" aria-selected="false">Alumnos</a>
+                  <a class="nav-link" id="alumnos-tab" data-toggle="tab" href="#alumnos" role="tab" aria-controls="alumnos" aria-selected="false">Alumnos</a>
                 </li>
               </ul>
+            </div>
             </div>
               <div class="card-body">
                 <h3 class="card-title"><?php echo e(__('Registrar Nuevo Usuario')); ?></h3>
