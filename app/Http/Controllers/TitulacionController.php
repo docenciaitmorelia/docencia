@@ -24,15 +24,15 @@ class TitulacionController extends Controller
 
     public function create(Request $request)
     {
-        $alumnos=Alumno::al()->orWhere->filtrar($request->busqueda)
+        $alumnos=Alumno::AL($request->busqueda)
                 ->orderBy('apellido_paterno','asc')
                 ->orderBy('apellido_materno','asc')
                 ->orderBy('nombre_alumno','asc')
                 ->get();
 
         $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))
-        ->where('area_academica','=',Auth::user()->clave_area)
-        ->orderBy('apellidos_empleado')->get();
+                ->where('area_academica','=',Auth::user()->clave_area)
+                ->orderBy('apellidos_empleado')->get();
         $planes=OpcionesTitulacion::OT($alumnos)->get();
         //return $alumnos;
       return view('titulaciones.create', compact('alumnos','personal','planes'));
@@ -94,29 +94,26 @@ class TitulacionController extends Controller
         return redirect()->route('titulaciones.index');
     }
 
-    public function expediente_titulacion($nc,$estatus){
-         $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion')
-                        ->join('personal as a','a.rfc','=','titulaciones.asesor')
-                        ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
-                        ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
-                        ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
-                        ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
-                        ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
-                        ->where('titulaciones.alumno','=',"$nc")
-                        ->where('titulaciones.estatus','=',"$estatus")
-                        ->get();
-        $id_t = $titulacion[0]->id;
-        $alumno = Alumno::where('no_de_control','LIKE',"%$nc%")->first();
-        $pro= Titulacion::select('proceso','opc_titu')->where('alumno', $nc)->where('estatus','=',$estatus)->first();
+    public function expediente_titulacion($nc){
+        $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion')
+                  ->join('personal as a','a.rfc','=','titulaciones.asesor')
+                  ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
+                  ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
+                  ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
+                  ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
+                  ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
+                  ->where('titulaciones.id',$nc)
+                  ->first();
+        $alumno = Alumno::where('no_de_control','=',"$titulacion->alumno")->first();
+        $pro= Titulacion::select('proceso','opc_titu')->where('id', $nc)->first();
         $p=$pro->proceso;
         $opc=$pro->opc_titu;
-        $proceso = Titulacion::select('p.orden','p.descripcion','p.id')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.alumno','=',$nc)->where('titulaciones.estatus','=',$estatus)->get();
-        $propuesta = Revision::select('veredicto')->where('id_titulacion','=',"$id_t")->where('tipo_revision','=','Propuesta')->get();
-        $ordenL = Titulacion::select('p.orden')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.alumno','=',$nc)->where('titulaciones.estatus','=',$estatus)->where('descripcion','=',"Liberación de Proyecto")->get();
+        $proceso = Titulacion::select('p.orden','p.descripcion','p.id')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.id','=',$nc)->get();
+        $propuesta = Revision::select('veredicto')->where('id_titulacion','=',"$titulacion->id")->where('tipo_revision','=','Propuesta')->get();
+        $ordenL = Titulacion::select('p.orden')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.id','=',$nc)->where('descripcion','=',"Liberación de Proyecto")->get();
+        $aprobacion = Revision::select(DB::raw('count(*) as total'))->where('veredicto','APROBADO')->where('id_titulacion','=',"$titulacion->id")->where('tipo_revision','=','PROPUESTA')->first();
         if(count($propuesta) > 0){
-          $a = 'A';
-          $veredicto = $propuesta[0]->veredicto;
-          if($veredicto == "Aceptado" || $veredicto=="Aceptado con modificaciones"){
+          if($aprobacion->total == 4){
             $v=1;
           }
           else{
@@ -124,8 +121,6 @@ class TitulacionController extends Controller
           }
         }
         else{
-          $a= 'A';
-          $veredicto='';
           $v=0;
         }
         if(count($ordenL) > 0){
@@ -133,11 +128,10 @@ class TitulacionController extends Controller
         }
         else {
           $ol=0;
-
         }
-        $borrador = Revision::select('veredicto')->where('id_titulacion','=',"$id_t")->where('tipo_revision','=','Borrador')->get();
-        $ordenI = Titulacion::select('p.orden')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.alumno','=',$nc)->where('titulaciones.estatus','=',$estatus)->where('descripcion','=',"Impresión Definitiva")->get();
-        if(count($borrador) > 0){
+        $borrador = Revision::select(DB::raw('count(*) as total'))->where('veredicto','APROBADO')->where('id_titulacion','=',"$titulacion->id")->where('tipo_revision','=','PROYECTO')->first();
+        $ordenI = Titulacion::select('p.orden')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.id','=',$nc)->where('descripcion','=',"Impresión Definitiva")->get();
+        if($borrador->total == 4){
           $b = 'A';
         }
         else{
@@ -160,8 +154,8 @@ class TitulacionController extends Controller
           ->where('p.descripcion','=',$p)->first();
           $orden =$ord->orden;
         }
-        //return $id_t;
-        return view('titulaciones.fragment.expediente_titulacion',compact('titulacion','alumno','estatus','proceso','orden','a','b','ol','veredicto','v','oi'));
+        //return $titulacion->nombre_opcion;
+        return view('titulaciones.fragment.expediente_titulacion',compact('titulacion','alumno','proceso','orden','b','ol','v','oi'));
     }
 
     private function obtener_siglas($estudios){
@@ -196,19 +190,18 @@ class TitulacionController extends Controller
 
     }
     public function gen_documentos(Request $request,$nc){
-        $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion')
-                        ->join('personal as a','a.rfc','=','titulaciones.asesor')
-                        ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
-                        ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
-                        ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
-                        ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
-                        ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
-                        ->where('titulaciones.alumno','LIKE',"%$nc%")
-                        ->where('titulaciones.estatus','=',"ACTIVO")
-                        ->get();
-        $alumno = Alumno::where('no_de_control','LIKE',"%$nc%")->get();
+      $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion')
+                ->join('personal as a','a.rfc','=','titulaciones.asesor')
+                ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
+                ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
+                ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
+                ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
+                ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
+                ->where('titulaciones.id',$nc)
+                ->first();
+      $alumno = Alumno::where('no_de_control','=',"$titulacion->alumno")->first();
 
-        $personal=Personal::select('rfc',DB::raw(),DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))->where('nombramiento','=','D')->orderBy('apellidos_empleado')->get();
+        $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))->where('nombramiento','=','D')->orderBy('apellidos_empleado')->get();
 
         if ($request->documento == 'Registro de Opción de Titulación'){
           return $this->gen_registro($titulacion,$alumno,$nc);

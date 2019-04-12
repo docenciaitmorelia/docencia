@@ -47,7 +47,7 @@
 				                        {{ $alumno->estatus }}
 				                    </td>
 									<td>
-										<a href="{{route('expediente_titulacion',[$alumno->no_de_control, $alumno->estatus]) }}" data-target="titulacion" class="btn btn-raised btn-primary">Expediente</a>
+										<a href="{{route('expediente_titulacion',$alumno->id) }}" data-target="titulacion" class="btn btn-raised btn-primary">Expediente</a>
 									</td>
 								</tr>
 							@endforeach

@@ -86,7 +86,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('crear_registro/{nc}', 'PDFController@crear_registro')->name('crear_registro');
 
-    Route::get('expediente_titulacion/{nc}/{estatus}', 'TitulacionController@expediente_titulacion')->name('expediente_titulacion');
+    Route::get('expediente_titulacion/{nc}', 'TitulacionController@expediente_titulacion')->name('expediente_titulacion');
 
     Route::post('gen_documentos/{nc}', 'TitulacionController@gen_documentos')->name('gen_documentos');
 

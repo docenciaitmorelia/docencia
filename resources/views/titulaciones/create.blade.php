@@ -66,9 +66,9 @@
 						<div class="form-group col-md-6">
 								<label for="alumno" class="bmd-label-floating col-form-label">{{ __('Alumno') }}</label>
 										<select id="alumno" type="text" class="form-control{{ $errors->has('alumno') ? ' is-invalid' : '' }}" name="alumno" value="" required autofocus>
-											<option id="alumno" value="">Seleccione alumno...</option>
+											<option value="">Seleccione alumno...</option>
 											@foreach($alumnos as $alumno)
-												<option id="alumno" value="{{ $alumno->no_de_control }}">{{$alumno->apellido_paterno}} {{$alumno->apellido_materno}} {{$alumno->nombre_alumno}}</option>
+												<option value="{{ $alumno->no_de_control }}">{{$alumno->apellido_paterno}} {{$alumno->apellido_materno}} {{$alumno->nombre_alumno}}</option>
 											@endforeach
 										</select>
 										@if ($errors->has('alumno'))
@@ -150,7 +150,7 @@
 						</div>
 
 						<div class="form-group col-md-6">
-							<input type="checkbox" id="aec" name="aec" value="AE">Asesor Externo
+							<input type="checkbox" id="aec" name="aec" value="">Asesor Externo
 						</div>
 
 						<div class="form-group col-md-6" style="display: none;" id="aediv" name="aediv">

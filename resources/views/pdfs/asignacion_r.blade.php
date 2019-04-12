@@ -15,7 +15,7 @@
     <div id="contenido">
       <p align="center">
         <strong>
-          {{$dep}}
+          DEPTO de...
           <br>
           REVISORES PARA OPCIÓN DE TITULACIÓN
         </strong>
@@ -23,24 +23,21 @@
       <br>
       <table class="table table-bordered" bordercolor="black">
           <tbody>
-              @foreach($data3 as $t)
             <tr>
-              <td>Alumno(a):</td>
-              <td>{{$t->completo}}</td>
+              <td>@if($data3->sexo == 'M')Alumno: @else Alumna: @endif</td>
+              <td>{{$data3->completo}}</td>
             </tr>
-              @endforeach
-              @foreach($data as $t)
             <tr>
               <td>Opción de Titulación:</td>
-              <td>{{$t->opcion}}</td>
+              <td>{{$data->nombre_opcion}}</td>
             </tr>
             <tr>
               <td>Título del trabajo</td>
-              <td>"{{$t->proyecto}}"</td>
+              <td>"{{$data->nombre_proyecto}}"</td>
             </tr>
             <tr>
               <td>Asesor</td>
-              <td>{{$t_asesor}}{{$t->asesor}}</td>
+              <td>{{$data->asesor}}</td>
             </tr>
           </tbody>
         </table>
@@ -58,27 +55,26 @@
           <tbody>
             <tr>
               <td>Presidente:</td>
-              <td> {{$t_presidente}} {{$t->presidente}}</td>
+              <td> {{$data->presidente}}</td>
               <td></td>
             </tr>
             <tr>
               <td>Secretario</td>
-              <td>{{$t_secretario}}{{$t->secretario}}</td>
+              <td>{{$data->secretario}}</td>
               <td></td>
             </tr>
             <tr>
               <td>Vocal Propietario</td>
-              <td>{{$t_vocalp}}{{$t->vocal_propietario}}</td>
+              <td>{{$data->vocal_propietario}}</td>
               <td></td>
             </tr>
             <tr>
               <td>Vocal Suplente</td>
-              <td>{{$t_vocals}}{{$t->vocal_suplente}}</td>
+              <td>{{$data->vocal_suplente}}</td>
               <td></td>
             </tr>
           </tbody>
         </table>
-        @endforeach
       <p align="justify">
           Después que revisen su proyecto y realice las correcciones necesarias, los revisores firmaran de conformidad. Entonces solicita el Oficio de Liberación de Proyecto.
         </p>
@@ -108,12 +104,12 @@
 	                    <td>&nbsp;</td>
 	                  </tr>
 	                  <tr>
-	                    <td align="center">{{$jefedepto}}</td>
-	                    <td align="center">{{$t_asesor}}{{$t->asesor}}</td>
-	                    <td align="center">{{$presac}}</td>
+	                    <td align="center">Nombre</td>
+	                    <td align="center">{{$data->asesor}}</td>
+	                    <td align="center">Nombre</td>
 	                  </tr>
 	                  <tr>
-	                    <td align="center" id="titulo">Jefe del {{ mb_convert_case($dep, MB_CASE_TITLE, "utf8")}}</td>
+	                    <td align="center" id="titulo">Jefe del {{ mb_convert_case('Depto', MB_CASE_TITLE, "utf8")}}</td>
 	                    <td align="center">Asesor</td>
 	                    <td align="center" id="titulo">Presidente de Academia</td>
 	                  </tr>
