@@ -15,11 +15,13 @@ class Alumno extends Model
 
     public function scopeAl($query)
     {
+      $clave_area_usuario = DB::table('personal')->where('rfc',Auth::user()->name)->first();
       $carreras = DB::table('carreras')
       ->select('carreras.carrera','nombre_reducido','reticula')
       ->join('permisos','permisos.carrera','=','carreras.carrera')
-      ->where('permisos.clave_area','=',Auth::user()->clave_area);
+      ->where('permisos.clave_area',$clave_area_usuario->area_academica);
       return $query
+        ->select('alumnos.*','carreras.nombre_reducido')
         ->where(function($query){
           $query->where('estatus_alumno','=','EGR')
             ->orWhere([['estatus_alumno','=','ACT'],['creditos_aprobados','>=',350],]);
@@ -31,11 +33,9 @@ class Alumno extends Model
     }
     public function scopeFiltrar($query,$busqueda){
       //$query = Alumno::Al();
-      //$busqueda= mb_strtoupper($busqueda,'UTF-8');
-      $query = $query
-      //->where('alumnos.no_de_control','LIKE',"'%%'");
-      ->where(DB::raw("CONCAT(alumnos.nombre_alumno,' ',alumnos.apellido_paterno,' ',alumnos.apellido_materno)"), 'LIKE', "'%$busqueda%'");
-      return $query;
-
+      $busqueda= mb_strtoupper($busqueda,'UTF-8');
+      return $query
+      ->where(DB::raw("CONCAT(alumnos.nombre_alumno,' ',alumnos.apellido_paterno,' ',alumnos.apellido_materno)"), 'LIKE', "%$busqueda%")
+      ->orWhere('no_de_control','like',"%$busqueda%");
     }
 }

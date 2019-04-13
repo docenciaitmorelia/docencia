@@ -39,12 +39,13 @@ class Titulacion extends Model
     ->where('estatus_alumno','EGR')
     ->orWhere([['estatus_alumno','ACT'],['creditos_aprobados','>=',350],])
     ->groupBy('no_de_control');
+    $clave_area_usuario = DB::table('personal')->select('area_academica')->where('rfc',Auth::user()->name)->first();
     return $query
           ->joinSub($alumnos,'alumnos',function ($join) {
             $join->on('titulaciones.alumno','=','alumnos.no_de_control');
           })
           ->join('permisos','permisos.carrera','=','alumnos.carrera')
-          ->where('permisos.clave_area','=',Auth::user()->clave_area)
+          ->where('permisos.clave_area',$clave_area_usuario->area_academica)
           ->where('titulaciones.alumno','LIKE',"%$s%")
           ->orwhere(DB::raw("CONCAT(alumnos.nombre_alumno,' ',alumnos.apellido_paterno,' ',alumnos.apellido_materno)"), 'LIKE', "%$s%");
   }

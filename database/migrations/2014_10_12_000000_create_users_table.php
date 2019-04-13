@@ -17,8 +17,8 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('rol',30);
-            $table->string('clave_area',10);
-            $table->integer('carrera');
+            $table->string('clave_area',10)->nullable();
+            $table->integer('carrera')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

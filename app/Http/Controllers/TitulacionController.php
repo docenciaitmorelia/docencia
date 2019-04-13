@@ -24,18 +24,22 @@ class TitulacionController extends Controller
 
     public function create(Request $request)
     {
-        $alumnos=Alumno::AL($request->busqueda)
+        $alumnos=Alumno::al()->filtrar($request->busqueda)
                 ->orderBy('apellido_paterno','asc')
                 ->orderBy('apellido_materno','asc')
                 ->orderBy('nombre_alumno','asc')
                 ->get();
-
+        $clave_area_usuario = DB::table('personal')->select('area_academica')->where('rfc',Auth::user()->name)->first();
         $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))
-                ->where('area_academica','=',Auth::user()->clave_area)
+                ->where('area_academica',$clave_area_usuario->area_academica)
                 ->orderBy('apellidos_empleado')->get();
-        $planes=OpcionesTitulacion::OT($alumnos)->get();
-        //return $alumnos;
-      return view('titulaciones.create', compact('alumnos','personal','planes'));
+        $reticulas=Array();
+        foreach ($alumnos as $alumno) {
+          array_push($reticulas,$alumno->reticula);
+        }
+        $reticulas = array_unique($reticulas);
+        $planes=OpcionesTitulacion::OT($reticulas)->orderBy('reticula','desc')->get();
+        return view('titulaciones.create', compact('alumnos','personal','planes'));
     }
 
     public function store(TitulacionRequest $request)
@@ -66,8 +70,9 @@ class TitulacionController extends Controller
         //$alumno=Alumno::select('no_de_control',DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))->orderBy('apellido_paterno')->get();
         $alumno=DB::table('alumnos')->where('no_de_control',$titulacion->alumno)
                 ->first();
+        $clave_area_usuario = DB::table('personal')->select('area_academica')->where('rfc',Auth::user()->name)->first();
         $personal=Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))
-        ->where('area_academica','=',Auth::user()->clave_area)
+        ->where('area_academica',$clave_area_usuario->area_academica)
         ->orderBy('apellidos_empleado')->get();
         $opcion=OpcionesTitulacion::OT($alumno)->get();
         $planes=OpcionesTitulacion::OT($alumno)->get();

@@ -60,7 +60,7 @@
 	<div class="col">
 		<div class="card">
 		  <div class="card-body">
-		    <h3 class="card-title">Registrar Titulación</h3>
+		    <h3 class="card-title">Registro de Expediente de Titulación</h3>
 					<form id="formTitulacion" action="{{ route('titulaciones.store') }}" method="POST" class="form">
 						@csrf
 						<div class="form-group col-md-6">

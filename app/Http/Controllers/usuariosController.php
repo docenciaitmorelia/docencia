@@ -100,7 +100,6 @@ class usuariosController extends Controller
             'name' => $request->name,
             'rol' => $request->rol,
             'clave_area' => $request->clave_area,
-            'carrera' => $request->carrera,
             'password' => Hash::make($request->password),
           ]);
 
