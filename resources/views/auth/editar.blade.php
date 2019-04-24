@@ -1,13 +1,14 @@
 @extends('layouts.app')
 @section('content')
     <div class="row justify-content-center">
-        <div class="col-md-10 col-md-offset-1">
+      <form method="POST" action="{{ route('usuariosCtl.update', $Usuario->id) }}">
+          @csrf
+          {{ method_field('PUT')}}
+
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">{{ __('Editar al Usuario') }} {{ $Usuario->name }}</h3>
-                    <form method="POST" action="{{ route('usuariosCtl.update', $Usuario->id) }}">
-                        @csrf
-                        {{ method_field('PUT')}}
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
                             <div class="col-md-6">
@@ -105,9 +106,37 @@
                             </div>
                         </div>
 
-                    </form>
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+          <div class="card">
+              <div class="card-body">
+                  <h3 class="card-title">{{ __('Permisos') }}</h3>
+                  <table class="table table-striped table-hover" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th >Carrera</th>
+                        <th >Habilitar:</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      @foreach($Carreras as $item)
+                        <tr>
+                          <td width="90%">
+                            <label for="{{$item->reticula}}/{{ $item->nombre_reducido }}" class="col-md-4 col-form-label text-md-right">{{$item->carrera}}-{{ $item->nombre_reducido }}</label>
+                          </td>
+                          <td width="10%">
+                            <input id="{{$item->reticula}}/{{ $item->nombre_reducido }}" type="checkbox" class="form-control" name="carreras[]" value="{{$item->carrera}}" placeholder="Otorgar permiso a esta carrera" @if(array_search($item->carrera, $Permisos)) checked @endif>
+                          </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+        </div>
+      </form>
     </div>
 @endsection

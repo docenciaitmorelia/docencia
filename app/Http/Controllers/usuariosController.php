@@ -75,14 +75,19 @@ class usuariosController extends Controller
      */
     public function edit($id)
     {
-      $Usuario = User::select('users.*','organigrama.descripcion_area','users.carrera','carreras.nombre_reducido')
+      $Usuario = User::select('users.*','organigrama.descripcion_area')
       ->where('users.id','=',$id)
       ->join('organigrama','users.clave_area','=','organigrama.clave_area')
-      ->join('carreras','users.carrera','=','carreras.carrera')
-      ->get();
+      ->first();
       $Areas = organigrama::select('clave_area','descripcion_area')->get();
-      $Carreras = Carrera::select('carrera','reticula','nombre_reducido')->get();
-      return view('auth.editar',['Usuario' => $Usuario[0],'Areas'=>$Areas, 'Carreras'=>$Carreras]);
+      $Carreras = Carrera::select('carrera','nombre_reducido')
+      ->where('nivel_escolar','L')->groupBy('carrera','nombre_reducido')->orderBy('nombre_reducido','asc')->get();
+      $permisos = DB::table('permisos')->select('carrera')->where('usuario',$Usuario->name)->get();
+      $Permisos = array();
+      foreach($permisos as $p){
+        array_push($Permisos,$p->carrera);
+      }
+      return view('auth.editar',['Usuario' => $Usuario,'Areas'=>$Areas, 'Carreras'=>$Carreras, 'Permisos'=>$Permisos]);
     }
 
     /**
@@ -94,6 +99,7 @@ class usuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
+      DB::beginTransaction();
       DB::table('users')
           ->where('id', $id)
           ->update([
@@ -102,7 +108,14 @@ class usuariosController extends Controller
             'clave_area' => $request->clave_area,
             'password' => Hash::make($request->password),
           ]);
-
+        DB::table('permisos')->where('usuario',$request->name)->delete();
+        foreach($request->carreras as $carrera){
+          DB::table('permisos')
+          ->updateOrInsert(
+            ['usuario' => $request->name,'carrera' => $carrera,'clave_area' => $request->clave_area]
+          );
+        }
+        DB::commit();
       return redirect()->route('admin');
     }
 

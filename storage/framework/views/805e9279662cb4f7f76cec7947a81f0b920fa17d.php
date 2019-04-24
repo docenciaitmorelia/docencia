@@ -1,13 +1,14 @@
 <?php $__env->startSection('content'); ?>
     <div class="row justify-content-center">
-        <div class="col-md-10 col-md-offset-1">
+      <form method="POST" action="<?php echo e(route('usuariosCtl.update', $Usuario->id)); ?>">
+          <?php echo csrf_field(); ?>
+          <?php echo e(method_field('PUT')); ?>
+
+
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title"><?php echo e(__('Editar al Usuario')); ?> <?php echo e($Usuario->name); ?></h3>
-                    <form method="POST" action="<?php echo e(route('usuariosCtl.update', $Usuario->id)); ?>">
-                        <?php echo csrf_field(); ?>
-                        <?php echo e(method_field('PUT')); ?>
-
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right"><?php echo e(__('Nombre')); ?></label>
                             <div class="col-md-6">
@@ -107,10 +108,38 @@
                             </div>
                         </div>
 
-                    </form>
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+          <div class="card">
+              <div class="card-body">
+                  <h3 class="card-title"><?php echo e(__('Permisos')); ?></h3>
+                  <table class="table table-striped table-hover" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th >Carrera</th>
+                        <th >Habilitar:</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <?php $__currentLoopData = $Carreras; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <tr>
+                          <td width="90%">
+                            <label for="<?php echo e($item->reticula); ?>/<?php echo e($item->nombre_reducido); ?>" class="col-md-4 col-form-label text-md-right"><?php echo e($item->carrera); ?>-<?php echo e($item->nombre_reducido); ?></label>
+                          </td>
+                          <td width="10%">
+                            <input id="<?php echo e($item->reticula); ?>/<?php echo e($item->nombre_reducido); ?>" type="checkbox" class="form-control" name="carreras[]" value="<?php echo e($item->carrera); ?>" placeholder="Otorgar permiso a esta carrera" <?php if(array_search($item->carrera, $Permisos)): ?> checked <?php endif; ?>>
+                          </td>
+                        </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+        </div>
+      </form>
     </div>
 <?php $__env->stopSection(); ?>
 

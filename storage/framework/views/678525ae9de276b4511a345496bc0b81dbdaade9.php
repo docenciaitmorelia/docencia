@@ -14,7 +14,6 @@
                         <p class="card-text">Id: <?php echo e($usuario->id); ?></p>
                         <p class="card-text">Rol: <?php echo e($usuario->rol); ?></p>
                         <p class="card-text">Área: <?php echo e($usuario->descripcion_area); ?></p>
-                        <p class="card-text">Carrera: <?php echo e($usuario->carrera); ?></p>
                         <p class="card-text">Email: <?php echo e($usuario->email); ?></p>
                         <a href="<?php echo e(route('usuariosCtl.edit',$usuario->id)); ?>" class="card-link"><i class="material-icons">create</i></a>
                         <a data-toggle="modal" data-target="#modal<?php echo e($usuario->id); ?>" class="card-link modal-trigger" href="#modal<?php echo e($usuario->id); ?>"><i class="material-icons">delete</i></a>
@@ -76,4 +75,3 @@
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php /* /Users/aapintor/laravel/docencia/resources/views/auth/index.blade.php */ ?>

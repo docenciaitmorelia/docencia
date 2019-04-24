@@ -15,9 +15,9 @@ class CreatePermisosTable extends Migration
     {
         Schema::create('permisos', function (Blueprint $table) {
             $table->string('usuario');
-            $table->integer('carrera');
+            $table->string('carrera',11);
             $table->string('clave_area');
-            $table->primary(['usuario','carrera']);
+            $table->primary(['usuario','carrera','clave_area']);
             $table->timestamps();
         });
     }
