@@ -33,7 +33,7 @@
 						<tbody>
 							@foreach($alumnos as $alumno)
 								<tr>
-									<td>{{ $alumno->no_de_control }}</td>
+									<td> {{ $alumno->no_de_control }}</td>
 									<td>
 										<strong>{{ $alumno->apellido_paterno }}</strong>
 									</td>

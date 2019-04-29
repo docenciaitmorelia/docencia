@@ -13,26 +13,20 @@ class procesotitulacionSeeder extends Seeder
     {
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '1',
-        'descripcion' => 'Registro de Opción de Titulación',
+        'descripcion' => 'Asignación de Sinodales',
         'orden' => '1',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '1',
-        'descripcion' => 'Asignación de Sinodales',
+        'descripcion' => 'Impresión Definitiva',
         'orden' => '2',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '1',
-        'descripcion' => 'Impresión Definitiva',
-        'orden' => '3',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '1',
         'descripcion' => 'Invitación a Ceremonia de Titulación',
-        'orden' => '4',
+        'orden' => '3',
       ]);
 
       DB::table('proceso_titulacion')->insert([
@@ -43,32 +37,32 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '2',
-        'descripcion' => 'Invitación a Ceremonia de Titulación',
-        'orden' => '2',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '3',
-        'descripcion' => 'Registro de Opción de Titulación',
-        'orden' => '1',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '3',
-        'descripcion' => 'Asignación de Sinodales',
-        'orden' => '2',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '3',
         'descripcion' => 'Impresión Definitiva',
+        'orden' => '2',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '2',
+        'descripcion' => 'Invitación a Ceremonia de Titulación',
         'orden' => '3',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '3',
+        'descripcion' => 'Asignación de Sinodales',
+        'orden' => '1',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '3',
+        'descripcion' => 'Impresión Definitiva',
+        'orden' => '2',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '3',
         'descripcion' => 'Invitación a Ceremonia de Titulación',
-        'orden' => '4',
+        'orden' => '3',
       ]);
 
       DB::table('proceso_titulacion')->insert([
@@ -79,8 +73,14 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '4',
-        'descripcion' => 'Invitación a Ceremonia de Titulación',
+        'descripcion' => 'Impresión Definitiva',
         'orden' => '2',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '4',
+        'descripcion' => 'Invitación a Ceremonia de Titulación',
+        'orden' => '3',
       ]);
 
       DB::table('proceso_titulacion')->insert([
@@ -91,8 +91,14 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '5',
-        'descripcion' => 'Invitación a Ceremonia de Titulación',
+        'descripcion' => 'Impresión Definitiva',
         'orden' => '2',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '5',
+        'descripcion' => 'Invitación a Ceremonia de Titulación',
+        'orden' => '3',
       ]);
 
       DB::table('proceso_titulacion')->insert([
@@ -109,38 +115,33 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '7',
-        'descripcion' => 'Registro de Opción de Titulación',
+        'descripcion' => 'Asignación de Sinodales',
         'orden' => '1',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '7',
-        'descripcion' => 'Asignación de Sinodales',
+        'descripcion' => 'Invitación a Ceremonia de Titulación',
         'orden' => '2',
       ]);
 
+
       DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '7',
+        'id_opcion' => '8',
+        'descripcion' => 'Asignación de Sinodales',
+        'orden' => '1',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '8',
         'descripcion' => 'Impresión Definitiva',
-        'orden' => '3',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '7',
-        'descripcion' => 'Invitación a Ceremonia de Titulación',
-        'orden' => '4',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '8',
-        'descripcion' => 'Asignación de Sinodales',
-        'orden' => '1',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '8',
-        'descripcion' => 'Invitación a Ceremonia de Titulación',
         'orden' => '2',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '8',
+        'descripcion' => 'Invitación a Ceremonia de Titulación',
+        'orden' => '3',
       ]);
 
       DB::table('proceso_titulacion')->insert([
@@ -157,99 +158,53 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '10',
-        'descripcion' => 'Registro de Opción de Titulación',
+        'descripcion' => 'Asignación de Sinodales',
         'orden' => '1',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '10',
-        'descripcion' => 'Asignación de Sinodales',
+        'descripcion' => 'Invitación a Ceremonia de Titulación',
         'orden' => '2',
       ]);
 
       DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '10',
-        'descripcion' => 'Impresión Definitiva',
-        'orden' => '3',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '10',
-        'descripcion' => 'Invitación a Ceremonia de Titulación',
-        'orden' => '4',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
         'id_opcion' => '11',
-        'descripcion' => 'Registro de Opción de Titulación',
+        'descripcion' => 'Asignación de Sinodales',
         'orden' => '1',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '11',
-        'descripcion' => 'Asignación de Revisores',
+        'descripcion' => 'Impresión Definitiva',
         'orden' => '2',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '11',
-        'descripcion' => 'Liberación de Proyecto',
+        'descripcion' => 'Invitación a Ceremonia de Titulación',
         'orden' => '3',
       ]);
 
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '11',
-        'descripcion' => 'Asignación de Sinodales',
-        'orden' => '4',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '11',
-        'descripcion' => 'Impresión Definitiva',
-        'orden' => '5',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '11',
-        'descripcion' => 'Invitación a Ceremonia de Titulación',
-        'orden' => '6',
-      ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '12',
-        'descripcion' => 'Registro de Opción de Titulación',
+        'descripcion' => 'Asignación de Sinodales',
         'orden' => '1',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '12',
-        'descripcion' => 'Asignación de Revisores',
+        'descripcion' => 'Impresión Definitiva',
         'orden' => '2',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '12',
-        'descripcion' => 'Liberación de Proyecto',
+        'descripcion' => 'Invitación a Ceremonia de Titulación',
         'orden' => '3',
       ]);
 
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '12',
-        'descripcion' => 'Asignación de Sinodales',
-        'orden' => '4',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '12',
-        'descripcion' => 'Impresión Definitiva',
-        'orden' => '5',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '12',
-        'descripcion' => 'Invitación a Ceremonia de Titulación',
-        'orden' => '6',
-      ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '13',
@@ -259,8 +214,14 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '13',
-        'descripcion' => 'Invitación a Ceremonia de Titulación',
+        'descripcion' => 'Impresión Definitiva',
         'orden' => '2',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '13',
+        'descripcion' => 'Invitación a Ceremonia de Titulación',
+        'orden' => '3',
       ]);
 
       DB::table('proceso_titulacion')->insert([
@@ -289,115 +250,61 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '16',
-        'descripcion' => 'Registro de Opción de Titulación',
+        'descripcion' => 'Asignación de Sinodales',
         'orden' => '1',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '16',
-        'descripcion' => 'Asignación de Revisores',
+        'descripcion' => 'Invitación a Ceremonia de Titulación',
         'orden' => '2',
       ]);
 
       DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '16',
-        'descripcion' => 'Liberación de Proyecto',
-        'orden' => '3',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '16',
-        'descripcion' => 'Asignación de Sinodales',
-        'orden' => '4',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '16',
-        'descripcion' => 'Impresión Definitiva',
-        'orden' => '5',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '16',
-        'descripcion' => 'Invitación a Ceremonia de Titulación',
-        'orden' => '6',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
         'id_opcion' => '17',
-        'descripcion' => 'Registro de Opción de Titulación',
+        'descripcion' => 'Asignación de Sinodales',
         'orden' => '1',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '17',
-        'descripcion' => 'Asignación de Revisores',
+        'descripcion' => 'Impresión Definitiva',
         'orden' => '2',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '17',
-        'descripcion' => 'Liberación de Proyecto',
+        'descripcion' => 'Invitación a Ceremonia de Titulación',
         'orden' => '3',
       ]);
 
       DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '17',
-        'descripcion' => 'Asignación de Sinodales',
-        'orden' => '4',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '17',
-        'descripcion' => 'Impresión Definitiva',
-        'orden' => '5',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '17',
-        'descripcion' => 'Invitación a Ceremonia de Titulación',
-        'orden' => '6',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
         'id_opcion' => '18',
-        'descripcion' => 'Registro de Opción de Titulación',
+        'descripcion' => 'Asignación de tema y asesor',
         'orden' => '1',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '18',
-        'descripcion' => 'Asignación de Revisores',
+        'descripcion' => 'Asignación de Sinodales',
         'orden' => '2',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '18',
-        'descripcion' => 'Liberación de Proyecto',
+        'descripcion' => 'Impresión Definitiva',
         'orden' => '3',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '18',
-        'descripcion' => 'Asignación de Sinodales',
-        'orden' => '4',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '18',
-        'descripcion' => 'Impresión Definitiva',
-        'orden' => '5',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '18',
         'descripcion' => 'Invitación a Ceremonia de Titulación',
-        'orden' => '6',
+        'orden' => '4',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '19',
-        'descripcion' => 'Registro de Opción de Titulación',
+        'descripcion' => 'Asignación de tema y asesor',
         'orden' => '1',
       ]);
 
@@ -433,48 +340,84 @@ class procesotitulacionSeeder extends Seeder
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '20',
-        'descripcion' => 'Asignación de Sinodales',
+        'descripcion' => 'Asignación de tema y asesor',
         'orden' => '1',
       ]);
 
       DB::table('proceso_titulacion')->insert([
         'id_opcion' => '20',
-        'descripcion' => 'Invitación a Ceremonia de Titulación',
-        'orden' => '2',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '21',
-        'descripcion' => 'Registro de Opción de Titulación',
-        'orden' => '1',
-      ]);
-
-      DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '21',
         'descripcion' => 'Asignación de Revisores',
         'orden' => '2',
       ]);
 
       DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '21',
+        'id_opcion' => '20',
         'descripcion' => 'Liberación de Proyecto',
         'orden' => '3',
       ]);
 
       DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '21',
+        'id_opcion' => '20',
         'descripcion' => 'Asignación de Sinodales',
         'orden' => '4',
       ]);
 
       DB::table('proceso_titulacion')->insert([
-        'id_opcion' => '21',
+        'id_opcion' => '20',
         'descripcion' => 'Impresión Definitiva',
         'orden' => '5',
       ]);
 
       DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '20',
+        'descripcion' => 'Invitación a Ceremonia de Titulación',
+        'orden' => '6',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
         'id_opcion' => '21',
+        'descripcion' => 'Asignación de Sinodales',
+        'orden' => '1',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '21',
+        'descripcion' => 'Invitación a Ceremonia de Titulación',
+        'orden' => '2',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '22',
+        'descripcion' => 'Asignación de tema y asesor',
+        'orden' => '1',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '22',
+        'descripcion' => 'Asignación de Revisores',
+        'orden' => '2',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '22',
+        'descripcion' => 'Liberación de Proyecto',
+        'orden' => '3',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '22',
+        'descripcion' => 'Asignación de Sinodales',
+        'orden' => '4',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '22',
+        'descripcion' => 'Impresión Definitiva',
+        'orden' => '5',
+      ]);
+
+      DB::table('proceso_titulacion')->insert([
+        'id_opcion' => '22',
         'descripcion' => 'Invitación a Ceremonia de Titulación',
         'orden' => '6',
       ]);

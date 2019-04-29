@@ -26,10 +26,10 @@
 							</tr>
 						</thead>
 						<tbody>
-
 								<tr>
-									<td>{{ $titulacion->asesor }}</td>
-
+									<td>
+										{{ $titulacion->asesor}}
+									</td>
 									<td>
 										{{ $titulacion->presidente }}
 									</td>
@@ -41,11 +41,7 @@
 									<td>
 										{{ $titulacion->vocal_propietario}}
 									</td>
-
-				                    <td>
-										{{ $titulacion->vocal_suplente}}
-									</td>
-
+									<td> @if($vs == '0') {{$titulacion->asesor_externo}} @else {{$titulacion->vocal_suplente}} @endif </td>
 									<td>
 										<a href="{{ route('titulaciones.edit', $titulacion->id) }}" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Editar Expediente"><i class="material-icons">create</i></a>
 										<a href="{{route('showRevisiones',$alumno->no_de_control) }}" data-target="titulacion" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Ver Status de Revisiones"><i class="material-icons">find_in_page</i></a>
@@ -67,7 +63,7 @@
 						@endif
 				    </div>
 				    <div class="col-md-6">
-				    @if($titulacion->estatus=='ACTIVO')
+				    @if($titulacion->estatus=='ACTIVO' || $titulacion->estatus =='TITULADO')
 					<form action="{{ route('gen_documentos', $titulacion->id) }}" method="POST">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div class="col-md-12">

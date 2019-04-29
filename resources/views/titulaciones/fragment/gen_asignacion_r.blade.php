@@ -45,15 +45,23 @@
           </thead>
           <tbody>
             <tr>
-              <td>{{ $titulacion->asesor }}</td>
+              <td>
+                {{ $titulacion->asesor}}
+              </td>
+              <td>
+                {{ $titulacion->presidente }}
+              </td>
 
-              <td>{{ $titulacion->presidente }}</td>
+              <td>
+                {{ $titulacion->secretario }}
+              </td>
 
-              <td>{{ $titulacion->secretario }}</td>
-
-              <td>{{ $titulacion->vocal_propietario }}</td>
-
-              <td>{{ $titulacion->vocal_suplente }}</td>
+              <td>
+                {{ $titulacion->vocal_propietario}}
+              </td>
+              <td>
+               @if($vs == '0') {{$titulacion->asesor_externo}} @else {{$titulacion->vocal_suplente}} @endif
+              </td>
 
             </tr>
           </tbody>

@@ -53,7 +53,6 @@
             @else
               @switch(Auth::user()->rol)
               @case("Jefe de Docencia")
-              <!--
                 <li class="dropdown">
                   <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Círc. Estudios
                     <b class="caret"></b></a>
@@ -63,7 +62,6 @@
                     <li><a href="{{ route('gen_horario')}}">Horario </a></li>
                   </ul>
                 </li>
--->
                 <li class="dropdown">
                   <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Titulaciones
                     <b class="caret"></b></a>
@@ -74,10 +72,9 @@
                     <li><a href="{{ route('revisiones.index') }}">Revisiones </a></li>-->
                   </ul>
                 </li>
-                <!--
+
                 <li><a href="{{ route('actividadescomp.index') }}">Actividades Complementarias</a></li>
                 <li><a href="{{ route('catalogoac.index') }}">Catalogo Act.</a></li>
-              -->
               @break
               @case("DivEstProf")
                 <li><a href="{{ route('procesotitulacion.index') }}">Proceso de Titulacion </a></li>

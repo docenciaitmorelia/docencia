@@ -3,82 +3,52 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\CatalogoAC;
+use App\Http\Requests\CatalogoACRequest;
 
 class CatalogoACController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+    	$catalogoac= CatalogoAC::Search($request->s)->orderBy('id','DESC')->paginate();
+        return view('catalogoac.index',compact('catalogoac'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+    	return view('catalogoac.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(CatalogoACRequest $request)
     {
-        //
+    	$catalogoac = new CatalogoAC;
+    	$catalogoac->actividad  = mb_strtoupper($request->actividad,'UTF-8');
+    	$catalogoac->creditos = $request->creditos;
+
+        $catalogoac->save();
+    	return redirect()->route('catalogoac.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $catalogoac  = CatalogoAC::find($id);
+        return view('catalogoac.edit',compact('catalogoac'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(CatalogoACRequest $request, $id)
     {
-        //
+        $catalogoac = CatalogoAC::find($id);
+        $catalogoac->actividad   = mb_strtoupper($request->actividad,'UTF-8');
+        $catalogoac->creditos = $request->creditos;
+
+        $catalogoac->save();
+        return redirect()->route('catalogoac.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+    	$catalogoac = catalogoac::find($id);
+    	$catalogoac-> delete();
+
+    	return back()->with('info', 'La actividad fue eliminada');
     }
 }

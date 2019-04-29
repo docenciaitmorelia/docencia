@@ -18,11 +18,10 @@
 				<h3>INSTITUTO TECNOLÓGICO DE MORELIA
 				<br>
 				<br>
-				{{$dep}}
 				<br>
 				<br>
 				PRÓXIMA CEREMONIA DE TITULACIÓN
-			</b>
+				</b>
 				<br>
 				<br>
 				<br>
@@ -46,21 +45,17 @@
 				<h3>{{ $carrera->nombre }}</h3>
 				@endforeach
 				<br>
-				<h3>OPCIÓN @foreach($data as $titulacion) {{ mb_strtoupper($titulacion->opcion,'UTF-8')}}</h3>
+				<h3>OPCIÓN {{ mb_strtoupper($data->nombre_opcion,'UTF-8')}}</h3>
 				<br>
 				<h3> MESA DE SINODALES</h3>
 				<br>
-				<br>
-				<br>
-
 			</center>
-			<h3>
-			PRESIDENTE: &emsp;&emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;   {{$t_presidente}}{{$titulacion->presidente}} <br>
-			SECRETARIO: &emsp;&emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;&emsp;    {{$t_secretario}}{{$titulacion->secretario}} <br>
-			VOCAL PROPIETARIO: &emsp;&emsp;  {{$t_vocalp}}{{$titulacion->vocal_propietario}} <br>
-			VOCAL SUPLENTE: &emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp; {{$t_vocals}}{{$titulacion->vocal_suplente}}
-			@endforeach
-		</h3>
+			<h4>
+			PRESIDENTE: &emsp;&emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;   {{$data->pg}} {{$data->presidente}} <br>
+			SECRETARIO: &emsp;&emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;&emsp;    {{$data->sg}} {{$data->secretario}} <br>
+			VOCAL PROPIETARIO: &emsp;&emsp;  {{$data->vpg}} {{$data->vocal_propietario}} <br>
+			VOCAL SUPLENTE: &emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp; @if($vs == '0') {{$data->asesor_externo}} @else {{$data->vsg}} {{$data->vocal_suplente}} @endif
+			</h4>
 </div>
 
 </body>

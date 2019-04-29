@@ -141,8 +141,8 @@
 
 					    <div class="form-group col-md-6">
 							<label for="vocal_suplente" class="control-label">Vocal Suplente</label>
-							<select id="vocal_suplente" name="vocal_suplente" class="form-control" required>
-								<option value="">Seleccione Vocal Suplente</option>
+							<select id="vocal_suplente" name="vocal_suplente" class="form-control">
+								<option value="0">Seleccione Vocal Suplente</option>
 								@foreach($personal as $doc)
 								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}, {{ $doc->rfc}}</option>
 								@endforeach
@@ -150,7 +150,7 @@
 						</div>
 
 						<div class="form-group col-md-6">
-							<input type="checkbox" id="aec" name="aec" value="">Asesor Externo
+							<input type="checkbox" id="aec" name="aec" onchange="myFunction()">Asesor Externo
 						</div>
 
 						<div class="form-group col-md-6" style="display: none;" id="aediv" name="aediv">
@@ -195,15 +195,15 @@
 </div>
 
 <script type="text/javascript">
-	$('#aec').on('click', function(){
-	if ( $(this).prop('checked') ) {
-			$('#aediv').show();
-	}
-	else {
-			$('#aediv').hide();
-	}
-	});
-
+function myFunction() {
+   if($('#aec').prop('checked')) {
+         $('#aediv').css('display','block');
+				 $("#vocal_suplente").prop('disabled', true);
+       } else {
+         $('#aediv').css('display','none');
+				 $("#vocal_suplente").prop('disabled', false);
+       }
+		 }
 	function validarFormulario(){
 		 $("#formTitulacion").validate();
 		 var asesor = $('#asesor').val();

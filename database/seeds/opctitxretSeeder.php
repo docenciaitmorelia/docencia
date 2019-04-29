@@ -60,10 +60,9 @@ class opctitxretSeeder extends Seeder
         'id_opcion_titulacion' => '10',
         'reticula' => '1993',
       ]);
-
       DB::table('opctitxrets')->insert([
         'id_opcion_titulacion' => '11',
-        'reticula' => '2004',
+        'reticula' => '1993',
       ]);
 
       DB::table('opctitxrets')->insert([
@@ -98,7 +97,7 @@ class opctitxretSeeder extends Seeder
 
       DB::table('opctitxrets')->insert([
         'id_opcion_titulacion' => '18',
-        'reticula' => '2010',
+        'reticula' => '2004',
       ]);
 
       DB::table('opctitxrets')->insert([
@@ -117,8 +116,8 @@ class opctitxretSeeder extends Seeder
       ]);
 
       DB::table('opctitxrets')->insert([
-        'id_opcion_titulacion' => '18',
-        'reticula' => '2017',
+        'id_opcion_titulacion' => '22',
+        'reticula' => '2010',
       ]);
 
       DB::table('opctitxrets')->insert([
@@ -133,6 +132,11 @@ class opctitxretSeeder extends Seeder
 
       DB::table('opctitxrets')->insert([
         'id_opcion_titulacion' => '21',
+        'reticula' => '2017',
+      ]);
+
+      DB::table('opctitxrets')->insert([
+        'id_opcion_titulacion' => '22',
         'reticula' => '2017',
       ]);
 

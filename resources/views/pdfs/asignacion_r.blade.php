@@ -2,26 +2,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Asignación de Revisores</title>
-  <link rel="stylesheet" type="text/css" href="{{ url('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url('bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url('bower_components/bootstrap-material-design/dist/css/ripples.min.css') }}">
-    <script type="text/javascript" src=" {{ url('bower_components/jquery/dist/jquery.min.js') }}"></script>
-    <script type="text/javascript" src=" {{ url('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src=" {{ url('bower_components/bootstrap-material-design/dist/js/ripples.min.js') }}"></script>
-    <script type="text/javascript" src=" {{ url('bower_components/bootstrap-material-design/dist/js/material.min.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ url('css/estilo.css') }}">
 </head>
   <body>
     <div id="contenido">
+			<p align='right'> Morelia, Mich. a {{$date}} </p>
       <p align="center">
         <strong>
-          DEPTO de...
+          {{$seccion->descripcion_area}}
           <br>
           REVISORES PARA OPCIÓN DE TITULACIÓN
         </strong>
       </p>
       <br>
-      <table class="table table-bordered" bordercolor="black">
+      <table border="1" bordercolor="black" width="100%">
           <tbody>
             <tr>
               <td>@if($data3->sexo == 'M')Alumno: @else Alumna: @endif</td>
@@ -37,14 +31,14 @@
             </tr>
             <tr>
               <td>Asesor</td>
-              <td>{{$data->asesor}}</td>
+              <td> {{$data->ag}} {{$data->asesor}}</td>
             </tr>
           </tbody>
         </table>
         <p align="justify">
           <strong>REVISORES</strong>
         </p>
-        <table class="table table-bordered" bordercolor="black">
+        <table border="1" bordercolor="black" width="100%">
           <thead>
             <tr>
               <th>Cargo</th>
@@ -54,30 +48,28 @@
           </thead>
           <tbody>
             <tr>
-              <td>Presidente:</td>
-              <td> {{$data->presidente}}</td>
-              <td></td>
+              <td>Presidente</td>
+              <td> {{$data->pg}} {{$data->presidente}}</td>
+              <td width="20%"></td>
             </tr>
             <tr>
               <td>Secretario</td>
-              <td>{{$data->secretario}}</td>
+              <td>{{$data->sg}} {{$data->secretario}}</td>
               <td></td>
             </tr>
             <tr>
               <td>Vocal Propietario</td>
-              <td>{{$data->vocal_propietario}}</td>
+              <td>{{$data->vpg}} {{$data->vocal_propietario}}</td>
               <td></td>
             </tr>
             <tr>
               <td>Vocal Suplente</td>
-              <td>{{$data->vocal_suplente}}</td>
+              <td> @if($vs == '0') {{$data->asesor_externo}} @else {{$data->vsg}} {{$data->vocal_suplente}} @endif </td>
               <td></td>
             </tr>
           </tbody>
         </table>
-      <p align="justify">
-          Después que revisen su proyecto y realice las correcciones necesarias, los revisores firmaran de conformidad. Entonces solicita el Oficio de Liberación de Proyecto.
-        </p>
+				<br>
 				<div id="firmas">
 	            <p align="center"><strong>ATENTAMENTE</strong><br>
 	              <i id="tec">"Técnica, progreso de México"</i>
@@ -98,20 +90,32 @@
 	                    <td>&nbsp;</td>
 	                    <td>&nbsp;</td>
 	                  </tr>
+	                  <tr>
+	                    <td align="center">{{$seccion->jefe_area}}</td>
+	                    <td align="center">&nbsp;</td>
+	                    <td align="center">{{$academia->grado}} {{$academia->nombre_empleado}} {{$academia->apellidos_empleado}}</td>
+	                  </tr>
+	                  <tr>
+	                    <td align="center" id="titulo">JEFE DEL {{$seccion->descripcion_area}}</td>
+	                    <td align="center">&nbsp;</td>
+	                    <td align="center" id="titulo">PRESIDENTE DE ACADEMIA</td>
+	                  </tr>
+
 										<tr>
 	                    <td>&nbsp;</td>
 	                    <td>&nbsp;</td>
 	                    <td>&nbsp;</td>
 	                  </tr>
-	                  <tr>
-	                    <td align="center">Nombre</td>
-	                    <td align="center">{{$data->asesor}}</td>
-	                    <td align="center">Nombre</td>
+
+										<tr>
+	                    <td>&nbsp;</td>
+	                    <td align="center">{{$data->ag}} {{$data->asesor}}</td>
+	                    <td>&nbsp;</td>
 	                  </tr>
-	                  <tr>
-	                    <td align="center" id="titulo">Jefe del {{ mb_convert_case('Depto', MB_CASE_TITLE, "utf8")}}</td>
-	                    <td align="center">Asesor</td>
-	                    <td align="center" id="titulo">Presidente de Academia</td>
+										<tr>
+	                    <td>&nbsp;</td>
+	                    <td align="center">ASESOR</td>
+	                    <td>&nbsp;</td>
 	                  </tr>
 	                </tbody>
 	                </table>

@@ -22,7 +22,7 @@
 				<td colspan="2" align="right"><b>SECCIÓN:&nbsp;</b>SISTEMAS Y COMPUTACIÓN</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="right"><b>OFICIO:&nbsp;</b>DSC.</td>
+				<td colspan="2" align="right"><b>OFICIO:&nbsp;</b>{{$nof}}</td>
 			</tr>
 			<tr>
 				<td colspan="2" align="right"><b>Morelia, Mich.,&nbsp;{{$date}}</b></td>
@@ -47,12 +47,10 @@
 	<p align="justify">
 		El que suscribe, Jefe del Departamento de Sistemas y Computación, hace constar que de acuerdo a la documentación que existe en registro de este departamento, se realizaron en el año las Titulaciones que a continuación se detallan:
 		</p>
-	<br>
-	<br>
 
 			@for($j = 1; $j <= 2; $j++)
 			@if($j==1 && count($titu1))
-			<h5>SEMESTRE: ENERO-JUNIO</h5>
+			<h5><b>SEMESTRE: ENERO-JUNIO</b></h5>
 
 			<table class="table table-bordered" bordercolor="black">
 				@foreach($su1 as $s1)
@@ -82,10 +80,9 @@
 				</tbody>
 				@endforeach
 			</table>
-<br>
-<br>
+			<br>
 			@elseif($j==2 && count($titu2))
-			<h5>SEMESTRE: AGOSTO-DICIEMBRE</h5>
+			<h5><b>SEMESTRE: AGOSTO-DICIEMBRE</b></h5>
 			<table class="table table-bordered">
 				@foreach($su1 as $s1)
 				<thead>
@@ -115,8 +112,6 @@
 			</table>
 			@endif
 			@endfor
-			<br>
-			<br>
 			<p>Sin otro particular, le reitero mi consideración distinguida.</p>
 			<div id="firmas">
             <p align="center"><strong>ATENTAMENTE</strong><br>
@@ -134,10 +129,10 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="center">@foreach($data5 as $docente) {{ $docente->especializacion}} @endforeach @foreach($data5 as $docente) {{ $docente->completo}} @endforeach</td>
+                    <td align="center">Nombre</td>
                   </tr>
                   <tr>
-                    <td align="center" id="titulo">@foreach($data5 as $docente) @if($docente->sexo=='M')Jefe @else Jefa @endif @endforeach del Departamento de Sistemas y Computación</td>
+                    <td align="center" id="titulo">Jefe del Departamento de Sistemas y Computación</td>
                   </tr>
                 </tbody>
                 </table>

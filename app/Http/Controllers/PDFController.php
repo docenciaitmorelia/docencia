@@ -12,25 +12,29 @@ use App\GrupoCEstudio;
 use App\OpcionesTitulacion;
 use App\Titulacion;
 use App\ProcesoTitulacion;
+use App\Puesto;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use File;
 
 class PDFController extends Controller
 {
 
-    public function crearPDFAC($datos,$datos2,$datos3,$vistaurl,$nc,$carrera,$dsc,$doc,$esc,$nof){
+    public function crearPDFAC($datos,$datos2,$datos3,$vistaurl,$nc,$carrera,$jefedsc,$gjdsc,$doc,$jefeesc,$gjesc,$nof,$docencia){
         $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
         $data   = $datos;
         $data2  = $datos2;
         $data3  = $datos3;
         $data4  = $carrera;
-        $data5  = $dsc;
+        $data5  = $jefedsc;
+        $gjdsc  = $gjdsc;
+        $gjesc  = $gjesc;
         $data6  = $doc;
-        $data7  = $esc;
+        $data7  = $jefeesc;
         $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
-        $view   = \View::make($vistaurl, compact('data', 'date','data2','data3','date','nc','data4','data5','data6','data7','nof'))->render();
+        $view   = \View::make($vistaurl, compact('data', 'date','data2','data3','date','nc','data4','data5','data6','data7','nof','gjesc','gjdsc','docencia'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
         $pdf    ->loadHTML($view,[],$overwrite = true)->save('pdf/AC/'.$nc.'.pdf');
         return $pdf->stream(''.$nc.'.pdf');
@@ -44,66 +48,71 @@ class PDFController extends Controller
         }
             $vistaurl="pdfs.constancia_ac";
             $ac=ActividadesComp::select('actividad','creditos','fecha_del','fecha_al','calificacion')
-                        ->where('alumno','LIKE',"%$nc%")->orderBy('fecha_del','ASC')->orderBy('fecha_al','ASC')->get();
-            $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo",'sexo'))
-                        ->where('no_de_control','LIKE',"%$nc%")->get();
-            $sum=ActividadesComp::where('alumno','LIKE',"%$nc%")
+                        ->where('alumno','=',"$nc")->orderBy('fecha_del','ASC')->orderBy('fecha_al','ASC')->get();
+            $nomb=DB::table('alumnos')->where('no_de_control','=',"$nc")->get();
+            $sum=ActividadesComp::where('alumno','=',"$nc")
                         ->sum(DB::raw('calificacion * creditos'));
             $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
                                             ->where('alumnos.no_de_control','=',"$nc")->groupBy('nombre')->get();
 
             $prom=(double)$sum/5;
-            $dsc=Personal::select(DB::raw("CONCAT(personal.nombre_empleado,' ',personal.apellidos_empleado) AS completo"),'personal.especializacion','personal.sexo_empleado AS sexo')->join('jefes','personal.rfc','=','jefes.rfc')->where('jefes.clave_area','=','DSC')->get();
-
-            $doc=Personal::select(DB::raw("CONCAT(personal.nombre_empleado,' ',personal.apellidos_empleado) AS completo"),'personal.especializacion','personal.sexo_empleado AS sexo')->join('jefes','personal.rfc','=','jefes.rfc')->where('jefes.clave_area','LIKE','%DSCDOCENCIA%')->get();
-
-            $esc=Personal::select(DB::raw("CONCAT(personal.nombre_empleado,' ',personal.apellidos_empleado) AS completo"),'personal.especializacion','personal.sexo_empleado AS sexo')->join('jefes','personal.rfc','=','jefes.rfc')->where('jefes.clave_area','LIKE','%SERVESCOLARES%')->get();
-
-            return $this->crearPDFAC($ac,$nomb,$prom, $vistaurl,$nc,$c,$dsc,$doc,$esc,$input);
+            $jefedsc    = Jefe::where('clave_area','=',Auth::user()->clave_area)->first();
+            $gjdsc      = Personal::select('sexo_empleado')->where('rfc','=',"$jefedsc->rfc")->get();
+            //Auth::user()->name
+            $doc=Personal::select(DB::raw("CONCAT(nombre_empleado,' ',apellidos_empleado) AS completo"),'sexo_empleado AS sexo')->where('personal.rfc','=','AOHA640415K52')->get();
+            $jefeesc    = Jefe::where('clave_area','=','120600')->first();
+            $gjesc      = Personal::select('sexo_empleado')->where('rfc','=',"$jefeesc->rfc")->get();
+            $docencia   =Puesto::select('g.grado as grado','d.apellidos_empleado','d.nombre_empleado','d.sexo_empleado as sexo_empleado')->join('grados as g','g.rfc','=','puesto_d.rfc')->join('personal as d','d.rfc','=','puesto_d.rfc')->where('puesto_d.puesto','JEFE DOCENCIA')->where('puesto_d.clave_area','=',Auth::user()->clave_area)->first();
+            //return $doc;
+            return $this->crearPDFAC($ac,$nomb,$prom, $vistaurl,$nc,$c,$jefedsc,$gjdsc,$doc,$jefeesc,$gjesc,$input,$docencia);
     }
 
-    public function crearPDFCE($alumno,$materia,$ciclo,$vistaurl,$carrera,$dsc,$nc,$nof){
+    public function crearPDFCE($alumno,$materia,$ciclo,$vistaurl,$carrera,$jefedsc,$gjdsc,$nc,$nof){
         $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
         $data   = $alumno;
         $data2  = $materia;
         $data3  = $ciclo;
         $data4  = $carrera;
-        $data5  = $dsc;
+        $data5  = $jefedsc;
+        $gjdsc  = $gjdsc;
         $date   = date('d')."/".$meses[date('m')-1]."/".date('Y');
         $anio   = date('Y');
-        $view   = \View::make($vistaurl, compact('data', 'date','data2','data3','data4','data5','nc','nof','anio'))->render();
+        $view   = \View::make($vistaurl, compact('data', 'date','data2','data3','data4','data5','nc','nof','anio','gjdsc'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
         $pdf    ->loadHTML($view)->save('pdf/Circulos/'.$nc.'.pdf');
+        //return $nc;
         return $pdf->stream(''.$nc.'.pdf');
     }
 
     public function crear_constancia_ce(Request $request,$nc){
         $input = $request->input('oficio');
+
         if (file_exists('pdf/Circulos/'.$nc.'.pdf')){
             File::delete('pdf/Circulos/'.$nc.'.pdf');
         }
 
             $vistaurl="pdfs.constancia_ce";
             $alumno=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))
-                        ->where('no_de_control','LIKE',"%$nc%")->get();
+                        ->where('no_de_control','=',"$nc")->get();
 
             $materia=GrupoCEstudio::select('materias.nombre_completo_materia as nombre')->join('materias','grupo_cestudios.materia','=','materias.id')
-                            ->where('grupo_cestudios.tutor','LIKE',"%$nc%")->get();
+                            ->where('grupo_cestudios.tutor','=',"$nc")->get();
 
             $carrera=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
                             ->where('alumnos.no_de_control','=',"$nc")->groupBy('nombre')->get();
 
             $ciclo=GrupoCEstudio::select('ciclo_escolar')->where('grupo_cestudios.tutor','LIKE',"%$nc%")->get();
 
-            $dsc=Personal::select(DB::raw("CONCAT(personal.nombre_empleado,' ',personal.apellidos_empleado) AS completo"),'personal.especializacion','personal.sexo_empleado AS sexo')->join('jefes','personal.rfc','=','jefes.rfc')->where('jefes.clave_area','=','DSC')->get();
-
-            return $this->crearPDFCE($alumno,$materia,$ciclo,$vistaurl,$carrera,$dsc,$nc,$input);
+            $jefedsc    = Jefe::where('clave_area','=',Auth::user()->clave_area)->first();
+            $gjdsc      = Personal::select('sexo_empleado')->where('rfc','=',"$jefedsc->rfc")->get();
+            //return $nc;
+            return $this->crearPDFCE($alumno,$materia,$ciclo,$vistaurl,$carrera,$jefedsc,$gjdsc,$nc,$input);
 
     }
 
     public function crear_reporte_a(Request $request){
         $a1= $request->input('anio1');
-        $a2= $request->input('anio2');
+        $oficio = $request->input('oficio');
         if (file_exists('pdf/Reportes/'.$a1.'.pdf')){
             File::delete('pdf/Reportes/'.$a1.'.pdf');
         }
@@ -130,18 +139,20 @@ class PDFController extends Controller
                             ->where('o.nombre_opcion','NOT LIKE','%CENEVAL%')
                             ->groupBy('o.nombre_opcion','opc_titu')
                             ->get();
+
             //return $now->year;
-            return $this->crearPDFRA($ti1,$a1,$ti2,$sum1,$sum2,$vistaurl);
+            return $this->crearPDFRA($ti1,$a1,$ti2,$sum1,$sum2,$vistaurl,$oficio);
     }
 
-    public function crearPDFRA($ti1,$a1,$ti2,$sum1,$sum2,$vistaurl){
+    public function crearPDFRA($ti1,$a1,$ti2,$sum1,$sum2,$vistaurl,$oficio){
         $titu1=$ti1;
         $titu2=$ti2;
         $su1=$sum1;
         $su2=$sum2;
+        $nof=$oficio;
         $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
         $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
-        $view   = \View::make($vistaurl, compact('titu1','titu2', 'a1','su1','su2','date'))->render();
+        $view   = \View::make($vistaurl, compact('titu1','titu2', 'a1','su1','su2','date','nof'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
         $pdf    ->loadHTML($view)->save('pdf/Reportes/'.$a1.'.pdf');
         return $pdf->stream(''.$a1.'.pdf');
@@ -207,330 +218,394 @@ class PDFController extends Controller
 
     public function crear_asignacion_s(Request $request,$nc){
         $oficio = $request->input('oficio');
-        $seccion = mb_strtoupper($request->input('seccion'),'UTF-8');
-        $depto = mb_strtoupper($request->input('depto'),'UTF-8');
-        $t_asesor = mb_strtoupper($request->input('t_asesor'),'UTF-8');
-        $t_presidente = mb_strtoupper($request->input('t_presidente'),'UTF-8');
-        $t_secretario = mb_strtoupper($request->input('t_secretario'),'UTF-8');
-        $t_vocalp = mb_strtoupper($request->input('t_vocalp'),'UTF-8');
-        $t_vocals = mb_strtoupper($request->input('t_vocals'),'UTF-8');
-        $t_jefedepto = mb_strtoupper($request->input('t_jefedepto'),'UTF-8');
-        $jefedepto = $request->input('jefedepto');
-        if (file_exists('pdf/AsignacionS/Asignacion_Sinodales_'.$nc.'.pdf')){
-            File::delete('pdf/AsignacionS/Asignacion_Sinodales_'.$nc.'.pdf');
+        $vs=Titulacion::select('vocal_suplente')->where('id',$nc)->first();
+        if($vs->vocal_suplente=='0'){
+          $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),'titulaciones.asesor_externo','op.nombre_opcion as nombre_opcion','ag.grado as ag','pg.grado as pg','vpg.grado as vpg','sg.grado as sg','op.opcion_titulacion as op')
+                 ->join('personal as a','a.rfc','=','titulaciones.asesor')
+                 ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
+                 ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
+                 ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
+                 ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
+                 ->join('grados as ag','ag.rfc','=','titulaciones.asesor')
+                 ->join('grados as pg','pg.rfc','=','titulaciones.presidente')
+                 ->join('grados as sg','sg.rfc','=','titulaciones.secretario')
+                 ->join('grados as vpg','vpg.rfc','=','titulaciones.vocal_propietario')
+                 ->where('titulaciones.id',$nc)
+                 ->first();
         }
-        $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))
-                        ->where('no_de_control','LIKE',"%$nc%")->get();
-                        $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
-                                            ->where('alumnos.no_de_control','=',"$nc")->groupBy('nombre')->get();
-        $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto as proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as opcion','op.detalle_opcion as detalle_opcion')
-                        ->join('personal as a','a.rfc','=','titulaciones.asesor')
-                        ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
-                        ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
-                        ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
-                        ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
-                        ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
-                        ->where('titulaciones.alumno','LIKE',"%$nc%")
-                        ->where('titulaciones.estatus','=',"ACTIVO")
-                        ->get();
-        $desc=$titulacion[0]->detalle_opcion;
-        $jefediv    = Jefe::where('descripcion_area','=','DIVISION DE ESTUDIOS PROFESIONALES')->get();
-        $rfcdiv     = $jefediv[0]->rfc;
-        $gjdiv      = Personal::select('sexo_empleado')->where('rfc','=',"$rfcdiv")->get();
+        else{
+          $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion','op.opcion_titulacion as op','ag.grado as ag','pg.grado as pg','vpg.grado as vpg','vsg.grado as vsg','sg.grado as sg')
+                 ->join('personal as a','a.rfc','=','titulaciones.asesor')
+                 ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
+                 ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
+                 ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
+                 ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
+                 ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
+                 ->join('grados as ag','ag.rfc','=','titulaciones.asesor')
+                 ->join('grados as pg','pg.rfc','=','titulaciones.presidente')
+                 ->join('grados as sg','sg.rfc','=','titulaciones.secretario')
+                 ->join('grados as vpg','vpg.rfc','=','titulaciones.vocal_propietario')
+                 ->join('grados as vsg','vsg.rfc','=','titulaciones.vocal_suplente')
+                 ->where('titulaciones.id',$nc)
+                 ->first();
+        }
+        if (file_exists('pdf/AsignacionS/Asignacion_Sinodales_'.$titulacion->alumno.'.pdf')){
+            File::delete('pdf/AsignacionS/Asignacion_Sinodales_'.$titulacion->alumno.'.pdf');
+        }
+        $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"),'sexo','no_de_control','reticula')
+                                 ->where('no_de_control','=',"$titulacion->alumno")->first();
+
+        $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
+                  ->where('alumnos.no_de_control',$titulacion->alumno)->groupBy('nombre')->first();
+        $desc=$titulacion->detalle_opcion;
+        $jefediv    = Jefe::where('descripcion_area','=','DIVISION DE ESTUDIOS PROFESIONALES')->first();
+        $gjdiv      = Personal::select('sexo_empleado')->where('rfc',$jefediv->rfc)->first();
         if($desc=='Protocolario'){
           $vistaurl="pdfs.asignacion_sp";
         }
         else{
           $vistaurl="pdfs.asignacion_s";
         }
-        $ord = ProcesoTitulacion::select('orden')->where('descripcion','LIKE',"%Asignación de Sinodales%")->pluck('orden');
-        $t=Titulacion::where('alumno', $nc)->where('estatus','=',"ACTIVO")->update(array('proceso' => 'Asignación de Sinodales'));
-        return $this->crearPDFAS($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$seccion,$jefediv,$gjdiv,$depto,$t_asesor,$t_presidente,$t_secretario,$t_vocalp,$t_vocals,$t_jefedepto,$jefedepto);
+        $t=Titulacion::where('id', $nc)->update(array('proceso' => 'Asignación de Sinodales'));
+        $jefedsc    = Jefe::where('clave_area','=',Auth::user()->clave_area)->first();
+        $gjdsc      = Personal::select('sexo_empleado')->where('rfc','=',"$jefedsc->rfc")->get();
+        //return $vs;
+        return $this->crearPDFAS($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$vs,$jefedsc,$gjdsc);
 
     }
 
-    public function crearPDFAS($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$seccion,$jefediv,$gjdiv,$depto,$t_asesor,$t_presidente,$t_secretario,$t_vocalp,$t_vocals,$t_jefedepto,$jefedepto){
-        $data   = $titulacion;
-        $data2  = $c;
-        $data3  = $nomb;
+    public function crearPDFAS($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$vs,$jefedsc,$gjdsc){
+        $titu   = $titulacion;
+        $carrera  = $c;
+        $alumno  = $nomb;
         $nof    = $oficio;
-        $secc   = $seccion;
         $jefediv=$jefediv;
         $gjdiv  =$gjdiv;
-        $dep = $depto;
-        $t_asesor = $t_asesor;
-        $t_presidente =$t_presidente;
-        $t_secretario =$t_secretario;
-        $t_vocalp =$t_vocalp;
-        $t_vocals = $t_vocals;
-        $jefedepto =$t_jefedepto." ".$jefedepto;
+        $gjdsc  = $gjdsc;
+        $jefedsc  = $jefedsc;
         $meses  = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
         $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
-        $view   = \View::make($vistaurl, compact('data', 'data2','data3','date','nof','nc','secc','jefediv','gjdiv','dep','t_asesor','t_presidente','t_secretario','t_vocalp','t_vocals','jefedepto'))->render();
+        $view   = \View::make($vistaurl, compact('titu', 'carrera','alumno','date','nof','nc','jefediv','gjdiv','vs','jefedsc','gjdsc'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
         //$pdf    ->loadHTML($view)->save('pdf/AsignacionS/Asignacion_Sinodales_'.$nc.'.pdf');
-        $pdf    ->loadHTML($view,[],$overwrite = true)->save('pdf/AsignacionS/Asignacion_Sinodales_'.$nc.'.pdf');
+        $pdf    ->loadHTML($view)->save('pdf/AsignacionS/Asignacion_Sinodales_'.$titu->alumno.'.pdf');
         //$pdf    ->loadHTML($view);
-        return $pdf->stream('Asignacion_Sinodales_'.$nc.'.pdf');
+        return $pdf->stream('Asignacion_Sinodales_'.$titu->alumno.'.pdf');
     }
 
     public function crear_impresion_d(Request $request,$nc){
-      if (file_exists('pdf/Impresion_Definitiva/Impresion_Definitiva_'.$nc.'.pdf')){
-          File::delete('pdf/Impresion_Definitiva/Impresion_Definitiva_'.$nc.'.pdf');
-      }
         $oficio     = $request->input('oficio');
-        $seccion = mb_strtoupper($request->input('seccion'),'UTF-8');
-        $t_asesor = mb_strtoupper($request->input('t_asesor'),'UTF-8');
-        $t_presidente = mb_strtoupper($request->input('t_presidente'),'UTF-8');
-        $t_secretario = mb_strtoupper($request->input('t_secretario'),'UTF-8');
-        $t_vocalp = mb_strtoupper($request->input('t_vocalp'),'UTF-8');
-        $t_vocals = mb_strtoupper($request->input('t_vocals'),'UTF-8');
-        $nomb       = Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"),'reticula')
-                        ->where('no_de_control','LIKE',"%$nc%")->get();
-        $ret        = $nomb[0]->reticula;
-        $c          = Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.id')
-                        ->where('alumnos.no_de_control','LIKE',"%$nc%")->get();
-        $titulacion = Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto as proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as opcion')
-                        ->join('personal as a','a.rfc','=','titulaciones.asesor')
-                        ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
-                        ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
-                        ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
-                        ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
-                        ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
-                        ->where('titulaciones.alumno','LIKE',"%$nc%")
-                        ->where('titulaciones.estatus','=',"ACTIVO")
-                        ->get();
-        $jefediv    = Jefe::where('descripcion_area','=','DIVISION DE ESTUDIOS PROFESIONALES')->get();
-        $rfcdiv     = $jefediv[0]->rfc;
-        $gjdiv      = Personal::select('sexo_empleado')->where('rfc','=',"$rfcdiv")->get();
+        $vs=Titulacion::select('vocal_suplente')->where('id',$nc)->first();
+        if($vs->vocal_suplente=='0'){
+          $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),'titulaciones.asesor_externo','op.nombre_opcion as nombre_opcion','ag.grado as ag','pg.grado as pg','vpg.grado as vpg','sg.grado as sg','op.opcion_titulacion as op')
+                 ->join('personal as a','a.rfc','=','titulaciones.asesor')
+                 ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
+                 ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
+                 ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
+                 ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
+                 ->join('grados as ag','ag.rfc','=','titulaciones.asesor')
+                 ->join('grados as pg','pg.rfc','=','titulaciones.presidente')
+                 ->join('grados as sg','sg.rfc','=','titulaciones.secretario')
+                 ->join('grados as vpg','vpg.rfc','=','titulaciones.vocal_propietario')
+                 ->where('titulaciones.id',$nc)
+                 ->first();
+        }
+        else{
+          $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion','op.opcion_titulacion as op','ag.grado as ag','pg.grado as pg','vpg.grado as vpg','vsg.grado as vsg','sg.grado as sg')
+                 ->join('personal as a','a.rfc','=','titulaciones.asesor')
+                 ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
+                 ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
+                 ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
+                 ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
+                 ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
+                 ->join('grados as ag','ag.rfc','=','titulaciones.asesor')
+                 ->join('grados as pg','pg.rfc','=','titulaciones.presidente')
+                 ->join('grados as sg','sg.rfc','=','titulaciones.secretario')
+                 ->join('grados as vpg','vpg.rfc','=','titulaciones.vocal_propietario')
+                 ->join('grados as vsg','vsg.rfc','=','titulaciones.vocal_suplente')
+                 ->where('titulaciones.id',$nc)
+                 ->first();
+        }
+        if (file_exists('pdf/Impresion_Definitiva/Impresion_Definitiva_'.$titulacion->alumno.'.pdf')){
+            File::delete('pdf/Impresion_Definitiva/Impresion_Definitiva_'.$titulacion->alumno.'.pdf');
+        }
+        $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"),'reticula','sexo','no_de_control')
+                      ->where('no_de_control',$titulacion->alumno)->first();
+        $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
+                    ->where('alumnos.no_de_control',$titulacion->alumno)->groupBy('nombre')->first();
+
+        $ret        = $nomb->reticula;
+        $jefediv    = Jefe::where('descripcion_area','=','DIVISION DE ESTUDIOS PROFESIONALES')->first();
+        $gjdiv      = Personal::select('sexo_empleado')->where('rfc',$jefediv->rfc)->first();
+        $seccion    = Jefe::where('clave_area','=',Auth::user()->clave_area)->first();
         if($ret < 2010){
           $vistaurl   = "pdfs.impresion_d";
         }
         else{
           $vistaurl   = "pdfs.impresion_dti";
         }
-        $t          = Titulacion::where('alumno', $nc)->where('estatus','=',"ACTIVO")->update(array('proceso' => 'Impresión Definitiva'));
-        return $this->crearPDFID($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$seccion,$t_asesor,$t_presidente,$t_secretario,$t_vocalp,$t_vocals);
+        $t=Titulacion::where('id', $nc)->update(array('proceso' => 'Asignación de Sinodales'));
+        $t=Titulacion::where('id', $nc)->update(array('proceso' => 'Impresión Definitiva'));
+        return $this->crearPDFID($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$vs,$seccion);
     }
 
-    public function crearPDFID($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$seccion,$t_asesor,$t_presidente,$t_secretario,$t_vocalp,$t_vocals){
-        $data   = $titulacion;
-        $data2  = $c;
-        $data3  = $nomb;
+    public function crearPDFID($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$vs,$seccion){
+        $titu   = $titulacion;
+        $carrera  = $c;
+        $alumno  = $nomb;
         $nof  = $oficio;
-        $secc = $seccion;
         $jefediv=$jefediv;
         $gjdiv  =$gjdiv;
-        $t_asesor = $t_asesor;
-        $t_presidente =$t_presidente;
-        $t_secretario =$t_secretario;
-        $t_vocalp =$t_vocalp;
-        $t_vocals = $t_vocals;
         $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
         $dia = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
         $date   = $dia[date('w')]." ".date('d')."/".$meses[date('m')-1]."/".date('Y') ;
-        $view   = \View::make($vistaurl, compact('data', 'data2','data3','date','nof','nc','jefediv','gjdiv','secc','t_asesor','t_presidente','t_secretario','t_vocalp','t_vocals'))->render();
+        $view   = \View::make($vistaurl, compact('titu', 'carrera','alumno','date','nof','nc','jefediv','gjdiv','vs','seccion'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
-        $pdf    ->loadHTML($view,[],$overwrite = true)->save('pdf/Impresion_Definitiva/Impresion_Definitiva_'.$nc.'.pdf');
-        return $pdf->stream('Impresion_Definitiva_'.$nc.'.pdf');
+        $pdf    ->loadHTML($view)->save('pdf/Impresion_Definitiva/Impresion_Definitiva_'.$titu->alumno.'.pdf');
+        return $pdf->stream('Impresion_Definitiva_'.$titu->alumno.'.pdf');
     }
 
     public function crear_asignacion_r(Request $request,$nc){
-       $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion')
-                ->join('personal as a','a.rfc','=','titulaciones.asesor')
-                ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
-                ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
-                ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
-                ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
-                ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
-                ->where('titulaciones.id',$nc)
-                ->first();
-        $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"),'sexo')
-                                ->where('no_de_control','=',"$titulacion->alumno")->first();
+      $vs=Titulacion::select('vocal_suplente')->where('id',$nc)->first();
+      if($vs->vocal_suplente=='0'){
+        $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),'titulaciones.asesor_externo','op.nombre_opcion as nombre_opcion','ag.grado as ag','pg.grado as pg','vpg.grado as vpg','sg.grado as sg','op.opcion_titulacion as op')
+               ->join('personal as a','a.rfc','=','titulaciones.asesor')
+               ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
+               ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
+               ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
+               ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
+               ->join('grados as ag','ag.rfc','=','titulaciones.asesor')
+               ->join('grados as pg','pg.rfc','=','titulaciones.presidente')
+               ->join('grados as sg','sg.rfc','=','titulaciones.secretario')
+               ->join('grados as vpg','vpg.rfc','=','titulaciones.vocal_propietario')
+               ->where('titulaciones.id',$nc)
+               ->first();
+      }
+      else{
+        $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion','op.opcion_titulacion as op','ag.grado as ag','pg.grado as pg','vpg.grado as vpg','vsg.grado as vsg','sg.grado as sg')
+               ->join('personal as a','a.rfc','=','titulaciones.asesor')
+               ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
+               ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
+               ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
+               ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
+               ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
+               ->join('grados as ag','ag.rfc','=','titulaciones.asesor')
+               ->join('grados as pg','pg.rfc','=','titulaciones.presidente')
+               ->join('grados as sg','sg.rfc','=','titulaciones.secretario')
+               ->join('grados as vpg','vpg.rfc','=','titulaciones.vocal_propietario')
+               ->join('grados as vsg','vsg.rfc','=','titulaciones.vocal_suplente')
+               ->where('titulaciones.id',$nc)
+               ->first();
+      }
+      if (file_exists('pdf/AsignacionR/Asignacion_Revisores_'.$titulacion->alumno.'.pdf')){
+          File::delete('pdf/AsignacionR/Asignacion_Revisores_'.$titulacion->alumno.'.pdf');
+      }
+        $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"),'sexo','reticula','no_de_control')
+                               ->where('no_de_control','=',"$titulacion->alumno")->first();
         $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
-                        ->where('alumnos.no_de_control','=',"12121612")->groupBy('nombre')->get();
-
-        $jefediv    = Jefe::where('descripcion_area','=','DIVISION DE ESTUDIOS PROFESIONALES')->get();
+                        ->where('alumnos.no_de_control',$titulacion->alumno)->groupBy('nombre')->get();
+        $seccion    = Jefe::where('clave_area','=',Auth::user()->clave_area)->first();
+        $academia   =Puesto::select('g.grado as grado','d.apellidos_empleado','d.nombre_empleado')->join('grados as g','g.rfc','=','puesto_d.rfc')->join('personal as d','d.rfc','=','puesto_d.rfc')->where('puesto_d.puesto','PRESIDENTE ACADEMIA')->where('puesto_d.clave_area','=',Auth::user()->clave_area)->first();
         $vistaurl="pdfs.asignacion_r";
         $t=Titulacion::where('id', $nc)->update(array('proceso' => 'Asignación de Revisores'));
         //return $nomb;
-        return $this->crearPDFAR($titulacion,$c,$nomb,$vistaurl,$titulacion->alumno);
+        return $this->crearPDFAR($titulacion,$c,$nomb,$vistaurl,$titulacion->alumno,$vs,$seccion,$academia);
     }
 
-    public function crearPDFAR($titulacion,$c,$nomb,$vistaurl,$nc){
-        $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+    public function crearPDFAR($titulacion,$c,$nomb,$vistaurl,$nc,$vs,$seccion,$academia){
         $data   = $titulacion;
         $data2  = $c;
         $data3  = $nomb;
-        $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
-        $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
-        $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
-        $view   = \View::make($vistaurl, compact('data', 'data2','data3','date','nc'))->render();
+        $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        $date   = date('d')." de ".$meses[date('m')-1]." de ".date('Y') ;
+        $view   = \View::make($vistaurl, compact('data', 'data2','data3','date','nc','vs','seccion','academia'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
-        $pdf    ->loadHTML($view);
+        $pdf    ->loadHTML($view)->save('pdf/AsignacionR/Asignacion_Revisores_'.$data->alumno.'.pdf');
         //return $t_vocals;
-        return $pdf->stream('Asignacion_Revisores_'.$nc.'.pdf');
+        return $pdf->stream('Asignacion_Revisores_'.$data->alumno.'.pdf');
     }
 
     public function crear_liberacion_p(Request $request,$nc){
         $oficio = $request->input('oficio');
-        $seccion = mb_strtoupper($request->input('seccion'),'UTF-8');
-        $depto = mb_strtoupper($request->input('depto'),'UTF-8');
-        $t_asesor = mb_strtoupper($request->input('t_asesor'),'UTF-8');
-        $t_presidente = mb_strtoupper($request->input('t_presidente'),'UTF-8');
-        $t_secretario = mb_strtoupper($request->input('t_secretario'),'UTF-8');
-        $t_vocalp = mb_strtoupper($request->input('t_vocalp'),'UTF-8');
-        $t_vocals = mb_strtoupper($request->input('t_vocals'),'UTF-8');
-        $t_jefedepto = mb_strtoupper($request->input('t_jefedepto'),'UTF-8');
-        $jefedepto = $request->input('jefedepto');
-        $t_presac = mb_strtoupper($request->input('t_presac'),'UTF-8');
-        $presac = $request->input('presac');
-        $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))
-                        ->where('no_de_control','LIKE',"%$nc%")->get();
+        $vs=Titulacion::select('vocal_suplente')->where('id',$nc)->first();
+        if($vs->vocal_suplente=='0'){
+          $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),'titulaciones.asesor_externo','op.nombre_opcion as nombre_opcion','ag.grado as ag','pg.grado as pg','vpg.grado as vpg','sg.grado as sg','op.opcion_titulacion as op')
+                 ->join('personal as a','a.rfc','=','titulaciones.asesor')
+                 ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
+                 ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
+                 ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
+                 ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
+                 ->join('grados as ag','ag.rfc','=','titulaciones.asesor')
+                 ->join('grados as pg','pg.rfc','=','titulaciones.presidente')
+                 ->join('grados as sg','sg.rfc','=','titulaciones.secretario')
+                 ->join('grados as vpg','vpg.rfc','=','titulaciones.vocal_propietario')
+                 ->where('titulaciones.id',$nc)
+                 ->first();
+        }
+        else{
+          $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion','op.opcion_titulacion as op','ag.grado as ag','pg.grado as pg','vpg.grado as vpg','vsg.grado as vsg','sg.grado as sg')
+                 ->join('personal as a','a.rfc','=','titulaciones.asesor')
+                 ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
+                 ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
+                 ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
+                 ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
+                 ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
+                 ->join('grados as ag','ag.rfc','=','titulaciones.asesor')
+                 ->join('grados as pg','pg.rfc','=','titulaciones.presidente')
+                 ->join('grados as sg','sg.rfc','=','titulaciones.secretario')
+                 ->join('grados as vpg','vpg.rfc','=','titulaciones.vocal_propietario')
+                 ->join('grados as vsg','vsg.rfc','=','titulaciones.vocal_suplente')
+                 ->where('titulaciones.id',$nc)
+                 ->first();
+        }
+        if (file_exists('pdf/LP/LP_'.$titulacion->alumno.'.pdf')){
+            File::delete('pdf/LP/LP_'.$titulacion->alumno.'.pdf');
+        }
+        $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"),'sexo','no_de_control','reticula')
+                                 ->where('no_de_control','=',"$titulacion->alumno")->get();
         $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
-                                            ->where('alumnos.no_de_control','=',"$nc")->groupBy('nombre')->get();
-        $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto as proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as opcion')
-                        ->join('personal as a','a.rfc','=','titulaciones.asesor')
-                        ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
-                        ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
-                        ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
-                        ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
-                        ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
-                        ->where('titulaciones.alumno','LIKE',"%$nc%")
-                        ->where('titulaciones.estatus','=',"ACTIVO")
-                        ->get();
+                    ->where('alumnos.no_de_control',$titulacion->alumno)->groupBy('nombre')->get();
 
-        $jefediv    = Jefe::where('descripcion_area','=','DIVISION DE ESTUDIOS PROFESIONALES')->get();
-        $rfcdiv     = $jefediv[0]->rfc;
-        $gjdiv      = Personal::select('sexo_empleado')->where('rfc','=',"$rfcdiv")->get();
+        $jefediv    = Jefe::where('descripcion_area','=','DIVISION DE ESTUDIOS PROFESIONALES')->first();
+        $gjdiv      = Personal::select('sexo_empleado')->where('rfc',$jefediv->rfc)->first();
+        $seccion    = Jefe::where('clave_area','=',Auth::user()->clave_area)->first();
+        $academia   =Puesto::select('g.grado as grado','d.apellidos_empleado','d.nombre_empleado')->join('grados as g','g.rfc','=','puesto_d.rfc')->join('personal as d','d.rfc','=','puesto_d.rfc')->where('puesto_d.puesto','PRESIDENTE ACADEMIA')->where('puesto_d.clave_area','=',Auth::user()->clave_area)->first();
         $vistaurl="pdfs.liberacion_p";
-        $t=Titulacion::where('alumno', $nc)->where('estatus','=',"ACTIVO")->update(array('proceso' => 'Liberación de Proyecto'));
-        return $this->crearPDFLP($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$seccion,$depto,$t_asesor,$t_presidente,$t_secretario,$t_vocalp,$t_vocals,$t_jefedepto,$jefedepto,$t_presac,$presac);
+        $t=Titulacion::where('id', $nc)->update(array('proceso' => 'Liberación de Proyecto'));
+        return $this->crearPDFLP($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$vs,$seccion,$academia);
     }
 
-    public function crearPDFLP($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$seccion,$depto,$t_asesor,$t_presidente,$t_secretario,$t_vocalp,$t_vocals,$t_jefedepto,$jefedepto,$t_presac,$presac){
+    public function crearPDFLP($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$vs,$seccion,$academia){
         $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
         $data   = $titulacion;
         $data2  = $c;
         $data3  = $nomb;
         $nof  = $oficio;
-        $secc = $seccion;
-        $jefediv = $jefediv;
-        $gjdiv = $gjdiv;
-        $dep = $depto;
-        $t_asesor = $t_asesor;
-        $t_presidente =$t_presidente;
-        $t_secretario =$t_secretario;
-        $t_vocalp =$t_vocalp;
-        $t_vocals = $t_vocals;
-        $jefedepto =$t_jefedepto." ".$jefedepto;
-        $presac = $t_presac." ".$presac;
         $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
         $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
         $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
-        $view   = \View::make($vistaurl, compact('data', 'data2','data3','date','nof','nc','jefediv','gjdiv','secc','dep','t_asesor','t_presidente','t_secretario','t_vocalp','t_vocals','jefedepto','presac'))->render();
+        $view   = \View::make($vistaurl, compact('data', 'data2','data3','date','nof','nc','jefediv','gjdiv','vs','seccion','academia'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
-        $pdf    ->loadHTML($view);
+        $pdf    ->loadHTML($view)->save('pdf/LP/LP_'.$data->alumno.'.pdf');
         //return $data3;
-        return $pdf->stream('Liberacion_Proyecto_'.$nc.'.pdf');
+        return $pdf->stream('Liberacion_Proyecto_'.$data->alumno.'.pdf');
     }
 
-    public function crear_registro(Request $request,$nc){
+    public function crear_autorizacion_t(Request $request,$nc){
         $oficio = $request->input('oficio');
-        $seccion = $request->input('seccion');
-        $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))
-                        ->where('no_de_control',$nc)->get();
-                        $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
-                                            ->where('alumnos.no_de_control','=',"$nc")->groupBy('nombre')->get();
-        $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto as proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as opcion')
-                        ->join('personal as a','a.rfc','=','titulaciones.asesor')
-                        ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
-                        ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
-                        ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
-                        ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
-                        ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
-                        ->where('titulaciones.alumno',$nc)
-                        ->where('titulaciones.estatus','=',"ACTIVO")
-                        ->get();
+          $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion','op.opcion_titulacion as op','ag.grado as ag','pg.grado as pg','vpg.grado as vpg','vsg.grado as vsg','sg.grado as sg')
+                 ->join('personal as a','a.rfc','=','titulaciones.asesor')
+                 ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
+                 ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
+                 ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
+                 ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
+                 ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
+                 ->join('grados as ag','ag.rfc','=','titulaciones.asesor')
+                 ->join('grados as pg','pg.rfc','=','titulaciones.presidente')
+                 ->join('grados as sg','sg.rfc','=','titulaciones.secretario')
+                 ->join('grados as vpg','vpg.rfc','=','titulaciones.vocal_propietario')
+                 ->join('grados as vsg','vsg.rfc','=','titulaciones.vocal_suplente')
+                 ->where('titulaciones.id',$nc)
+                 ->first();
+        if (file_exists('pdf/ATA/ATA_'.$titulacion->alumno.'.pdf')){
+                     File::delete('pdf/ATA/ATA_'.$titulacion->alumno.'.pdf');
+        }
+        $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"),'sexo','reticula','no_de_control')
+                        ->where('no_de_control',$titulacion->alumno)->first();
+        $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
+                                        ->where('alumnos.no_de_control',$titulacion->alumno)->groupBy('nombre')->first();
+        $jefediv    = Jefe::where('descripcion_area','=','DIVISION DE ESTUDIOS PROFESIONALES')->first();
+        $gjdiv      = Personal::select('sexo_empleado')->where('rfc',$jefediv->rfc)->first();
+        $jefedsc    = Jefe::where('clave_area','=',Auth::user()->clave_area)->first();
+        $academia   =Puesto::select('g.grado as grado','d.apellidos_empleado','d.nombre_empleado')->join('grados as g','g.rfc','=','puesto_d.rfc')->join('personal as d','d.rfc','=','puesto_d.rfc')->where('puesto_d.puesto','PRESIDENTE ACADEMIA')->where('puesto_d.clave_area','=',Auth::user()->clave_area)->first();
 
-        $jefediv    = Jefe::where('descripcion_area','=','DIVISION DE ESTUDIOS PROFESIONALES')->get();
-        $rfcdiv     = $jefediv[0]->rfc;
-        $gjdiv      = Personal::select('sexo_empleado')->where('rfc','=',"$rfcdiv")->get();
-        $vistaurl="pdfs.registro_t";
-        $t=Titulacion::where('alumno', $nc)->where('estatus','=',"ACTIVO")->update(array('proceso' => 'Liberación de Proyecto'));
-        return $this->crearPDFRT($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$seccion);
+        $vistaurl="pdfs.autorizacion_t";
+        $t=Titulacion::where('id', $nc)->update(array('proceso' => 'Autorización de tema'));
+        return $this->crearPDFATA($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$jefedsc,$academia);
     }
 
-    public function crearPDFRT($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$seccion){
+    public function crearPDFATA($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$jefedsc,$academia){
         $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
-        $data   = $titulacion;
-        $data2  = $c;
-        $data3  = $nomb;
+        $titu   = $titulacion;
+        $carrera  = $c;
+        $alumno  = $nomb;
         $nof  = $oficio;
-        $secc = $seccion;
         $jefediv = $jefediv;
         $gjdiv = $gjdiv;
         $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
         $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
         $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
-        $view   = \View::make($vistaurl, compact('data', 'data2','data3','date','nof','nc','jefediv','gjdiv','secc'))->render();
+        $view   = \View::make($vistaurl, compact('titu', 'carrera','alumno','date','nof','nc','jefediv','gjdiv','jefedsc','academia'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
-        $pdf    ->loadHTML($view);
-        return $pdf->stream('Liberacion_Proyecto_'.$nc.'.pdf');
+        $pdf    ->loadHTML($view)->save('pdf/ATA/ATA_'.$titu->alumno.'.pdf');
+        return $pdf->stream('ATA_'.$nc.'.pdf');
     }
 
     public function crear_invitacion(Request $request,$nc){
-      $t_asesor = mb_strtoupper($request->input('t_asesor'),'UTF-8');
-      $t_presidente = mb_strtoupper($request->input('t_presidente'),'UTF-8');
-      $t_secretario = mb_strtoupper($request->input('t_secretario'),'UTF-8');
-      $t_vocalp = mb_strtoupper($request->input('t_vocalp'),'UTF-8');
-      $t_vocals = mb_strtoupper($request->input('t_vocals'),'UTF-8');
-        $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))
-                        ->where('no_de_control','LIKE',"%$nc%")->get();
-        $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
-                            ->where('alumnos.no_de_control','=',"$nc")->groupBy('nombre')->get();
-        $titulacion= Titulacion::select('titulaciones.id','titulaciones.nombre_proyecto as proyecto',DB::raw("CONCAT(a.especializacion,' ',a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.especializacion,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.especializacion,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.especializacion,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.especializacion,' ',s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as opcion')
-                        ->join('personal as a','a.rfc','=','titulaciones.asesor')
-                        ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
-                        ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
-                        ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
-                        ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
-                        ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
-                        ->where('titulaciones.alumno','LIKE',"%$nc%")
-                        ->where('titulaciones.estatus','=',"ACTIVO")
-                        ->get();
-        $depto = mb_strtoupper($request->input('depto'),'UTF-8');
+        $vs=Titulacion::select('vocal_suplente')->where('id',$nc)->first();
+        if($vs->vocal_suplente=='0'){
+          $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),'titulaciones.asesor_externo','op.nombre_opcion as nombre_opcion','ag.grado as ag','pg.grado as pg','vpg.grado as vpg','sg.grado as sg','op.opcion_titulacion as op')
+                 ->join('personal as a','a.rfc','=','titulaciones.asesor')
+                 ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
+                 ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
+                 ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
+                 ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
+                 ->join('grados as ag','ag.rfc','=','titulaciones.asesor')
+                 ->join('grados as pg','pg.rfc','=','titulaciones.presidente')
+                 ->join('grados as sg','sg.rfc','=','titulaciones.secretario')
+                 ->join('grados as vpg','vpg.rfc','=','titulaciones.vocal_propietario')
+                 ->where('titulaciones.id',$nc)
+                 ->first();
+        }
+        else{
+          $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),DB::raw("CONCAT(s4.apellidos_empleado,' ',s4.nombre_empleado) AS vocal_suplente"),'op.nombre_opcion as nombre_opcion','op.opcion_titulacion as op','ag.grado as ag','pg.grado as pg','vpg.grado as vpg','vsg.grado as vsg','sg.grado as sg')
+                 ->join('personal as a','a.rfc','=','titulaciones.asesor')
+                 ->join('personal as s1','s1.rfc','=','titulaciones.presidente')
+                 ->join('personal as s2','s2.rfc','=','titulaciones.secretario')
+                 ->join('personal as s3','s3.rfc','=','titulaciones.vocal_propietario')
+                 ->join('personal as s4','s4.rfc','=','titulaciones.vocal_suplente')
+                 ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
+                 ->join('grados as ag','ag.rfc','=','titulaciones.asesor')
+                 ->join('grados as pg','pg.rfc','=','titulaciones.presidente')
+                 ->join('grados as sg','sg.rfc','=','titulaciones.secretario')
+                 ->join('grados as vpg','vpg.rfc','=','titulaciones.vocal_propietario')
+                 ->join('grados as vsg','vsg.rfc','=','titulaciones.vocal_suplente')
+                 ->where('titulaciones.id',$nc)
+                 ->first();
+        }
+      if (file_exists('pdf/INV/ICT_'.$titulacion->alumno.'.pdf')){
+                   File::delete('pdf/INV/ICT_'.$titulacion->alumno.'.pdf');
+      }
+      $nomb=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"),'sexo','no_de_control','reticula')
+                               ->where('no_de_control','=',"$titulacion->alumno")->get();
+      $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
+                       ->where('alumnos.no_de_control',$titulacion->alumno)->groupBy('nombre')->get();
+
         $date  = $request->input('fecha');
         $fecha = strtotime($request->input('fecha'));
         $lugar = mb_strtoupper($request->input('lugar'),'UTF-8');
         $hora  = mb_strtoupper($request->input('hora'),'UTF-8');
         $vistaurl="pdfs.invitacion";
-        $t=Titulacion::where('alumno', $nc)->where('estatus','=',"ACTIVO")->update(array('proceso' => 'Invitación a Ceremonia de Titulación','fecha_cer' => "$date",'lugar' => "$lugar",'hora' =>"$hora"));
+        $t=Titulacion::where('id', $nc)->update(array('estatus'=>'TITULADO','proceso' => 'Invitación a Ceremonia de Titulación','fecha_cer' => "$date",'lugar' => "$lugar",'hora' =>"$hora"));
         //return $c;
-        return $this->crearPDFINV($titulacion,$c,$nomb,$vistaurl,$nc,$fecha,$lugar,$hora,$depto,$t_asesor,$t_presidente,$t_secretario,$t_vocalp,$t_vocals);
+        return $this->crearPDFINV($titulacion,$c,$nomb,$vistaurl,$nc,$fecha,$lugar,$hora,$vs);
     }
 
-    public function crearPDFINV($titulacion,$c,$nomb,$vistaurl,$nc,$fecha,$lugar,$hora,$depto,$t_asesor,$t_presidente,$t_secretario,$t_vocalp,$t_vocals){
+    public function crearPDFINV($titulacion,$c,$nomb,$vistaurl,$nc,$fecha,$lugar,$hora,$vs){
         $fecha = $fecha;
         $lugar = $lugar;
         $hora  = $hora;
-        $dep   =$depto;
-        $t_asesor = $t_asesor;
-        $t_presidente =$t_presidente;
-        $t_secretario =$t_secretario;
-        $t_vocalp =$t_vocalp;
-        $t_vocals = $t_vocals;
         $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
         $dia = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
         $data   = $titulacion;
         $data2  = $c;
         $data3  = $nomb;
         $date   = $dia[date('w',$fecha)]." ".date('d',$fecha)." DE ".$meses[date('m',$fecha)-1]." DE ".date('Y') ;
-        $view   = \View::make($vistaurl, compact('data', 'data2','data3','date','nc','fecha','lugar','hora','dep','t_asesor','t_presidente','t_secretario','t_vocalp','t_vocals'))->render();
+        $view   = \View::make($vistaurl, compact('data', 'data2','data3','date','nc','fecha','lugar','hora','vs'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
-        $pdf    ->loadHTML($view);
-        //return $date;
-        return $pdf->stream('Invitacion_'.$nc.'.pdf');
+        $pdf    ->loadHTML($view)->save('pdf/INV/ICT_'.$data->alumno.'.pdf');
+        //return $data;
+        return $pdf->stream('Invitacion_'.$data->alumno.'.pdf');
     }
 
     public function crear_lista_circulos(Request $request){

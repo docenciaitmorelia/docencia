@@ -36,7 +36,7 @@
               <label class="control-label" for="descripcion">Descripción del paso:</label>
               <select id="descripcion" name="descripcion" class="form-control">
                 <option value="" selected>Seleccione Opción de titulación</option>
-                  <option value="Registrar Opción de Titulación">Registrar Opción de Titulación</option>
+                  <option value="Asignación de tema y asesor">Asignación de tema y asesor</option>
                   <option value="Asignación de Sinodales">Asignación de Sinodales</option>
                   <option value="Impresión Definitiva">Impresión Definitiva</option>
                   <option value="Asignación de Revisores">Asignación de Revisores</option>

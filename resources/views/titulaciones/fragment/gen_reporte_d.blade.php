@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-	<h3>Generar reporte por docente</h3>
+<div class="row">
+	<div class="col">
+		<div class="card">
+			<div class="card-body">
+				<h3 class="card-title">Generar reporte por docente</h3>
 	<form action="crear_reporte_d" method="POST" class="form" target="_blank">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="col-md-6 form-group">
@@ -35,4 +39,8 @@
 			<a href="{{ route('titulaciones.index') }}" class="btn btn-raised btn-primary">Regresar</a>
 		</p>
 	</form>
+</div>
+</div>
+</div>
+</div>
 @endsection

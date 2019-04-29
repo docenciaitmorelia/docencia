@@ -2,26 +2,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Impresión Definitiva</title>
-  <link rel="stylesheet" type="text/css" href="{{ url('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url('bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url('bower_components/bootstrap-material-design/dist/css/ripples.min.css') }}">
-    <script type="text/javascript" src=" {{ url('bower_components/jquery/dist/jquery.min.js') }}"></script>
-    <script type="text/javascript" src=" {{ url('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src=" {{ url('bower_components/bootstrap-material-design/dist/js/ripples.min.js') }}"></script>
-    <script type="text/javascript" src=" {{ url('bower_components/bootstrap-material-design/dist/js/material.min.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ url('css/estilo.css') }}">
 </head>
   <body>
     <div id="contenido">
     <table align="right">
         <tr>
-          <td colspan="2" align="right"><b>Morelia, Mich.,&nbsp; {{$date}}</b></td>
+          <td colspan="2" align="right"><b>Morelia, Mich.,&nbsp;{{$date}}</b></td>
         </tr>
         <tr>
           <td colspan="2" align="right"><b>DEPENDENCIA:&nbsp;</b>SUB. ACADÉMICA</td>
         </tr>
         <tr>
-          <td colspan="2" align="right"><b>SECCIÓN:&nbsp;</b>{{$secc}}</td>
+          <td colspan="2" align="right"><b>SECCIÓN:&nbsp;</b>{{$seccion->descripcion_area}}</td>
         </tr>
         <tr>
           <td colspan="2" align="right"><b>OFICIO:&nbsp;</b>{{$nof}}</td>
@@ -42,41 +35,36 @@
     <div class="col-md-12" id="den">
       <p>
   			<strong>
-  				@foreach($jefediv as $div) {{ $div->jefe_area}} @endforeach
+  			     {{ $jefediv->jefe_area}}
   				<br>
-  				@foreach($gjdiv as $genero) @if($genero->sexo_empleado=='M') JEFE @else JEFA @endif @endforeach DE LA DIVISIÓN DE ESTUDIOS PROFESIONALES
+  				@if($gjdiv->sexo_empleado=='M') JEFE @else JEFA @endif DE LA DIVISIÓN DE ESTUDIOS PROFESIONALES
   				<br>
   			</strong>
   		</p>
       <p align="justify">
         Los que suscriben, integrantes del Jurado de Examen Recepcional del egresado (a) cuyos datos se especifican a continuación:
       </p>
-      <table class="table table-bordered" bordercolor="black">
+      <table border="1" bordercolor="black">
           <tbody>
-              @foreach($data3 as $t)
             <tr>
-              <td>Nombre del egresado (a):</td>
-              <td>{{$t->completo}}</td>
+              <td width="25%">Nombre @if($alumno->sexo=='M') del&nbsp;egresado: @else de&nbsp;la&nbsp;egresada: @endif</td>
+              <td>{{alumno->completo}}</td>
             </tr>
-              @endforeach
             <tr>
               <td>Número de control</td>
-              <td>{{$nc}}</td>
+              <td>{{alumno->no_de_control}}</td>
             </tr>
-              @foreach($data2 as $t)
             <tr>
               <td>Pasante de la carrera de:</td>
-              <td>{{$t->nombre}}</td>
+              <td>{{$carrera->nombre}}</td>
             </tr>
-              @endforeach
-              @foreach($data as $t)
             <tr>
               <td>Opción de Titulación</td>
-              <td>{{$t->opcion}}</td>
+              <td> {{$titu->op}}.{{$titu->nombre_opcion}}</td>
             </tr>
             <tr>
               <td>Título final del trabajo de Titulación</td>
-              <td>"{{$t->proyecto}}"</td>
+              <td>"{{$titu->nombre_proyecto}}"</td>
             </tr>
 
           </tbody>
@@ -110,9 +98,9 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="center">{{$t_presidente}}{{$t->presidente}}</td>
+                    <td align="center">{{$titu->presidente}}</td>
                     <td align="center">&nbsp;</td>
-                    <td align="center">{{$t_secretario}}{{$t->secretario}}</td>
+                    <td align="center">{{$titu->secretario}}</td>
                   </tr>
                   <tr>
                     <td align="center" id="titulo">PRESIDENTE</td>
@@ -135,9 +123,9 @@
                     <td>&nbsp;</td>
                   </tr>
                   <tr>
-                    <td align="center">{{$t_vocalp}}{{$t->vocal_propietario}}</td>
+                    <td align="center">{{$titu->vocal_propietario}}</td>
                     <td align="center">&nbsp;</td>
-                    <td align="center">{{$t_vocals}}{{$t->vocal_suplente}}</td>
+                    <td align="center">@if($vs == '0') {{$titu->asesor_externo}} @else {{$titu->vocal_suplente}} @endif</td>
                   </tr>
                   <tr>
                     <td align="center" id="titulo">VOCAL PROPIETARIO</td>
@@ -161,7 +149,7 @@
                   </tr>
                   <tr>
                     <td align="center">&nbsp;</td>
-                    <td align="center">{{$t->asesor}}</td>
+                    <td align="center">{{$titu->asesor}}</td>
                     <td align="center">&nbsp;</td>
                   </tr>
                   <tr>
@@ -171,9 +159,7 @@
                   </tr>
                 </tbody>
                 </table>
-                @endforeach
             </div>
-            <p id="cp">C.C.P. Alumno</p>
     </div>
     </div>
   </body>

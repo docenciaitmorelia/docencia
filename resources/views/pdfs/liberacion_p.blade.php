@@ -21,7 +21,7 @@
           <td colspan="2" align="right"><b>DEPENDENCIA:&nbsp;</b>SUB. ACADÉMICA</td>
         </tr>
         <tr>
-          <td colspan="2" align="right"><b>SECCIÓN:&nbsp;</b>{{$secc}}</td>
+          <td colspan="2" align="right"><b>SECCIÓN:&nbsp;</b>{{$seccion->descripcion_area}}</td>
         </tr>
         <tr>
           <td colspan="2" align="right"><b>OFICIO:&nbsp;</b>{{$nof}}</td>
@@ -43,10 +43,10 @@
     <br>
     <div class="col-md-12" id="den">
       <p>
-  			<strong>
-  				@foreach($jefediv as $div) {{ $div->jefe_area}} @endforeach
+        <strong>
+  			     {{ $jefediv->jefe_area}}
   				<br>
-  				@foreach($gjdiv as $genero) @if($genero->sexo_empleado=='M') JEFE @else JEFA @endif @endforeach DE LA DIVISIÓN DE ESTUDIOS PROFESIONALES
+  				@if($gjdiv->sexo_empleado=='M') JEFE @else JEFA @endif DE LA DIVISIÓN DE ESTUDIOS PROFESIONALES
   				<br>
   			</strong>
   		</p>
@@ -57,30 +57,29 @@
           <tbody>
               @foreach($data3 as $t)
             <tr>
-              <td>Nombre del egresado (a):</td>
+              <td width="25%">Nombre del egresado (a):</td>
               <td>{{$t->completo}}</td>
             </tr>
-              @endforeach
+
             <tr>
               <td>Número de control</td>
-              <td>{{$nc}}</td>
+              <td>{{$t->no_de_control}}</td>
             </tr>
+            @endforeach
               @foreach($data2 as $t)
             <tr>
               <td>Carrera de:</td>
               <td>{{$t->nombre}}</td>
             </tr>
               @endforeach
-              @foreach($data as $t)
             <tr>
               <td>Opción de Titulación</td>
-              <td>{{$t->opcion}}</td>
+              <td>{{$data->nombre_opcion}}</td>
             </tr>
             <tr>
               <td>Nombre del proyecto:</td>
-              <td>"{{$t->proyecto}}"</td>
+              <td>"{{$data->nombre_proyecto}}"</td>
             </tr>
-            @endforeach
           </tbody>
         </table>
         <p align="justify">
@@ -93,37 +92,50 @@
             </p>
             <br>
             <div class="col-md-12">
-              <table align="center">
-                <thead>
-                  <tr>
-                    <th width='30%'>&nbsp;</th>
-                    <th width='30%'>&nbsp;</th>
-                    <th width='30%'>&nbsp;</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td align="center">{{$jefedepto}}</td>
-                    <td align="center">{{$t_asesor}}{{$t->asesor}}</td>
-                    <td align="center">{{$presac}}</td>
-                  </tr>
-                  <tr>
-                    <td align="center" id="titulo">Jefe del {{ mb_convert_case($dep, MB_CASE_TITLE, "utf8")}}</td>
-                    <td align="center">Asesor</td>
-                    <td align="center" id="titulo">Presidente de Academia</td>
-                  </tr>
-                </tbody>
-                </table>
+              <div class="col-md-12">
+	              <table align="center">
+	                <thead>
+	                  <tr>
+	                    <th width='30%'>&nbsp;</th>
+	                    <th width='30%'>&nbsp;</th>
+	                    <th width='30%'>&nbsp;</th>
+	                  </tr>
+	                </thead>
+	                <tbody>
+										<tr>
+	                    <td>&nbsp;</td>
+	                    <td>&nbsp;</td>
+	                    <td>&nbsp;</td>
+	                  </tr>
+	                  <tr>
+	                    <td align="center">{{$seccion->jefe_area}}</td>
+	                    <td align="center">&nbsp;</td>
+	                    <td align="center">{{$academia->grado}} {{$academia->nombre_empleado}} {{$academia->apellidos_empleado}}</td>
+	                  </tr>
+	                  <tr>
+	                    <td align="center" id="titulo">JEFE DEL {{$seccion->descripcion_area}}</td>
+	                    <td align="center">&nbsp;</td>
+	                    <td align="center" id="titulo">PRESIDENTE DE ACADEMIA</td>
+	                  </tr>
+
+										<tr>
+	                    <td>&nbsp;</td>
+	                    <td>&nbsp;</td>
+	                    <td>&nbsp;</td>
+	                  </tr>
+
+										<tr>
+	                    <td>&nbsp;</td>
+	                    <td align="center">{{$data->ag}} {{$data->asesor}}</td>
+	                    <td>&nbsp;</td>
+	                  </tr>
+										<tr>
+	                    <td>&nbsp;</td>
+	                    <td align="center">ASESOR</td>
+	                    <td>&nbsp;</td>
+	                  </tr>
+	                </tbody>
+	                </table>
             </div>
   </div>
     </div>

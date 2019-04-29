@@ -41,7 +41,7 @@
 						<div class="form-group col-md-12">
 							<label for="asesor" class="control-label">Asesor</label>
 							<select id="asesor" name="asesor" class="form-control" required>
-								<option value="">Seleccione Asesor</option>
+								<option value="0">Seleccione Asesor</option>
 								@foreach($personal as $doc)
 								<option value="{!! $doc->rfc !!}" {{(old('asesor',$titulacion->asesor)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}, {{ $doc->rfc}}</option>
 								@endforeach
@@ -80,21 +80,17 @@
 
 					    <div class="form-group col-md-6">
 							<label for="vocal_suplente" class="control-label">Vocal Suplente</label>
+							@if($vs == '0')
+							<input type="text" id="ae" name="ae" class="form-control" style="text-transform:uppercase;" value="{{ old('ae', $titulacion->asesor_externo) }}">
+							<input type="text" style="display: none;" id="vocal_suplente" name="vocal_suplente" value="0">
+							@else
 							<select id="vocal_suplente" name="vocal_suplente" class="form-control" required>
-								<option value="">Seleccione Vocal Suplente</option>
+								<option value="0">Seleccione Vocal Suplente</option>
 								@foreach($personal as $doc)
 								<option value="{!! $doc->rfc !!}" {{(old('vocal_suplente',$titulacion->vocal_suplente)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}, {{ $doc->rfc}}</option>
 								@endforeach
 							</select>
-						</div>
-
-						<div class="form-group col-md-6">
-							<input type="checkbox" id="aec" name="aec" value="AE">Asesor Externo
-						</div>
-
-						<div class="form-group col-md-6" style="display: none;" id="aediv" name="aediv">
-							<label for="ae" class="control-label">Nombre del Asesor</label>
-							<input type="text" id="ae" name="ae" class="form-control" value="" style="text-transform:uppercase;">
+							@endif
 						</div>
 
 						<div class="col-md-4">

@@ -12,7 +12,7 @@
           <td colspan="2" align="right"><b>DEPENDENCIA:&nbsp;</b>SUB. ACADÉMICA</td>
         </tr>
         <tr>
-          <td colspan="2" align="right"><b>SECCIÓN:&nbsp;</b>{$secc}}</td>
+          <td colspan="2" align="right" width="25%"><b>SECCIÓN:&nbsp;</b>{{$data5->descripcion_area}}</td>
         </tr>
         <tr>
           <td colspan="2" align="right"><b>OFICIO:&nbsp;</b>{{$nof}}</td>
@@ -72,10 +72,10 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td align="center">@foreach($data5 as $docente) {{ $docente->especializacion}} @endforeach @foreach($data5 as $docente) {{ $docente->completo}} @endforeach</td>
+                    <td align="center">{{$data5->jefe_area}}</td>
                   </tr>
                   <tr>
-                    <td align="center" id="titulo">@foreach($data5 as $docente) @if($docente->sexo=='M')Jefe @else Jefa @endif @endforeach del Departamento de Sistemas y Computación</td>
+                    <td align="center" id="titulo">@foreach($gjdsc as $genero) @if($genero->sexo_empleado=='M') JEFE @else JEFA @endif @endforeach DEL {{$data5->descripcion_area}}</td>
                   </tr>
                 </tbody>
                 </table>
