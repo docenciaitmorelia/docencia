@@ -44,7 +44,7 @@
       <br>
       <br>
       <p align="justify">
-        Por medio de la presente se hace <strong>CONSTAR</strong> que el <strong>C. @foreach($data as $alumno) {{$alumno->completo}}&nbsp; @endforeach</strong> de la carrera @foreach($data4 as $carrera) {{$carrera->nombre}}, @endforeach &nbsp;con número de control {{$nc}}, apoyó como ASESOR(A) de Círculos de estudio en la(s) materia(s) @foreach($data2 as $materia) {{$materia->nombre}}, @endforeach &nbsp;en el periodo @foreach($data3 as $ciclo) @if($ciclo->ciclo_escolar==1) ENERO-JUNIO @else AGOSTO-DICIEMBRE @endif @endforeach{{$anio}}.
+        Por medio de la presente se hace <strong>CONSTAR</strong> que el <strong>C.{{$data->completo}}&nbsp;</strong> de la carrera @foreach($data4 as $carrera) {{$carrera->nombre}}, @endforeach &nbsp;con número de control {{$nc}}, apoyó como ASESOR(A) de Círculos de estudio en la(s) materia(s) @foreach($data2 as $materia) {{$materia->nombre}}, @endforeach &nbsp;en el periodo @foreach($data3 as $ciclo) @if($ciclo->ciclo_escolar==1) ENERO-JUNIO @else AGOSTO-DICIEMBRE @endif @endforeach{{$anio}}.
       </p>
 
      <br>

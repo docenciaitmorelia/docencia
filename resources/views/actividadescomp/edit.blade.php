@@ -15,7 +15,7 @@
 			<div class="col-md-12">
 			<div class="col-md-6">
 				<label for="actividad" class="control-label">Nombre de la Actividad</label>
-				<input type="text" id="actividad" name="actividad" class="form-control" style="text-transform:uppercase;" value="{{ old('actividad', $actividadescomp->actividad) }}">
+				<input type="text" id="actividad" name="actividad" class="form-control" style="text-transform:uppercase;" value="{{ old('actividad', $actividadescomp->actividad) }}" required>
 			</div>
 
 			<div class="col-md-6">
@@ -26,7 +26,7 @@
 		<div class="col-md-12">
       <div class="col-md-6">
           <label for="tipo" class="control-label">Tipo de Actividad</label>
-                <select id="tipo" name="tipo" class="form-control" data-live-search="true">
+                <select id="tipo" name="tipo" class="form-control" data-live-search="true" required>
                     <option value="">Seleccione Tipo de actividad</option>
                     @foreach($tipo as $t)
                     <option value="{!! $t->id !!}" {{(old('tipo',$actividadescomp->tipo)==$t->id)? 'selected':''}}>{!! $t->actividad !!}</option>
@@ -36,7 +36,7 @@
 
 			<div class="col-md-3">
 				<label for="creditos" class="control-label">Número de créditos</label>
-				<input type="number" id="creditos" name="creditos" max="2" class="form-control" value="{{ old('creditos', $actividadescomp->creditos) }}">
+				<input type="number" id="creditos" name="creditos" max="2" class="form-control" value="{{ old('creditos', $actividadescomp->creditos) }}" required>
 			</div>
 
       <div class="col-md-3">
@@ -47,23 +47,23 @@
 		<div class="col-md-12">
 			<div class="col-md-6">
 				<label for="fecha_del" class="control-label">Del</label>
-				<input type="text" id="fecha_del" name="fecha_del" class="form-control" style="text-transform:uppercase;" value="{{ old('fecha_del', $actividadescomp->fecha_del) }}">
+				<input type="text" id="fecha_del" name="fecha_del" class="form-control" style="text-transform:uppercase;" value="{{ old('fecha_del', $actividadescomp->fecha_del) }}" required>
 			</div>
 
 			<div class="col-md-6">
 				<label for="fecha_al" class="control-label">Al</label>
-				<input type="text" id="fecha_al" name="fecha_al" class="form-control" style="text-transform:uppercase;" value="{{ old('fecha_al', $actividadescomp->fecha_al) }}">
+				<input type="text" id="fecha_al" name="fecha_al" class="form-control" style="text-transform:uppercase;" value="{{ old('fecha_al', $actividadescomp->fecha_al) }}" required>
 			</div>
 		</div>
 		<div class="col-md-12">
 			<div class="col-md-4">
 				<label for="calificacion" class="control-label">Calificación</label>
-				<input type="number" id="calificacion" name="calificacion" class="form-control" step=".01" value="{{ old('calificacion', $actividadescomp->calificacion) }}">
+				<input type="number" id="calificacion" name="calificacion" class="form-control" step=".01" value="{{ old('calificacion', $actividadescomp->calificacion) }}" required>
 			</div>
 
 			<div class="col-md-8">
 				<label for="docente_resp" class="control-label">Docente Responsable</label>
-				<select id="docente_resp" name="docente_resp" class="form-control">
+				<select id="docente_resp" name="docente_resp" class="form-control" required>
 					<option value="">Seleccione docente</option>
 					@foreach($docente as $doc)
 					<option value="{!! $doc->rfc !!}" {{(old('docente_resp',$actividadescomp->docente_resp)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}</option>

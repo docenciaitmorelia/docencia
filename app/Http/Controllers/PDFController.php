@@ -79,22 +79,19 @@ class PDFController extends Controller
         $anio   = date('Y');
         $view   = \View::make($vistaurl, compact('data', 'date','data2','data3','data4','data5','nc','nof','anio','gjdsc'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
-        $pdf    ->loadHTML($view)->save('pdf/Circulos/'.$nc.'.pdf');
+        $pdf    ->loadHTML($view)->save('pdf/Circulos/'.$data->no_de_control.'.pdf');
         //return $nc;
         return $pdf->stream(''.$nc.'.pdf');
     }
 
     public function crear_constancia_ce(Request $request,$nc){
         $input = $request->input('oficio');
-
-        if (file_exists('pdf/Circulos/'.$nc.'.pdf')){
-            File::delete('pdf/Circulos/'.$nc.'.pdf');
-        }
-
             $vistaurl="pdfs.constancia_ce";
             $alumno=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))
-                        ->where('no_de_control','=',"$nc")->get();
-
+                        ->where('no_de_control','=',"$nc")->first();
+            if (file_exists('pdf/Circulos/'.$alumno->no_de_control.'.pdf')){
+                File::delete('pdf/Circulos/'.$alumno->no_de_control.'.pdf');
+            }
             $materia=GrupoCEstudio::select('materias.nombre_completo_materia as nombre')->join('materias','grupo_cestudios.materia','=','materias.id')
                             ->where('grupo_cestudios.tutor','=',"$nc")->get();
 
