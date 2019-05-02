@@ -45,28 +45,28 @@ class PDFController extends Controller
     public function crear_constancia_ac(Request $request,$nc){
         $input = $request->input('oficio');
         $controller = new ActividadesCompController;
+        $vistaurl="pdfs.constancia_ac";
+        $ac=ActividadesComp::select('actividad','creditos','fecha_del','fecha_al','calificacion')
+                        ->where('alumno','=',"$nc")->orderBy('fecha_del','ASC')->orderBy('fecha_al','ASC')->get();
+        $nomb=DB::table('alumnos')->where('no_de_control','=',"$nc")->get();
         if (file_exists('pdf/AC/'.$nc.'.pdf')){
             File::delete('pdf/AC/'.$nc.'.pdf');
         }
-            $vistaurl="pdfs.constancia_ac";
-            $ac=ActividadesComp::select('actividad','creditos','fecha_del','fecha_al','calificacion')
-                        ->where('alumno','=',"$nc")->orderBy('fecha_del','ASC')->orderBy('fecha_al','ASC')->get();
-            $nomb=DB::table('alumnos')->where('no_de_control','=',"$nc")->get();
-            $sum=ActividadesComp::where('alumno','=',"$nc")
+        $sum=ActividadesComp::where('alumno','=',"$nc")
                         ->sum(DB::raw('calificacion * creditos'));
-            $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
+        $c=Alumno::select('carreras.nombre_carrera as nombre')->join('carreras','alumnos.carrera','=','carreras.carrera')
                                             ->where('alumnos.no_de_control','=',"$nc")->groupBy('nombre')->get();
 
-            $prom=(double)$sum/5;
-            $jefedsc    = Jefe::where('clave_area','=',Auth::user()->clave_area)->first();
-            $gjdsc      = Personal::select('sexo_empleado')->where('rfc','=',"$jefedsc->rfc")->get();
-            //Auth::user()->name
-            $doc=Personal::select(DB::raw("CONCAT(nombre_empleado,' ',apellidos_empleado) AS completo"),'sexo_empleado AS sexo')->where('personal.rfc','=','AOHA640415K52')->get();
-            $jefeesc    = Jefe::where('clave_area','=','120600')->first();
-            $gjesc      = Personal::select('sexo_empleado')->where('rfc','=',"$jefeesc->rfc")->get();
-            $docencia   =Puesto::select('g.grado as grado','d.apellidos_empleado','d.nombre_empleado','d.sexo_empleado as sexo_empleado')->join('grados as g','g.rfc','=','puesto_d.rfc')->join('personal as d','d.rfc','=','puesto_d.rfc')->where('puesto_d.puesto','JEFE DOCENCIA')->where('puesto_d.clave_area','=',Auth::user()->clave_area)->first();
+        $prom=(double)$sum/5;
+        $jefedsc    = Jefe::where('clave_area','=',Auth::user()->clave_area)->first();
+        $gjdsc      = Personal::select('sexo_empleado')->where('rfc','=',"$jefedsc->rfc")->get();
+        //Auth::user()->name
+        $doc=Personal::select(DB::raw("CONCAT(nombre_empleado,' ',apellidos_empleado) AS completo"),'sexo_empleado AS sexo')->where('personal.rfc','=','AOHA640415K52')->get();
+        $jefeesc    = Jefe::where('clave_area','=','120600')->first();
+        $gjesc      = Personal::select('sexo_empleado')->where('rfc','=',"$jefeesc->rfc")->get();
+        $docencia   =Puesto::select('g.grado as grado','d.apellidos_empleado','d.nombre_empleado','d.sexo_empleado as sexo_empleado')->join('grados as g','g.rfc','=','puesto_d.rfc')->join('personal as d','d.rfc','=','puesto_d.rfc')->where('puesto_d.puesto','JEFE DOCENCIA')->where('puesto_d.clave_area','=',Auth::user()->clave_area)->first();
             //return $doc;
-            return $this->crearPDFAC($ac,$nomb,$prom, $vistaurl,$nc,$c,$jefedsc,$gjdsc,$doc,$jefeesc,$gjesc,$input,$docencia);
+        return $this->crearPDFAC($ac,$nomb,$prom, $vistaurl,$nc,$c,$jefedsc,$gjdsc,$doc,$jefeesc,$gjesc,$input,$docencia);
     }
 
     //CIRCULOS DE ESTUDIOS
@@ -85,7 +85,7 @@ class PDFController extends Controller
         $pdf    = \App::make('snappy.pdf.wrapper');
         $pdf    ->loadHTML($view)->save('pdf/Circulos/'.$data->no_de_control.'.pdf');
         //return $nc;
-        return $pdf->stream(''.$nc.'.pdf');
+        return $pdf->stream(''.$data->no_de_control.'.pdf');
     }
 
     public function crear_constancia_ce(Request $request,$nc){
