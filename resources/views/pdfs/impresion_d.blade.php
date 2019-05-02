@@ -125,7 +125,7 @@
                   <tr>
                     <td align="center">{{$titu->vocal_propietario}}</td>
                     <td align="center">&nbsp;</td>
-                    <td align="center">@if($vs == '0') {{$titu->asesor_externo}} @else {{$titu->vocal_suplente}} @endif</td>
+                    <td align="center">@if($ae->asesor_externo != 'N') {{$titu->asesor_externo}} @else {{$titu->vocal_suplente}} @endif</td>
                   </tr>
                   <tr>
                     <td align="center" id="titulo">VOCAL PROPIETARIO</td>

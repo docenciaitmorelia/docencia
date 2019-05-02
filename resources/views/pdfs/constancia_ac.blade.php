@@ -5,10 +5,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url('css/estilo.css') }}">
 </head>
   <body>
-
     <div id="contenido">
         <div id="datos1">
-            <table align="right">
+            <table align="right" width="50%" style="font-size: 10pt;">
                 <tr>
                   <td colspan="2" align="right"><b>DEPENDENCIA:&nbsp;</b>SUB. ACADÉMICA</td>
                 </tr>
@@ -55,16 +54,16 @@
               <table border="1" bordercolor="black" align="center" style="height: 150px;">
                   <thead align="center">
                       <tr>
-                          <th class="text-center">Actividad</th>
-                          <th class="text-center">Fecha</th>
-                          <th class="text-center">N. Créditos</th>
-                          <th class="text-center">Calif.</th>
+                          <th class="text-center" width="60%">Actividad</th>
+                          <th class="text-center" width="20%">Fecha</th>
+                          <th class="text-center" width="15%">N. Créditos</th>
+                          <th class="text-center" width="5%">Calif.</th>
                       </tr>
               </thead>
               <tbody>
                 @foreach($data as $acomplementaria)
-                  <tr style="height:20px;">
-                    <td>{{ $acomplementaria->actividad }}</td>
+                  <tr>
+                    <td style="font-size: 9pt;">{{ $acomplementaria->actividad }}</td>
                     <td align="center">
                       @if($acomplementaria->fecha_del != $acomplementaria->fecha_al)
                       {{ $acomplementaria->fecha_del }} A {{$acomplementaria->fecha_al }}

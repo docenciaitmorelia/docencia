@@ -64,7 +64,7 @@
             </tr>
             <tr>
               <td>Vocal Suplente</td>
-              <td> @if($vs == '0') {{$data->asesor_externo}} @else {{$data->vsg}} {{$data->vocal_suplente}} @endif </td>
+              <td> @if($ae->asesor_externo != 'N') {{$data->asesor_externo}} @else {{$data->vsg}} {{$data->vocal_suplente}} @endif </td>
               <td></td>
             </tr>
           </tbody>

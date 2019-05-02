@@ -54,7 +54,7 @@
 			PRESIDENTE: &emsp;&emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;   {{$data->pg}} {{$data->presidente}} <br>
 			SECRETARIO: &emsp;&emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;&emsp;    {{$data->sg}} {{$data->secretario}} <br>
 			VOCAL PROPIETARIO: &emsp;&emsp;  {{$data->vpg}} {{$data->vocal_propietario}} <br>
-			VOCAL SUPLENTE: &emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp; @if($vs == '0') {{$data->asesor_externo}} @else {{$data->vsg}} {{$data->vocal_suplente}} @endif
+			VOCAL SUPLENTE: &emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp; @if($ae->asesor_externo != 'N') {{$data->asesor_externo}} @else {{$data->vsg}} {{$data->vocal_suplente}} @endif
 			</h4>
 </div>
 

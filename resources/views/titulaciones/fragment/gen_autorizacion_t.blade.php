@@ -21,48 +21,53 @@
 					</h5>
 				</center>
 				<table class="table table-striped table-hover">
-					<thead>
-					<tr>
-						<th>
-							<center>Asesor</center>
-						</th>
-						<th>
-							<center>Presidente</center>
-						</th>
-						<th>
-							<center>Secretario</center>
-						</th>
-						<th>
-							<center>Vocal Propietario</center>
-						</th>
-						<th>
-							<center>Vocal Suplente</center>
-						</th>
-					</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
-								{{ $titulacion->asesor}}
-							</td>
-							<td>
-								{{ $titulacion->presidente }}
-							</td>
+          <thead>
+            <tr>
+              @if($ae->asesor_externo == 'N')
+              <th><center>Asesor</center></th>
+              <th><center>Presidente</center></th>
+              <th><center>Secretario</center></th>
+              <th><center>Vocal Propietario</center></th>
+              <th><center>Vocal Suplente</center></th>
+              <th colspan="1"></th>
+              @else
+              <th><center>Asesor</center></th>
+              <th><center>Presidente</center></th>
+              <th><center>Secretario</center></th>
+              <th><center>Vocal Propietario</center></th>
+              <th><center>Vocal Suplente</center></th>
+              <th><center>Sinodal Externo</center></th>
+              <th colspan="1"></th>
+              @endif
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td>
+                  {{ $titulacion->asesor}}
+                </td>
+                <td>
+                  {{ $titulacion->presidente }}
+                </td>
 
-							<td>
-								{{ $titulacion->secretario }}
-							</td>
+                <td>
+                  {{ $titulacion->secretario }}
+                </td>
 
-							<td>
-								{{ $titulacion->vocal_propietario}}
-							</td>
-							<td>
-              @if($vs == '0') {{$titulacion->asesor_externo}} @else {{$titulacion->vocal_suplente}} @endif
-              </td>
-
-						</tr>
-					</tbody>
-				</table>
+                <td>
+                  {{ $titulacion->vocal_propietario}}
+                </td>
+                <td>
+                  {{$titulacion->vocal_suplente}}
+                </td>
+                @if($ae->asesor_externo != 'N')
+                <td>
+                  {{$titulacion->asesor_externo}}
+                </td>
+                @endif
+              </tr>
+          </tbody>
+        </table>
 				<br>
 				<form action="../crear_autorizacion_t/{{$titulacion->id}}" method="POST" target="_blank">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">

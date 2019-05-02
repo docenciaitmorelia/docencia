@@ -198,10 +198,8 @@
 function myFunction() {
    if($('#aec').prop('checked')) {
          $('#aediv').css('display','block');
-				 $("#vocal_suplente").prop('disabled', true);
        } else {
          $('#aediv').css('display','none');
-				 $("#vocal_suplente").prop('disabled', false);
        }
 		 }
 	function validarFormulario(){

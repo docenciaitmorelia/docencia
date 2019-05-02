@@ -84,6 +84,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('crear_invitacion/{nc}', 'PDFController@crear_invitacion')->name('crear_invitacion');
 
+    Route::get('crear_control_p/{nc}', 'PDFController@crear_control_p')->name('control_p');
+
+    Route::get('crear_control_b/{nc}', 'PDFController@crear_control_b')->name('control_b');
+
     Route::post('crear_autorizacion_t/{nc}', 'PDFController@crear_autorizacion_t')->name('crear_autorizacion_t');
 
     Route::get('expediente_titulacion/{nc}', 'TitulacionController@expediente_titulacion')->name('expediente_titulacion');

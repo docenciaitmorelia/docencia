@@ -94,7 +94,7 @@
                     <td align="center">{{$titu->sg}} {{$titu->secretario}}</td>
                   </tr>
                   <tr>
-                    <td align="center" id="titulo">@if($vs == '0') PRESIDENTE @else PRESIDENTE & ASESOR @endif</td>
+                    <td align="center" id="titulo">@if($ae->asesor_externo != 'N') PRESIDENTE @else PRESIDENTE & ASESOR @endif</td>
                     <td align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td align="center" id="titulo">SECRETARIO</td>
                   </tr>
@@ -116,12 +116,12 @@
                   <tr>
                     <td align="center">{{$titu->vpg}} {{$titu->vocal_propietario}}</td>
                     <td align="center">&nbsp;</td>
-                    <td align="center">@if($vs == '0') {{$titu->asesor_externo}} @else {{$titu->vsg}} {{$titu->vocal_suplente}} @endif</td>
+                    <td align="center">@if($ae->asesor_externo != 'N') {{$titu->asesor_externo}} @else {{$titu->vsg}} {{$titu->vocal_suplente}} @endif</td>
                   </tr>
                   <tr>
                     <td align="center" id="titulo">VOCAL PROPIETARIO</td>
                     <td align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td align="center" id="titulo">@if($vs == '0') VOCAL SUPLENTE & ASESOR @else VOCAL SUPLENTE @endif</td>
+                    <td align="center" id="titulo">@if($ae->asesor_externo != 'N') VOCAL SUPLENTE & ASESOR @else VOCAL SUPLENTE @endif</td>
                   </tr>
                 </tbody>
                 </table>

@@ -12,12 +12,8 @@ body{
 
 }
 #contenido{
-  font-family: Verdana;
-  padding-top: 250px;
+  padding-top: 225px;
 	margin-left: 1.5cm;
 	margin-right: 1.5cm;
-}
-
-#creditos{
-  font-style: italic;
+  font-family: Verdana;
 }

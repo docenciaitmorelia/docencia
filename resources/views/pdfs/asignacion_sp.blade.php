@@ -50,7 +50,7 @@
 				<tr> <td> PRESIDENTE: </td> <td>    {{$titu->presidente}} </td><tr>
 				<tr> <td>SECRETARIO:   </td> <td>  {{$titu->secretario}} </td><tr>
 				<tr> <td>VOCAL PROP.:  </td> <td>  {{$titu->vocal_propietario}} </td><tr>
-				<tr> <td>VOCAL SUPL.:  </td> <td>  @if($vs == '0') {{$titu->asesor_externo}} @else {{$titu->vocal_suplente}} @endif</td><tr>
+				<tr> <td>VOCAL SUPL.:  </td> <td>  @if($ae->asesor_externo != 'N') {{$titu->asesor_externo}} @else {{$titu->vocal_suplente}} @endif</td><tr>
 				<tr> <td>  ASESOR:     </td> <td>    {{$titu->asesor}} </td><tr>
 				</table>
 		</p>

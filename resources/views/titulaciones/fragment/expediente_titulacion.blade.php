@@ -5,24 +5,37 @@
 		<div class="card">
 		  <div class="card-body">
 		    <h3 class="card-title">Expediente de proceso de titulación</h3>
-
 				<center>
 				<div class="col-md-12">
 					<h3> <b>{{$alumno->no_de_control}} — {{$alumno->apellido_paterno}} {{$alumno->apellido_materno}} {{$alumno->nombre_alumno}}</b></h3>
 				</div>
 				</center>
 				<hr>
-				<center><h5><i>{{$titulacion->nombre_opcion}}<br>Estatus de proceso de Titulación: {{$titulacion->estatus}}</i></h5></center>
+				<center><h5><i>{{$titulacion->nombre_opcion}}<br>Estatus de proceso de Titulación: {{$titulacion->estatus}}</i></h5>
+					<a href="{{ route('control_p', $titulacion->id) }}" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Control de Propuesta" target="_blank"><i class="material-icons">playlist_add_check</i></a>
+					<a href="{{ route('control_b', $titulacion->id) }}" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Control de borrador" target="_blank"><i class="material-icons">playlist_add_check</i></a>
+
+				</center>
 
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
+								@if($ae->asesor_externo == 'N')
 								<th><center>Asesor</center></th>
 								<th><center>Presidente</center></th>
 								<th><center>Secretario</center></th>
 								<th><center>Vocal Propietario</center></th>
 								<th><center>Vocal Suplente</center></th>
 								<th colspan="1"></th>
+								@else
+								<th><center>Asesor</center></th>
+								<th><center>Presidente</center></th>
+								<th><center>Secretario</center></th>
+								<th><center>Vocal Propietario</center></th>
+								<th><center>Vocal Suplente</center></th>
+								<th><center>Sinodal Externo</center></th>
+								<th colspan="1"></th>
+								@endif
 							</tr>
 						</thead>
 						<tbody>
@@ -41,7 +54,14 @@
 									<td>
 										{{ $titulacion->vocal_propietario}}
 									</td>
-									<td> @if($vs == '0') {{$titulacion->asesor_externo}} @else {{$titulacion->vocal_suplente}} @endif </td>
+									<td>
+										{{$titulacion->vocal_suplente}}
+									</td>
+									@if($ae->asesor_externo != 'N')
+									<td>
+										{{$titulacion->asesor_externo}}
+									</td>
+									@endif
 									<td>
 										<a href="{{ route('titulaciones.edit', $titulacion->id) }}" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Editar Expediente"><i class="material-icons">create</i></a>
 										<a href="{{route('showRevisiones',$alumno->no_de_control) }}" data-target="titulacion" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Ver Status de Revisiones"><i class="material-icons">find_in_page</i></a>
@@ -81,7 +101,7 @@
 						</p>
 					</form>
 				    </div>
-				@else
+						@else
 				    <p class="col-md-12">
 							<a href="{{ route('titulaciones.index') }}" class="btn btn-raised btn-primary">Regresar</a>
 						</p>

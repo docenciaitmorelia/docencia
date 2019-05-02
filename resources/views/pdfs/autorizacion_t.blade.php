@@ -1,7 +1,7 @@
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
-	<title>Asignación de Sinodales</title>
+	<title>Autorización de tema y asignación de asesor</title>
     <link rel="stylesheet" type="text/css" href="{{ url('css/estilo.css') }}">
 </head>
   <body>
