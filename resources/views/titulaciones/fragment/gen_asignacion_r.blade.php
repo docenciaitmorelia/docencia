@@ -34,7 +34,6 @@
               <th><center>Vocal Suplente</center></th>
               <th colspan="1"></th>
               @else
-              <th><center>Asesor</center></th>
               <th><center>Presidente</center></th>
               <th><center>Secretario</center></th>
               <th><center>Vocal Propietario</center></th>
@@ -45,6 +44,7 @@
             </tr>
           </thead>
           <tbody>
+						@if($ae->asesor_externo == 'N')
               <tr>
                 <td>
                   {{ $titulacion->asesor}}
@@ -69,6 +69,29 @@
                 </td>
                 @endif
               </tr>
+							@else
+							<tr>
+                <td>
+                  {{ $titulacion->presidente }}
+                </td>
+
+                <td>
+                  {{ $titulacion->secretario }}
+                </td>
+
+                <td>
+                  {{ $titulacion->vocal_propietario}}
+                </td>
+                <td>
+                  {{$titulacion->vocal_suplente}}
+                </td>
+                @if($ae->asesor_externo != 'N')
+                <td>
+                  {{$titulacion->asesor_externo}}
+                </td>
+                @endif
+              </tr>
+							@endif
           </tbody>
         </table>
         <br>

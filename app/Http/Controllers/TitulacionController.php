@@ -72,6 +72,7 @@ class TitulacionController extends Controller
 
     public function edit(Request $request,$id)
     {
+      $ae=Titulacion::select('asesor_externo')->where('id',$id)->first();
         $titulacion  = Titulacion::find($id);
         //$alumno=Alumno::select('no_de_control',DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))->orderBy('apellido_paterno')->get();
         $alumno=DB::table('alumnos')->where('no_de_control',$titulacion->alumno)
@@ -82,7 +83,7 @@ class TitulacionController extends Controller
         ->orderBy('apellidos_empleado')->get();
         $planes=OpcionesTitulacion::orderBy('opcion_titulacion','desc')->get();
         //return $alumno;
-        return view('titulaciones.edit', compact('titulacion','alumno','personal','planes'));
+        return view('titulaciones.edit', compact('titulacion','alumno','personal','planes','ae'));
     }
 
     public function update(TitulacionRequest $request, $id)
