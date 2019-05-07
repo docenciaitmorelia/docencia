@@ -1,11 +1,12 @@
 <?php $__env->startSection('content'); ?>
 <div class="row">
-  <div class="col">
+  <div class="col s12">
     <div class="card">
       <div class="card-body">
       <?php if(Auth::user()->rol == 'Administrador'): ?>
         <h3 class="card-title"><?php echo e(__('Administrar Usuarios')); ?></h3>
-          <div class="row">
+        <div class="row">
+          <div class="col s12">
               <?php $__currentLoopData = $Usuarios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $usuario): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                   <div class="col-md-3">
                     <div class="card">
@@ -48,6 +49,7 @@
                     </div>
                   </div>
               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
           </div>
         <?php else: ?>
           <h3 class="card-title"><?php echo e(__('Usuario No Autorizado')); ?></h3>

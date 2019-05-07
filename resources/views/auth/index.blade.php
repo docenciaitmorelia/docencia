@@ -1,12 +1,13 @@
 @extends('layouts.app')
 @section('content')
 <div class="row">
-  <div class="col">
+  <div class="col s12">
     <div class="card">
       <div class="card-body">
       @if(Auth::user()->rol == 'Administrador')
         <h3 class="card-title">{{ __('Administrar Usuarios') }}</h3>
-          <div class="row">
+        <div class="row">
+          <div class="col s12">
               @foreach($Usuarios as $usuario)
                   <div class="col-md-3">
                     <div class="card">
@@ -47,6 +48,7 @@
                     </div>
                   </div>
               @endforeach
+            </div>
           </div>
         @else
           <h3 class="card-title">{{ __('Usuario No Autorizado') }}</h3>
