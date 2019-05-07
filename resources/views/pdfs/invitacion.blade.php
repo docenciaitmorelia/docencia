@@ -45,26 +45,26 @@
 				<h3>{{ $carrera->nombre }}</h3>
 				@endforeach
 				<br>
-				<h3>OPCIÓN {{ mb_strtoupper($data->nombre_opcion,'UTF-8')}}</h3>
+				<h3>OPCIÓN {{ mb_strtoupper($titulacion->nombre_opcion,'UTF-8')}}</h3>
 				<br>
 				<h3> MESA DE SINODALES</h3>
 				<br>
 			</center>
-			<h4>
-				<table>
+			<h3>
+				<table align='center'>
 				@if($ae->asesor_externo != 'N')
-				<tr> <td>PRESIDENTE: </td> <td>    {{$titu->revisor1}} </td><tr>
-        <tr> <td>SECRETARIO:   </td> <td>  {{$titu->revisor2}} </td><tr>
-        <tr> <td>VOCAL PROP.:  </td> <td>  {{$titu->revisor3}} </td><tr>
-        <tr> <td>VOCAL SUPL.:  </td> <td>  {{$titu->asesor}} </td><tr>
+				<tr> <td>PRESIDENTE: </td> <td>    {{$titulacion->revisor1}} </td><tr>
+        <tr> <td>SECRETARIO:   </td> <td>  {{$titulacion->revisor2}} </td><tr>
+        <tr> <td>VOCAL PROP.:  </td> <td>  {{$titulacion->revisor3}} </td><tr>
+        <tr> <td>VOCAL SUPL.:  </td> <td>  {{$titulacion->asesor}} </td><tr>
 				@else
-        <tr> <td>PRESIDENTE: </td> <td>    {{$titu->asesor}} </td><tr>
-        <tr> <td>SECRETARIO:   </td> <td>  {{$titu->revisor1}} </td><tr>
-        <tr> <td>VOCAL PROP.:  </td> <td>  {{$titu->revisor2}} </td><tr>
-        <tr> <td>VOCAL SUPL.:  </td> <td>  {{$titu->revisor3}} </td><tr>
+        <tr> <td>PRESIDENTE: </td> <td>    {{$titulacion->asesor}} </td><tr>
+        <tr> <td>SECRETARIO:   </td> <td>  {{$titulacion->revisor1}} </td><tr>
+        <tr> <td>VOCAL PROP.:  </td> <td>  {{$titulacion->revisor2}} </td><tr>
+        <tr> <td>VOCAL SUPL.:  </td> <td>  {{$titulacion->revisor3}} </td><tr>
 				@endif
       	</table>
-			</h4>
+			</h3>
 </div>
 
 </body>
