@@ -51,10 +51,19 @@
 				<br>
 			</center>
 			<h4>
-			PRESIDENTE: &emsp;&emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;   {{$data->pg}} {{$data->presidente}} <br>
-			SECRETARIO: &emsp;&emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp; &emsp;&emsp;    {{$data->sg}} {{$data->secretario}} <br>
-			VOCAL PROPIETARIO: &emsp;&emsp;  {{$data->vpg}} {{$data->vocal_propietario}} <br>
-			VOCAL SUPLENTE: &emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp; @if($ae->asesor_externo != 'N') {{$data->asesor_externo}} @else {{$data->vsg}} {{$data->vocal_suplente}} @endif
+				<table>
+				@if($ae->asesor_externo != 'N')
+				<tr> <td>PRESIDENTE: </td> <td>    {{$titu->revisor1}} </td><tr>
+        <tr> <td>SECRETARIO:   </td> <td>  {{$titu->revisor2}} </td><tr>
+        <tr> <td>VOCAL PROP.:  </td> <td>  {{$titu->revisor3}} </td><tr>
+        <tr> <td>VOCAL SUPL.:  </td> <td>  {{$titu->asesor}} </td><tr>
+				@else
+        <tr> <td>PRESIDENTE: </td> <td>    {{$titu->asesor}} </td><tr>
+        <tr> <td>SECRETARIO:   </td> <td>  {{$titu->revisor1}} </td><tr>
+        <tr> <td>VOCAL PROP.:  </td> <td>  {{$titu->revisor2}} </td><tr>
+        <tr> <td>VOCAL SUPL.:  </td> <td>  {{$titu->revisor3}} </td><tr>
+				@endif
+      	</table>
 			</h4>
 </div>
 

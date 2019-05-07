@@ -25,27 +25,25 @@
             <tr>
               @if($ae->asesor_externo == 'N')
               <th><center>Asesor</center></th>
-              <th><center>Presidente</center></th>
-              <th><center>Secretario</center></th>
-              <th><center>Vocal Propietario</center></th>
-              <th><center>Vocal Suplente</center></th>
+              <th colspan="3"><center>Revisores</center></th>
               <th colspan="1"></th>
               @else
-              <th><center>Presidente</center></th>
-              <th><center>Secretario</center></th>
-              <th><center>Vocal Propietario</center></th>
-              <th><center>Vocal Suplente</center></th>
-              <th><center>Sinodal Externo</center></th>
-              <th colspan="1"></th>
+              <th><center>Asesor</center></th>
+              <th colspan="3"><center>Revisores</center></th>
               @endif
             </tr>
           </thead>
           <tbody>
-						@if($ae->asesor_externo == 'N')
               <tr>
+                @if($ae->asesor_externo == 'N')
                 <td>
-                  {{ $titulacion->asesor}}
+                  {{$titulacion->asesor}}
                 </td>
+                @else
+                <td>
+                  {{$titulacion->asesor_externo}}
+                </td>
+                @endif
                 <td>
                   {{ $titulacion->presidente }}
                 </td>
@@ -57,38 +55,7 @@
                 <td>
                   {{ $titulacion->vocal_propietario}}
                 </td>
-                <td>
-                  {{$titulacion->vocal_suplente}}
-                </td>
-                @if($ae->asesor_externo != 'N')
-                <td>
-                  {{$titulacion->asesor_externo}}
-                </td>
-                @endif
               </tr>
-							@else
-							<tr>
-                <td>
-                  {{ $titulacion->presidente }}
-                </td>
-
-                <td>
-                  {{ $titulacion->secretario }}
-                </td>
-
-                <td>
-                  {{ $titulacion->vocal_propietario}}
-                </td>
-                <td>
-                  {{$titulacion->vocal_suplente}}
-                </td>
-                @if($ae->asesor_externo != 'N')
-                <td>
-                  {{$titulacion->asesor_externo}}
-                </td>
-                @endif
-              </tr>
-							@endif
           </tbody>
         </table>
 				<br>

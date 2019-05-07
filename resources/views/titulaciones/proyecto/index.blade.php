@@ -39,7 +39,7 @@
 										{{ $alumno->nombre_proyecto }}
 									</td>
 									<td>
-										<a href="{{route('proyectoTitulacionCtl.show',$alumno->no_de_control) }}" data-target="titulacion" class="btn btn-raised btn-primary">Expediente</a>
+										<a href="{{route('proyectoTitulacionCtl.show',$alumno->id) }}" data-target="titulacion" class="btn btn-raised btn-primary">Expediente</a>
 									</td>
 								</tr>
 							@endforeach

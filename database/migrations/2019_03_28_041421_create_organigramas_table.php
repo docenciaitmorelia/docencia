@@ -13,7 +13,7 @@ class CreateOrganigramasTable extends Migration
      */
     public function up()
     {
-        Schema::create('organigramas', function (Blueprint $table) {
+        Schema::create('organigrama', function (Blueprint $table) {
             $table->increments('id');
             $table->string('clave_area');
             $table->string('descripcion_area');
@@ -21,7 +21,7 @@ class CreateOrganigramasTable extends Migration
             $table->integer('nivel');
             $table->char('tipo_area',1);
             $table->string('subnivel');
-            $table->timestamps();
+            $table->primary(['id','clave_area']);
         });
     }
 
@@ -32,6 +32,6 @@ class CreateOrganigramasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organigramas');
+        Schema::dropIfExists('organigrama');
     }
 }

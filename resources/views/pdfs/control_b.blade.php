@@ -66,7 +66,7 @@
 					Nombre del asesor:
 				</td>
 				<td style="border-bottom: 1px solid black;">
-					{{$titulacion->ag}} {{$titulacion->asesor}}
+					{{$titulacion->asesor}}
 				</td>
 			</tr>
 		</tbody>
@@ -93,7 +93,7 @@
 			</tr>
 			<tr>
 				<td height="40px" align="center">
-					{{$titulacion->sg}} {{$titulacion->secretario}}
+					{{$titulacion->revisor1}}
 				</td>
 				<td>
 					&nbsp;
@@ -121,7 +121,7 @@
 			</tr>
 			<tr>
 				<td height="40px" align="center">
-					{{$titulacion->vpg}} {{$titulacion->vocal_propietario}}
+					{{$titulacion->revisor2}}
 				</td>
 				<td>
 					&nbsp;
@@ -149,7 +149,7 @@
 			</tr>
 			<tr>
 				<td height="40px" align="center">
-					{{$titulacion->vsg}} {{$titulacion->vocal_suplente}}
+					{{$titulacion->revisor3}}
 				</td>
 				<td>
 					&nbsp;
@@ -181,7 +181,7 @@
 		</tr>
 		<tr>
 			<td align="center" height="40px">
-				{{$titulacion->sg}} {{$titulacion->secretario}}
+				{{$titulacion->revisor1}}
 			</td>
 			<td>
 				&nbsp;
@@ -209,7 +209,7 @@
 		</tr>
 		<tr>
 			<td height="40px" align="center">
-				{{$titulacion->vpg}} {{$titulacion->vocal_propietario}}
+				{{$titulacion->revisor2}}
 			</td>
 			<td>
 				&nbsp;
@@ -237,7 +237,7 @@
 		</tr>
 		<tr>
 			<td height="40px" align="center">
-				{{$titulacion->vsg}} {{$titulacion->vocal_suplente}}
+				{{$titulacion->revisor3}}
 			</td>
 			<td>
 				&nbsp;

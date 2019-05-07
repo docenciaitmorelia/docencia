@@ -24,11 +24,10 @@ class Titulacion extends Model
   {
     $s= mb_strtoupper($s,'UTF-8');
     return $query->join('alumnos','titulaciones.alumno','=','alumnos.no_de_control')
-                  ->where('secretario',Auth::user()->name)
+                  ->where('revisor1',Auth::user()->name)
                   ->where('estatus','ACTIVO')
-                  ->orWhere('presidente',Auth::user()->name)
-                  ->orWhere('vocal_propietario',Auth::user()->name)
-                  ->orWhere('vocal_suplente',Auth::user()->name)
+                  ->orWhere('revisor2',Auth::user()->name)
+                  ->orWhere('revisor3',Auth::user()->name)
                   ->where('titulaciones.alumno','LIKE',"%$s%");
                   //->orwhere(DB::raw("CONCAT(alumnos.nombre_alumno,' ',alumnos.apellido_paterno,' ',alumnos.apellido_materno)"), 'LIKE', "%$s%");
   }

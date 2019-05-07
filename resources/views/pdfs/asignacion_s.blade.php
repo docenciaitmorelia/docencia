@@ -48,11 +48,19 @@
         <p align="justify">
         <br>
 				<table>
-        <tr> <td>PRESIDENTE: </td> <td>    {{$titu->pg}} {{$titu->presidente}} </td><tr>
-        <tr> <td>SECRETARIO:   </td> <td>  {{$titu->sg}} {{$titu->secretario}} </td><tr>
-        <tr> <td>VOCAL PROP.:  </td> <td>  {{$titu->vpg}} {{$titu->vocal_propietario}} </td><tr>
-        <tr> <td>VOCAL SUPL.:  </td> <td>  @if($ae->asesor_externo != 'N') {{$titu->asesor_externo}} @else {{$titu->vsg}} {{$titu->vocal_suplente}} @endif</td><tr>
-      	<tr> <td>ASESOR:     </td> <td>    {{$titu->ag}} {{$titu->asesor}} </td><tr>
+				@if($ae->asesor_externo != 'N')
+				<tr> <td>PRESIDENTE: </td> <td>    {{$titu->revisor1}} </td><tr>
+        <tr> <td>SECRETARIO:   </td> <td>  {{$titu->revisor2}} </td><tr>
+        <tr> <td>VOCAL PROP.:  </td> <td>  {{$titu->revisor3}} </td><tr>
+        <tr> <td>VOCAL SUPL.:  </td> <td>  {{$titu->asesor}} </td><tr>
+      	<tr> <td>ASESOR:     </td> <td>    {{$titu->asesor}} </td><tr>
+				@else
+        <tr> <td>PRESIDENTE: </td> <td>    {{$titu->asesor}} </td><tr>
+        <tr> <td>SECRETARIO:   </td> <td>  {{$titu->revisor1}} </td><tr>
+        <tr> <td>VOCAL PROP.:  </td> <td>  {{$titu->revisor2}} </td><tr>
+        <tr> <td>VOCAL SUPL.:  </td> <td>  {{$titu->revisor3}} </td><tr>
+      	<tr> <td>ASESOR:     </td> <td>    {{$titu->asesor}} </td><tr>
+				@endif
       	</table>
 				</p>
         <br>

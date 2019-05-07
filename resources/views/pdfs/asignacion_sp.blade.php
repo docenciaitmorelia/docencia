@@ -43,14 +43,21 @@
 			</strong>
 		</p>
 		<p align="justify">
-			De acuerdo a la solicitud presentada por @if($alumno->sexo=='M') el&nbsp;egresado: @else la&nbsp;egresada: @endif <strong> {{$alumno->completo}} </strong>, con número de control {{$alumno->no_de_control}} pasante de la carrera de: {{$carrera->nombre}} con registro de la opción @if($alumno->reticula < 2010) {{$titu->op}}.{{$titu->nombre_opcion}}; @else {{$titu->nombre_opcion}}; @endif se le informa a usted que la asignación de sinodales queda de la siguiente manera:
+			De acuerdo a la solicitud presentada por @if($alumno->sexo=='M') el&nbsp;egresado: @else la&nbsp;egresada: @endif <strong> {{$alumno->completo}} </strong>, con número de control {{$alumno->no_de_control}} pasante de la carrera de: {{$carrera->nombre}} con registro de la opción @if($alumno->reticula < 2010) {{$titu->op}}. {{$titu->nombre_opcion}}; @else {{$titu->nombre_opcion}}; @endif se le informa a usted que la asignación de sinodales queda de la siguiente manera:
 			</p>
 			<p align="justify">
 				<table>
-				<tr> <td> PRESIDENTE: </td> <td>    {{$titu->presidente}} </td><tr>
-				<tr> <td>SECRETARIO:   </td> <td>  {{$titu->secretario}} </td><tr>
-				<tr> <td>VOCAL PROP.:  </td> <td>  {{$titu->vocal_propietario}} </td><tr>
-				<tr> <td>VOCAL SUPL.:  </td> <td>  @if($ae->asesor_externo != 'N') {{$titu->asesor_externo}} @else {{$titu->vocal_suplente}} @endif</td><tr>
+					@if($ae->asesor_externo != 'N')
+					<tr> <td>PRESIDENTE: </td> <td>    {{$titu->revisor1}} </td><tr>
+	        <tr> <td>SECRETARIO:   </td> <td>  {{$titu->revisor2}} </td><tr>
+	        <tr> <td>VOCAL PROP.:  </td> <td>  {{$titu->revisor3}} </td><tr>
+	        <tr> <td>VOCAL SUPL.:  </td> <td>  {{$titu->asesor}} </td><tr>
+					@else
+	        <tr> <td>PRESIDENTE: </td> <td>    {{$titu->asesor}} </td><tr>
+	        <tr> <td>SECRETARIO:   </td> <td>  {{$titu->revisor1}} </td><tr>
+	        <tr> <td>VOCAL PROP.:  </td> <td>  {{$titu->revisor2}} </td><tr>
+	        <tr> <td>VOCAL SUPL.:  </td> <td>  {{$titu->revisor3}} </td><tr>
+					@endif
 				</table>
 		</p>
 			<br>
@@ -65,18 +72,19 @@
 					<br>
 					<br>
 					<br>
-					{{$jefedsc}}
+					{{$jefedsc->jefe_area}}
 					<br>
-					Jefe del {{$jefedsc->descripcion_area}}</td>
+					JEFE DEL {{$jefedsc->descripcion_area}}</td>
 					</div>
 				<br>
 				<br>
 				<br>
 				<br>
+				<div class="col-md-12">
+						<p id="cp">Cp. Integrantes del jurado<br>Alumno interesado<br>Archivo</p>
+				</div>
 	</div>
-			<div class="col-md-12">
-					<p id="cp">Cp. Integrantes del jurado<br>Alumno interesado<br>Archivo</p>
-			</div>
+
 	</div>
 </body>
 </html>

@@ -12,9 +12,10 @@
 				</center>
 				<hr>
 				<center><h5><i>{{$titulacion->nombre_opcion}}<br>Estatus de proceso de Titulación: {{$titulacion->estatus}}</i></h5>
+					@if($titulacion->detalle_opcion == 'Recepcional')
 					<a href="{{ route('control_p', $titulacion->id) }}" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Control de Propuesta" target="_blank"><i class="material-icons">playlist_add_check</i></a>
 					<a href="{{ route('control_b', $titulacion->id) }}" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Control de borrador" target="_blank"><i class="material-icons">playlist_add_check</i></a>
-
+					@endif
 				</center>
 
 					<table class="table table-striped table-hover">
@@ -22,27 +23,26 @@
 							<tr>
 								@if($ae->asesor_externo == 'N')
 								<th><center>Asesor</center></th>
-								<th><center>Presidente</center></th>
-								<th><center>Secretario</center></th>
-								<th><center>Vocal Propietario</center></th>
-								<th><center>Vocal Suplente</center></th>
+								<th colspan="3"><center>Revisores</center></th>
 								<th colspan="1"></th>
 								@else
 								<th><center>Asesor</center></th>
-								<th><center>Presidente</center></th>
-								<th><center>Secretario</center></th>
-								<th><center>Vocal Propietario</center></th>
-								<th><center>Vocal Suplente</center></th>
-								<th><center>Sinodal Externo</center></th>
+								<th colspan="3"><center>Revisores</center></th>
 								<th colspan="1"></th>
 								@endif
 							</tr>
 						</thead>
 						<tbody>
 								<tr>
+									@if($ae->asesor_externo == 'N')
 									<td>
-										{{ $titulacion->asesor}}
+										{{$titulacion->asesor}}
 									</td>
+									@else
+									<td>
+										{{$titulacion->asesor_externo}}
+									</td>
+									@endif
 									<td>
 										{{ $titulacion->presidente }}
 									</td>
@@ -54,17 +54,10 @@
 									<td>
 										{{ $titulacion->vocal_propietario}}
 									</td>
-									<td>
-										{{$titulacion->vocal_suplente}}
-									</td>
-									@if($ae->asesor_externo != 'N')
-									<td>
-										{{$titulacion->asesor_externo}}
-									</td>
-									@endif
+
 									<td>
 										<a href="{{ route('titulaciones.edit', $titulacion->id) }}" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Editar Expediente"><i class="material-icons">create</i></a>
-										<a href="{{route('showRevisiones',$alumno->no_de_control) }}" data-target="titulacion" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Ver Status de Revisiones"><i class="material-icons">find_in_page</i></a>
+										<a href="{{route('showRevisiones',$titulacion->id) }}" data-target="titulacion" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Ver Status de Revisiones"><i class="material-icons">find_in_page</i></a>
 									</td>
 								</tr>
 						</tbody>
@@ -91,7 +84,7 @@
 							<select id="documento" type="text" class="form-control" name="documento" value="" required autofocus>
 								<option value="">Seleccione documento</option>
 									@foreach($proceso as $documento)
-										<option id="documento" value="{{ $documento->descripcion }}" @if($ol!= 0 && $documento->orden >= $ol && $v == 0) @if($b == 'N') disabled @endif @endif @if($oi!= 0 && $documento->orden >= $oi && $b == 'N') disabled @endif>{{$documento->descripcion}}</option>
+										<option id="documento" value="{{ $documento->descripcion }}" @if($ol != 0 && $documento->orden >= $ol && $v == 0) @if($b == 'N') disabled @endif @endif @if($oi != 0 && $documento->orden >= $oi && $b == 'N') disabled @endif>{{$documento->descripcion}}</option>
 									@endforeach
 						  </select>
 						</div>

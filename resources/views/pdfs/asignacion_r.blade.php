@@ -31,7 +31,7 @@
             </tr>
             <tr>
               <td>Asesor</td>
-              <td> {{$data->ag}} {{$data->asesor}}</td>
+              <td> {{$data->asesor}}</td>
             </tr>
           </tbody>
         </table>
@@ -47,26 +47,49 @@
             </tr>
           </thead>
           <tbody>
+						@if($ae->asesor_externo != 'N')
             <tr>
               <td>Presidente</td>
-              <td> {{$data->pg}} {{$data->presidente}}</td>
+              <td> {{$data->revisor1}}</td>
               <td width="20%"></td>
             </tr>
             <tr>
               <td>Secretario</td>
-              <td>{{$data->sg}} {{$data->secretario}}</td>
+              <td>{{$data->revisor2}}</td>
               <td></td>
             </tr>
             <tr>
               <td>Vocal Propietario</td>
-              <td>{{$data->vpg}} {{$data->vocal_propietario}}</td>
+              <td>{{$data->revisor3}}</td>
               <td></td>
             </tr>
             <tr>
               <td>Vocal Suplente</td>
-              <td> @if($ae->asesor_externo != 'N') {{$data->asesor_externo}} @else {{$data->vsg}} {{$data->vocal_suplente}} @endif </td>
+              <td> {{$data->asesor}}</td>
               <td></td>
             </tr>
+						@else
+						<tr>
+              <td>Presidente</td>
+              <td> {{$data->asesor}}</td>
+              <td width="20%"></td>
+            </tr>
+            <tr>
+              <td>Secretario</td>
+              <td>{{$data->revisor1}}</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Vocal Propietario</td>
+              <td>{{$data->revisor2}}</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Vocal Suplente</td>
+              <td> {{$data->revisor3}}</td>
+              <td></td>
+            </tr>
+						@endif
           </tbody>
         </table>
 				<br>
@@ -109,7 +132,7 @@
 
 										<tr>
 	                    <td>&nbsp;</td>
-	                    <td align="center">{{$data->ag}} {{$data->asesor}}</td>
+	                    <td align="center">{{$data->asesor}}</td>
 	                    <td>&nbsp;</td>
 	                  </tr>
 										<tr>

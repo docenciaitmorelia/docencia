@@ -97,11 +97,19 @@
                   </tr>
                 </thead>
                 <tbody>
+                  @if($ae->asesor_externo != 'N')
                   <tr>
-                    <td align="center">{{$titu->presidente}}</td>
+                    <td align="center">{{$titu->revisor1}}</td>
                     <td align="center">&nbsp;</td>
-                    <td align="center">{{$titu->secretario}}</td>
+                    <td align="center">{{$titu->revisor2}}</td>
                   </tr>
+                  @else
+                  <tr>
+                    <td align="center">{{$titu->asesor}}</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">{{$titu->revisor1}}</td>
+                  </tr>
+                  @endif
                   <tr>
                     <td align="center" id="titulo">PRESIDENTE</td>
                     <td align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -122,11 +130,19 @@
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                   </tr>
+                  @if($ae->asesor_externo != 'N')
                   <tr>
-                    <td align="center">{{$titu->vocal_propietario}}</td>
+                    <td align="center">{{$titu->revisor3}}</td>
                     <td align="center">&nbsp;</td>
-                    <td align="center">@if($ae->asesor_externo != 'N') {{$titu->asesor_externo}} @else {{$titu->vocal_suplente}} @endif</td>
+                    <td align="center">{{$titu->asesor}}</td>
                   </tr>
+                  @else
+                  <tr>
+                    <td align="center">{{$titu->revisor2}}</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">{{$titu->revisor3}}</td>
+                  </tr>
+                  @endif
                   <tr>
                     <td align="center" id="titulo">VOCAL PROPIETARIO</td>
                     <td align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>

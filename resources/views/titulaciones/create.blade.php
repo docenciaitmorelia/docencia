@@ -101,7 +101,7 @@
 						<br>
 						<div class="form-group col-md-12">
 							<label for="asesor" class="control-label">Asesor</label>
-							<select id="asesor" name="asesor" class="form-control" required>
+							<select id="asesor" name="asesor" class="form-control">
 								<option value="">Seleccione Asesor</option>
 								@foreach($personal as $doc)
 								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}, {{ $doc->rfc}}</option>
@@ -109,40 +109,30 @@
 							</select>
 						</div>
 
-						<div class="form-group col-md-6">
-							<label for="presidente" class="control-label">Presidente</label>
-							<select id="presidente" name="presidente" class="form-control" required>
-								<option value="">Seleccione Presidente</option>
+						<div class="form-group col-md-4">
+							<label for="revisor1" class="control-label">Revisor 1</label>
+							<select id="revisor1" name="revisor1" class="form-control" required>
+								<option value="">Seleccione Revisor</option>
 								@foreach($personal as $doc)
 								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}, {{ $doc->rfc}}</option>
 								@endforeach
 							</select>
 						</div>
 
-						<div class="form-group col-md-6">
-							<label for="secretario" class="control-label">Secretario</label>
-							<select id="secretario" name="secretario" class="form-control" required>
-								<option value="">Seleccione Secretario</option>
+						<div class="form-group col-md-4">
+							<label for="revisor2" class="control-label">Revisor 2</label>
+							<select id="revisor2" name="revisor2" class="form-control" required>
+								<option value="">Seleccione Revisor</option>
 								@foreach($personal as $doc)
 								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}, {{ $doc->rfc}}</option>
 								@endforeach
 							</select>
 						</div>
 
-						<div class="form-group col-md-6">
-							<label for="vocal_propietario" class="control-label">Vocal Propietario</label>
-							<select id="vocal_propietario" name="vocal_propietario" class="form-control" required>
-								<option value="">Seleccione Vocal Propietario</option>
-								@foreach($personal as $doc)
-								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}, {{ $doc->rfc}}</option>
-								@endforeach
-							</select>
-						</div>
-
-					    <div class="form-group col-md-6">
-							<label for="vocal_suplente" class="control-label">Vocal Suplente</label>
-							<select id="vocal_suplente" name="vocal_suplente" class="form-control">
-								<option value="0">Seleccione Vocal Suplente</option>
+						<div class="form-group col-md-4">
+							<label for="revisor3" class="control-label">Revisor 3 </label>
+							<select id="revisor3" name="revisor3" class="form-control" required>
+								<option value="">Seleccione Revisor </option>
 								@foreach($personal as $doc)
 								<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}, {{ $doc->rfc}}</option>
 								@endforeach
@@ -159,7 +149,7 @@
 						</div>
 
 						<p class="form-group col-md-12">
-							<button type="submit" class="btn btn-raised btn-primary" onclick="validarFormulario()">Guardar</button>
+							<button type="submit" class="btn btn-raised btn-primary">Guardar</button>
 							<a data-toggle="modal" data-target="#modal1" class="btn btn-raised btn-primary">Cancelar</a>
 						</p>
 
@@ -187,7 +177,6 @@
 								</div>
 							</div>
 						</div> <!-- end modal structure -->
-
 					</form>
 		  </div>
 		</div>
@@ -198,22 +187,14 @@
 function myFunction() {
    if($('#aec').prop('checked')) {
          $('#aediv').css('display','block');
-       } else {
+				 $('#asesor').prop( "disabled", true );
+       }
+			 else {
          $('#aediv').css('display','none');
+				 $('#asesor').prop( "disabled", false );
+				 $('#ae').val('');
        }
 		 }
-	function validarFormulario(){
-		 $("#formTitulacion").validate();
-		 var asesor = $('#asesor').val();
-		 alert(asesor);
-		 var presidente = $('#presidente').val();
-		 if(asesor==presidente){
-			 alert('son iguales');
-		 }
-	}
-	$(document).ready(function(){
-		 validarFormulario();
-	});
 
 </script>
 

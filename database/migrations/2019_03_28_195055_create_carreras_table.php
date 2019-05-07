@@ -25,6 +25,7 @@ class CreateCarrerasTable extends Migration
           $table->string('siglas',10);
           $table->timestamps();
           $table->index('reticula');
+          $table->primary(['id','carrera']);
         });
     }
 

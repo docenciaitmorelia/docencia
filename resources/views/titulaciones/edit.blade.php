@@ -38,6 +38,7 @@
 						<br>
 						<hr>
 						<br>
+						@if($titulacion->asesor_externo == 'N')
 						<div class="form-group col-md-12">
 							<label for="asesor" class="control-label">Asesor</label>
 							<select id="asesor" name="asesor" class="form-control" required>
@@ -47,57 +48,62 @@
 								@endforeach
 							</select>
 						</div>
-
 						<div class="form-group col-md-6">
-							<label for="presidente" class="control-label">Presidente</label>
-							<select id="presidente" name="presidente" class="form-control" required>
-								<option value="">Seleccione Presidente</option>
-								@foreach($personal as $doc)
-								<option value="{!! $doc->rfc !!}" {{(old('presidente',$titulacion->presidente)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}, {{ $doc->rfc}}</option>
-								@endforeach
-							</select>
+							<input type="checkbox" id="aec" name="aec" onchange="myFunction()">Asesor Externo
 						</div>
-
-						<div class="form-group col-md-6">
-							<label for="secretario" class="control-label">Secretario</label>
-							<select id="secretario" name="secretario" class="form-control" required>
-								<option value="">Seleccione Secretario</option>
-								@foreach($personal as $doc)
-								<option value="{!! $doc->rfc !!}" {{(old('secretario',$titulacion->secretario)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}, {{ $doc->rfc}}</option>
-								@endforeach
-							</select>
-						</div>
-
-						<div class="form-group col-md-6">
-							<label for="vocal_propietario" class="control-label">Vocal Propietario</label>
-							<select id="vocal_propietario" name="vocal_propietario" class="form-control" required>
-								<option value="">Seleccione Vocal Propietario</option>
-								@foreach($personal as $doc)
-								<option value="{!! $doc->rfc !!}" {{(old('vocal_propietario',$titulacion->vocal_propietario)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}, {{ $doc->rfc}}</option>
-								@endforeach
-							</select>
-						</div>
-
-					    <div class="form-group col-md-6">
-							<label for="vocal_suplente" class="control-label">Vocal Suplente</label>
-							<select id="vocal_suplente" name="vocal_suplente" class="form-control" required>
-								<option value="0">Seleccione Vocal Suplente</option>
-								@foreach($personal as $doc)
-								<option value="{!! $doc->rfc !!}" {{(old('vocal_suplente',$titulacion->vocal_suplente)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}, {{ $doc->rfc}}</option>
-								@endforeach
-							</select>
-						</div>
-						@if($titulacion->asesor_externo == '0')
 						<div class="form-group col-md-6" style="display: none;" id="aediv" name="aediv">
-							<label for="ae" class="control-label">Nombre del Asesor</label>
+							<label for="ae" class="control-label">Nombre del Asesor externo</label>
 							<input type="text" id="ae" name="ae" class="form-control" value="" style="text-transform:uppercase;" value="{{ old('ae', $titulacion->asesor_externo) }}">
 						</div>
 						@else
+						<div class="form-group col-md-12">
+							<label for="asesor" class="control-label">Asesor</label>
+							<select id="asesor" name="asesor" class="form-control" required>
+								<option value="0">Seleccione Asesor</option>
+								@foreach($personal as $doc)
+								<option value="{!! $doc->rfc !!}" {{(old('asesor',$titulacion->asesor)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}, {{ $doc->rfc}}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="form-group col-md-6">
+							<input type="checkbox" id="aec" name="aec" onchange="myFunction()" checked>Asesor Externo
+						</div>
 						<div class="form-group col-md-6" id="aediv" name="aediv">
-							<label for="ae" class="control-label">Nombre del Asesor</label>
+							<label for="ae" class="control-label">Nombre del Asesor Externo</label>
 							<input type="text" id="ae" name="ae" class="form-control" style="text-transform:uppercase;" value="{{ old('ae', $titulacion->asesor_externo) }}">
 						</div>
 						@endif
+
+						<div class="form-group col-md-6">
+							<label for="revisor1" class="control-label">Revisor 1</label>
+							<select id="revisor1" name="revisor1" class="form-control" required>
+								<option value="">Seleccione Revisor</option>
+								@foreach($personal as $doc)
+								<option value="{!! $doc->rfc !!}" {{(old('revisor1',$titulacion->revisor1)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}, {{ $doc->rfc}}</option>
+								@endforeach
+							</select>
+						</div>
+
+						<div class="form-group col-md-6">
+							<label for="revisor2" class="control-label">Revisor 2</label>
+							<select id="revisor2" name="revisor2" class="form-control" required>
+								<option value="">Seleccione Revisor</option>
+								@foreach($personal as $doc)
+								<option value="{!! $doc->rfc !!}" {{(old('revisor2',$titulacion->revisor2)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}, {{ $doc->rfc}}</option>
+								@endforeach
+							</select>
+						</div>
+
+						<div class="form-group col-md-6">
+							<label for="revisor3" class="control-label">Revisor 3</label>
+							<select id="revisor3" name="revisor3" class="form-control" required>
+								<option value="">Seleccione Revisor</option>
+								@foreach($personal as $doc)
+								<option value="{!! $doc->rfc !!}" {{(old('revisor3',$titulacion->revisor3)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}, {{ $doc->rfc}}</option>
+								@endforeach
+							</select>
+						</div>
+
 						<div class="col-md-4">
 							<label for="estatus" class="control-label">Estatus</label>
 							<select id="estatus" name="estatus" class="form-control" required="">
@@ -145,19 +151,18 @@
 </div>
 
 <script type="text/javascript">
+function myFunction() {
+   if($('#aec').prop('checked')) {
+         $('#aediv').css('display','block');
+				 $('#asesor').prop( "disabled", true );
 
-	function validarFormulario(){
-		 $("#formTitulacion").validate();
-		 var asesor = $('#asesor').val();
-		 alert(asesor);
-		 var presidente = $('#presidente').val();
-		 if(asesor==presidente){
-			 alert('son iguales');
+       }
+			 else {
+         $('#aediv').css('display','none');
+				 $('#asesor').prop( "disabled", false );
+				 $('#ae').val('');
+       }
 		 }
-	}
-	$(document).ready(function(){
-		 validarFormulario();
-	});
 
 </script>
 

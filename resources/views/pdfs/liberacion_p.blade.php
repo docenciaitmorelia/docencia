@@ -119,7 +119,7 @@
 
 										<tr>
 	                    <td>&nbsp;</td>
-	                    <td align="center">{{$data->ag}} {{$data->asesor}}</td>
+	                    <td align="center">{{$data->asesor}}</td>
 	                    <td>&nbsp;</td>
 	                  </tr>
 										<tr>

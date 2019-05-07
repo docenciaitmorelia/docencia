@@ -25,10 +25,7 @@
 						<thead>
 							<tr>
                 <th></th>
-								<th><center>Presidente</center></th>
-								<th><center>Secretario</center></th>
-								<th><center>Vocal Propietario</center></th>
-								<th><center>Vocal Suplente</center></th>
+								<th colspan="3"><center>Revisores</center></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -38,7 +35,6 @@
 									<td>{{ $titulacion->presidente }}</td>
 									<td>{{ $titulacion->secretario }}</td>
 									<td>{{ $titulacion->vocal_propietario}}</td>
-                  <td>{{ $titulacion->vocal_suplente}}</td>
 								</tr>
                 <tr>
                   <td><strong>Veredicto:</strong></td>
