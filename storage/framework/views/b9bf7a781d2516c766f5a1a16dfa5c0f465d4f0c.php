@@ -53,7 +53,6 @@
             <?php else: ?>
               <?php switch(Auth::user()->rol):
               case ("Jefe de Docencia"): ?>
-              <!--
                 <li class="dropdown">
                   <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Círc. Estudios
                     <b class="caret"></b></a>
@@ -63,7 +62,6 @@
                     <li><a href="<?php echo e(route('gen_horario')); ?>">Horario </a></li>
                   </ul>
                 </li>
--->
                 <li class="dropdown">
                   <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Titulaciones
                     <b class="caret"></b></a>
@@ -74,10 +72,9 @@
                     <li><a href="<?php echo e(route('revisiones.index')); ?>">Revisiones </a></li>-->
                   </ul>
                 </li>
-                <!--
+
                 <li><a href="<?php echo e(route('actividadescomp.index')); ?>">Actividades Complementarias</a></li>
                 <li><a href="<?php echo e(route('catalogoac.index')); ?>">Catalogo Act.</a></li>
-              -->
               <?php break; ?>
               <?php case ("DivEstProf"): ?>
                 <li><a href="<?php echo e(route('procesotitulacion.index')); ?>">Proceso de Titulacion </a></li>
