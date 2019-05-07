@@ -161,7 +161,7 @@ class TitulacionController extends Controller
        $ol=0;
      }
      $borrador = Revision::select(DB::raw('count(*) as total'))->where('veredicto','APROBADO')->where('id_titulacion','=',"$titulacion->id")->where('tipo_revision','=','PROYECTO')->first();
-     $ordenI = Titulacion::select('p.orden')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.id','=',$nc)->where('descripcion',$pro->proceso)->get();
+     $ordenI = Titulacion::select('p.orden')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('descripcion','Invitación a Ceremonia de Titulación')->get();
      if($borrador->total == 3){
        $b = 'A';
      }
@@ -177,7 +177,6 @@ class TitulacionController extends Controller
      }
      if($p=='Alta'){
        $orden = 'Alta';
-
      }
      else {
        $ord = Titulacion::select('p.orden','p.id_opcion')
@@ -185,30 +184,9 @@ class TitulacionController extends Controller
        ->where('p.descripcion','=',$p)->where('titulaciones.id',$titulacion->id)->first();
        $orden =$ord->orden;
      }
-     //return $orden;
+     //return $ord;
      return view('titulaciones.fragment.expediente_titulacion',compact('titulacion','alumno','proceso','orden','b','ol','v','oi','ae'));
  }
-
-    private function obtener_siglas($estudios){
-      $salutation="";
-      $estudios = strtoupper($estudios);
-      if(stristr($estudios,"MAESTR")){
-        $salutation = "M.";
-      }
-      if (stristr($estudios,"DOCTOR")){
-        $satutation = "D.";
-      }
-      if(stristr($estudios,"CIENCIAS")){
-        $salutation = $salutation . "C.";
-      }
-      if(stristr($estudios,"INGENIER")){
-        $salutation = "ING.";
-      }
-      if(stristr($estudios,"LICENCIAD")){
-        $salutation = "LIC.";
-      }
-      return $salutation;
-    }
 
     public function proyectosDocentes(Request $request){
 

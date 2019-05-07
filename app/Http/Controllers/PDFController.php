@@ -546,15 +546,15 @@ class PDFController extends Controller
         $hora  = $hora;
         $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
         $dia = array("DOMINGO","LUNES","MARTES","MIÉRCOLES","JUEVES","VIERNES","SÁBADO");
-        $data   = $titulacion;
+        $titulacion   = $titulacion;
         $data2  = $c;
         $data3  = $nomb;
         $date   = $dia[date('w',$fecha)]." ".date('d',$fecha)." DE ".$meses[date('m',$fecha)-1]." DE ".date('Y') ;
-        $view   = \View::make($vistaurl, compact('data', 'data2','data3','date','nc','fecha','lugar','hora','ae'))->render();
+        $view   = \View::make($vistaurl, compact('titulacion', 'data2','data3','date','nc','fecha','lugar','hora','ae'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
-        $pdf    ->loadHTML($view)->save('pdf/INV/ICT_'.$data->alumno.'.pdf');
+        $pdf    ->loadHTML($view)->save('pdf/INV/ICT_'.$titulacion->alumno.'.pdf');
         //return $data;
-        return $pdf->stream('Invitacion_'.$data->alumno.'.pdf');
+        return $pdf->stream('Invitacion_'.$titulacion->alumno.'.pdf');
     }
 
     public function crear_control_p($nc){
