@@ -19,6 +19,7 @@ class CreateMateriasCarrerasTable extends Migration
           $table->string('materia');
           $table->integer('creditos_materia');
           $table->integer('horas_teoricas');
+          $table->integer('horas_practicas');
           $table->integer('orden_certificado');
           $table->integer('semestre_reticula');
           $table->integer('creditos_prerrequisito');
@@ -26,12 +27,11 @@ class CreateMateriasCarrerasTable extends Migration
           $table->string('clave_oficial_materia');
           $table->char('estatus_materia_carrera',1);
           $table->integer('renglon');
-          $table->increments('id');
+          $table->integer('id');
           $table->integer('id_materia');
-          $table->foreign('id_materia')->references('id')->on('materias');
-          $table->integer('id_carrera')->unsigned();
-          $table->foreign('id_carrera')->references('id')->on('carreras');
-          $table->primary(['id','materia']);
+          $table->integer('id_carrera');
+          $table->string('id_especialidad');
+          $table->primary('materia');
         });
     }
 

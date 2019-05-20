@@ -23,7 +23,6 @@ class CreateRevisionsTable extends Migration
           $table->date('fecha_revision');
           $table->string('veredicto',20);
           $table->string('comentarios');
-          $table->timestamps();
       });
     }
 

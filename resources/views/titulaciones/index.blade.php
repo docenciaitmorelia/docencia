@@ -26,7 +26,7 @@
 								<th>Paterno</th>
 								<th>Materno</th>
 								<th>Nombre</th>
-				                <th>Estatus Titulación</th>
+				        <th>Estatus Titulación</th>
 								<th colspan="1">&nbsp;</th>
 							</tr>
 						</thead>
@@ -43,9 +43,9 @@
 									<td>
 										<strong>{{ $alumno->nombre_alumno }}</strong>
 									</td>
-				                    <td>
-				                        {{ $alumno->estatus }}
-				                    </td>
+				          <td>
+				            {{ $alumno->estatus }}
+				          </td>
 									<td>
 										<a href="{{route('expediente_titulacion',$alumno->id) }}" data-target="titulacion" class="btn btn-raised btn-primary">Expediente</a>
 									</td>

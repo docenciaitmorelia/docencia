@@ -17,7 +17,6 @@ class CreateOpctitxretsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('id_opcion_titulacion')->unsigned();
             $table->bigInteger('reticula');
-            $table->timestamps();
             $table->foreign('id_opcion_titulacion')->references('id')->on('opciones_titulacion');
         });
     }

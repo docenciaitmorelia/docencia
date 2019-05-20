@@ -14,14 +14,14 @@ class CreateOrganigramasTable extends Migration
     public function up()
     {
         Schema::create('organigrama', function (Blueprint $table) {
-            $table->increments('id');
             $table->string('clave_area');
             $table->string('descripcion_area');
             $table->biginteger('area_depende');
             $table->integer('nivel');
             $table->char('tipo_area',1);
+            $table->integer('id');
             $table->string('subnivel');
-            $table->primary(['id','clave_area']);
+            $table->primary('clave_area');
         });
     }
 

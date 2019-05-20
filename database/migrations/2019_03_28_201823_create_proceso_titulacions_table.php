@@ -19,7 +19,6 @@ class CreateProcesoTitulacionsTable extends Migration
           $table->foreign('id_opcion')->references('id')->on('opciones_titulacion');
           $table->string('descripcion',255);
           $table->integer('orden');
-          $table->timestamps();
       });
     }
 

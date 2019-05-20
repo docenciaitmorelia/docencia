@@ -8,46 +8,67 @@
         <h3 class="card-title">{{ __('Administrar Usuarios') }}</h3>
         <div class="row">
           <div class="col s12">
-              @foreach($Usuarios as $usuario)
-                  <div class="col-md-3">
-                    <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title">{{ $usuario->name }}</h5>
-                        <p class="card-text">Id: {{ $usuario->id }}</p>
-                        <p class="card-text">Rol: {{ $usuario->rol }}</p>
-                        <p class="card-text">Área: {{ $usuario->descripcion_area }}</p>
-                        <p class="card-text">Email: {{ $usuario->email }}</p>
+
+              <table class="table table-striped table-hover">
+    						<thead>
+    							<tr>
+    								<th>Usuario</th>
+    								<th>ID</th>
+    								<th>ROL</th>
+    								<th>Área</th>
+    				        <th>Email</th>
+    								<th colspan="1">&nbsp;</th>
+    							</tr>
+    						</thead>
+    						<tbody>
+    						@foreach($Usuarios as $usuario)
+    								<tr>
+    									<td> {{ $usuario->name }}</td>
+    									<td>
+    										<strong>{{ $usuario->id }}</strong>
+    									</td>
+    									<td>
+    										<strong>{{ $usuario->rol }}</strong>
+    									</td>
+    									<td>
+    										<strong>{{ $usuario->descripcion_area }}</strong>
+    									</td>
+    				          <td>
+    				            {{ $usuario->email }}
+    				          </td>
+    									<td>
                         <a href="{{ route('usuariosCtl.edit',$usuario->id) }}" class="card-link"><i class="material-icons">create</i></a>
                         <a data-toggle="modal" data-target="#modal{{ $usuario->id }}" class="card-link modal-trigger" href="#modal{{ $usuario->id }}"><i class="material-icons">delete</i></a>
-
                         <!-- Modal Structure -->
-                        <div id="modal{{ $usuario->id }}" class="modal" tabindex="-1" role="dialog">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">Eliminar</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <form action="{{ route('usuariosCtl.destroy',$usuario->id) }}" method="POST" id='form-{{ $usuario->id }}'>
-                                    {{ csrf_field() }}
-                                    {{ method_field('DELETE') }}
-                                </form>
-                                <p>¿Seguro que deseas eliminar el usuario {{ $usuario->name }}?</p>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('form-{{ $usuario->id }}').submit();">Sí, Quiero Eliminar el Registro</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                          <div id="modal{{ $usuario->id }}" class="modal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">Eliminar</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <form action="{{ route('usuariosCtl.destroy',$usuario->id) }}" method="POST" id='form-{{ $usuario->id }}'>
+                                      {{ csrf_field() }}
+                                      {{ method_field('DELETE') }}
+                                  </form>
+                                  <p>¿Seguro que deseas eliminar el usuario {{ $usuario->name }}?</p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('form-{{ $usuario->id }}').submit();">Sí, Quiero Eliminar el Registro</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-              @endforeach
+                      </td>
+    								</tr>
+                    @endforeach
+    						</tbody>
+    					</table>
+
             </div>
           </div>
         @else

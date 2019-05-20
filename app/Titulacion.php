@@ -36,7 +36,7 @@ class Titulacion extends Model
     $s= mb_strtoupper($s,'UTF-8');
     $alumnos = DB::table('alumnos')
     ->where('estatus_alumno','EGR')
-    ->orWhere([['estatus_alumno','ACT'],['creditos_aprobados','>=',350],])
+    ->orWhere([['estatus_alumno','ACT'],['creditos_aprobados','>=',230],])
     ->groupBy('no_de_control');
     $clave_area_usuario = DB::table('personal')->select('area_academica')->where('rfc',Auth::user()->name)->first();
     return $query
@@ -48,5 +48,4 @@ class Titulacion extends Model
           ->where('titulaciones.alumno','LIKE',"%$s%")
           ->orwhere(DB::raw("CONCAT(alumnos.nombre_alumno,' ',alumnos.apellido_paterno,' ',alumnos.apellido_materno)"), 'LIKE', "%$s%");
   }
-
 }

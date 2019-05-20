@@ -76,7 +76,8 @@
 						@endif
 				    </div>
 				    <div class="col-md-6">
-				    @if($titulacion->estatus=='ACTIVO' || $titulacion->estatus =='TITULADO')
+				    @if($titulacion->estatus=='ACTIVO' || $titulacion->estatus =='TITULADO' )
+						@if($titulacion->detalle_opcion == 'Recepcional')
 					<form action="{{ route('gen_documentos', $titulacion->id) }}" method="POST">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div class="col-md-12">
@@ -88,6 +89,19 @@
 									@endforeach
 						  </select>
 						</div>
+						@else
+						<form action="{{ route('gen_documentos', $titulacion->id) }}" method="POST">
+							<input type="hidden" name="_token" value="{{ csrf_token() }}">
+							<div class="col-md-12">
+								<label for="documento" class="control-label">Tipo de Documento</label>
+								<select id="documento" type="text" class="form-control" name="documento" value="" required autofocus>
+									<option value="">Seleccione documento</option>
+										@foreach($proceso as $documento)
+											<option id="documento" value="{{ $documento->descripcion }}">{{$documento->descripcion}}</option>
+										@endforeach
+							  </select>
+							</div>
+						@endif
 						<p class="col-md-12">
 							<button type="submit" class="btn btn-raised btn-primary">Generar Documento</button>
 							<a href="{{ route('titulaciones.index') }}" class="btn btn-raised btn-primary">Regresar</a>

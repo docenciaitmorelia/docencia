@@ -24,7 +24,7 @@ class Alumno extends Model
         ->select('alumnos.*','carreras.nombre_reducido')
         ->where(function($query){
           $query->where('estatus_alumno','=','EGR')
-            ->orWhere([['estatus_alumno','=','ACT'],['creditos_aprobados','>=',350],]);
+            ->orWhere([['estatus_alumno','=','ACT'],['creditos_aprobados','>=',200],]);
 
         })
         ->joinSub($carreras, 'carreras', function ($join) {

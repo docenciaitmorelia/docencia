@@ -15,8 +15,8 @@ class Grados extends Migration
     {
       Schema::create('grados', function (Blueprint $table) {
           $table->string('rfc');
+          $table->foreign('rfc')->references('rfc')->on('personal');
           $table->string('grado');
-          $table->timestamps();
       });
     }
 

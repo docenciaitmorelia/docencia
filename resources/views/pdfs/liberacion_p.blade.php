@@ -101,31 +101,14 @@
 	                    <td>&nbsp;</td>
 	                  </tr>
 	                  <tr>
-	                    <td align="center">{{$seccion->jefe_area}}</td>
-	                    <td align="center">&nbsp;</td>
-	                    <td align="center">{{$academia->grado}} {{$academia->nombre_empleado}} {{$academia->apellidos_empleado}}</td>
+	                    <td align="center">{{$data->asesor}}</td>
+	                    <td align="center">{{$data->revisor1}}</td>
+	                    <td align="center">{{$data->revisor2}}</td>
 	                  </tr>
 	                  <tr>
-	                    <td align="center" id="titulo">JEFE DEL {{$seccion->descripcion_area}}</td>
-	                    <td align="center">&nbsp;</td>
-	                    <td align="center" id="titulo">PRESIDENTE DE ACADEMIA</td>
-	                  </tr>
-
-										<tr>
-	                    <td>&nbsp;</td>
-	                    <td>&nbsp;</td>
-	                    <td>&nbsp;</td>
-	                  </tr>
-
-										<tr>
-	                    <td>&nbsp;</td>
-	                    <td align="center">{{$data->asesor}}</td>
-	                    <td>&nbsp;</td>
-	                  </tr>
-										<tr>
-	                    <td>&nbsp;</td>
-	                    <td align="center">ASESOR</td>
-	                    <td>&nbsp;</td>
+	                    <td align="center" id="titulo">PRESIDENTE</td>
+	                    <td align="center">SECRETARIO</td>
+	                    <td align="center" id="titulo">VOCAL</td>
 	                  </tr>
 	                </tbody>
 	                </table>

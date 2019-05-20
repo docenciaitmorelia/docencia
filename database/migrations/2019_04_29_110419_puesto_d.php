@@ -15,6 +15,7 @@ class PuestoD extends Migration
     {
       Schema::create('puesto_d', function (Blueprint $table) {
           $table->string('rfc');
+          $table->foreign('rfc')->references('rfc')->on('personal');
           $table->string('puesto');
           $table->string('clave_area');
           $table->timestamps();

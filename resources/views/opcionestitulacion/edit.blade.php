@@ -30,7 +30,11 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="detalle_opcion" class="bmd-label-floating col-form-label">{{ __('Descripción') }}</label>
-                    <input maxlength="255" id="detalle_opcion" type="text" class="form-control{{ $errors->has('detalle_opcion') ? ' is-invalid' : '' }}" name="detalle_opcion" value="{{ $Array->detalle_opcion }}" placeholder="Ejemplo: Producto de Investigación..." required>
+                <select id="detalle_opcion" name="detalle_opcion" class="form-control" required>
+                  <option value="" selected>Seleccione detalle de opción</option>
+                    <option value="Protocolario" {{(old('detalle_opcion',$Array->detalle_opcion)=='Protocolario')? 'selected':''}}>Protocolario</option>
+                    <option value="Recepcional" {{(old('detalle_opcion',$Array->detalle_opcion)=='Recepcional')? 'selected':''}}>Recepcional</option>
+                  </select>
                     @if ($errors->has('detalle_opcion'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('detalle_opcion') }}</strong>

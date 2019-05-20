@@ -18,12 +18,11 @@ class CreateMateriasTable extends Migration
           $table->char('nivel_escolar',1);
           $table->integer('tipo_materia');
           $table->integer('clave_area');
-          $table->foreign('clave_area')->references('clave_area')->on('organigrama');
           $table->string('nombre_completo_materia');
           $table->string('nombre_abreviado_materia');
-          $table->increments('id');
+          $table->integer('id');
           $table->string('tipo_calificacion');
-          $table->primary(['id','materia']);
+          $table->primary('materia');
         });
     }
 

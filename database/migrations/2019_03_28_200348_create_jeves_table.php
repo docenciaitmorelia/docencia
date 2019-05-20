@@ -16,9 +16,10 @@ class CreateJevesTable extends Migration
       Schema::create('jefes', function (Blueprint $table) {
           $table->string('clave_area');
           $table->string('descripcion_area');
+          $table->string('jefe_area');
           $table->string('rfc');
           $table->foreign('rfc')->references('rfc')->on('personal');
-          $table->timestamps();
+          $table->string('dependencia_id');
           $table->primary('clave_area');
       });
     }

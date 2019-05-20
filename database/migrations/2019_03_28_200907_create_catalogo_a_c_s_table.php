@@ -17,7 +17,6 @@ class CreateCatalogoACSTable extends Migration
           $table->increments('id');
           $table->string('actividad');
           $table->integer('creditos');
-          $table->timestamps();
       });
     }
 

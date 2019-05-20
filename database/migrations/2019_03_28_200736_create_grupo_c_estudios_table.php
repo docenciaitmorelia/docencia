@@ -17,8 +17,8 @@ class CreateGrupoCEstudiosTable extends Migration
           $table->increments('id');
           $table->string('tutor');
           $table->foreign('tutor')->references('no_de_control')->on('alumnos');
-          $table->integer('materia')->unsigned();
-          $table->foreign('materia')->references('id')->on('materias_carreras');
+          $table->string('materia');
+          $table->foreign('materia')->references('materia')->on('materias_carreras');
           $table->string('ciclo_escolar');
           $table->string('dia1');
           $table->string('hora1');
