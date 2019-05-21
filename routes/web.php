@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('crear_horario','PDFController@crear_horario')->name('crear_horario');
 
-    Route::get('listar_grupo/{nc}', 'GrupoCEstudioController@listar_grupo')->name('listar_grupo');
+    Route::get('listar_grupoce/{nc}', 'GrupoCEstudioController@listar_grupoce')->name('listar_grupoce');
 
     Route::post('crear_constancia_ce/{nc}', 'PDFController@crear_constancia_ce')->name('crear_constancia_ce');
 

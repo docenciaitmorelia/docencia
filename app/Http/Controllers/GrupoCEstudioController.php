@@ -70,14 +70,14 @@ class GrupoCEstudioController extends Controller
         return redirect()->route('grupocestudio.index');
     }
 
-    public function listar_grupo($nc){
+    public function listar_grupoce($nc){
         $grupocestudio= GrupoCEstudio::select('grupo_cestudios.tutor as tutor','grupo_cestudios.id','materias.nombre_completo_materia','grupo_cestudios.dia1','grupo_cestudios.hora1','grupo_cestudios.salon1','grupo_cestudios.dia2','grupo_cestudios.hora2','grupo_cestudios.salon2')->join('alumnos','grupo_cestudios.tutor','=','alumnos.no_de_control')
                     ->join('materias','grupo_cestudios.materia', '=','materias.id')
                     ->where('grupo_cestudios.id','=',"$nc")
                     ->first();
         $alumno = Alumno::where('no_de_control',$grupocestudio->tutor)->get();
         //return $grupocestudio;
-        return view('grupocestudio.fragment.listargrupo',compact('grupocestudio','alumno'));
+        return view('grupocestudio.fragment.listargrupoce',compact('grupocestudio','alumno'));
 
     }
 

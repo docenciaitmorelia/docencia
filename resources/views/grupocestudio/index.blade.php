@@ -37,7 +37,7 @@
 								<td><strong>{{ $grupo->nombre_completo_materia }}</strong></td>
 								<td><strong>@if($grupo->ciclo_escolar==1) ENERO-JUNIO @else AGOSTO-DICIEMBRE @endif</strong></td>
 								<td colspan="3" align="center">
-									<a href="{{ route('listar_grupo', $grupo->id)}}" data-target="grupo" class="btn btn-raised btn-primary">Detalles</a>
+									<a href="{{ route('listar_grupoce', $grupo->id)}}" data-target="grupo" class="btn btn-raised btn-primary">Detalles</a>
 								</td>
 							</tr>
 							@endforeach
