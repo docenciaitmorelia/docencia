@@ -14,6 +14,8 @@
 						</h4>
 					</div>
 				</center>
+				@if (file_exists('pdf/ATA/ATA_'.$titulacion->alumno.'.pdf')) <a href="{{ asset('pdf/ATA/ATA_'.$titulacion->alumno.'.pdf')}}" target="_blank">Abrir Autorización de tema y asignación de asesor</a>
+        @endif
 				<hr>
 				<center>
 					<h5>
@@ -59,7 +61,7 @@
           </tbody>
         </table>
 				<br>
-				<form action="../crear_autorizacion_t/{{$titulacion->id}}" method="POST" target="_blank">
+				<form action="{{ route('crear_autorizacion_t', $titulacion->id) }}" method="POST" target="_blank">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div class="col-md-12">
 							<div class="col-md-6">

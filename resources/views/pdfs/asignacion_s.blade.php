@@ -23,7 +23,7 @@
           <td colspan="2" align="right">&nbsp;</td>
         </tr>
         <tr>
-          <td colspan="2" align="right"><b>ASUNTO:&nbsp;</b> Asignación de sinodales</td>
+          <td colspan="2" align="right"><b>ASUNTO:&nbsp;</b> Autorización de opción de titulación y asignación de sinodales</td>
         </tr>
     </table>
     <br>
@@ -40,26 +40,26 @@
   				<br>
   				@if($gjdiv->sexo_empleado=='M') JEFE @else JEFA @endif DE LA DIVISIÓN DE ESTUDIOS PROFESIONALES
   				<br>
+					PRESENTE
+					<br>
   			</strong>
 			</p>
       	<p align="justify">
-        De acuerdo a la solicitud presentada por @if($alumno->sexo=='M') el&nbsp;egresado: @else la&nbsp;egresada: @endif <strong> {{$alumno->completo}}</strong>, con número de control {{$alumno->no_de_control}} pasante de la carrera de: {{$carrera->nombre}} con registro de la opción @if($alumno->reticula < 2010) {{$titu->op}}.{{$titu->nombre_opcion}}; @else {{$titu->nombre_opcion}}; @endif se le informa a usted que la asignación de sinodales queda de la siguiente manera:
+        En respuesta a su oficio <b>{{$nofdiv}}</b> la solicitud de titulación; informo a usted que @if($alumno->sexo=='M') el @else la @endif <strong>C. {{$alumno->completo}}</strong>, pasante de la carrera de <b>{{$carrera->nombre}}</b> y con número de control <b>{{$alumno->no_de_control}}</b>, registró la opción de titulación: @if($alumno->reticula < 2010) <b>{{$titu->op}}. {{$titu->nombre_opcion}}</b>; @else <b>{{$titu->nombre_opcion}}</b>; @endif con el proyecto titulado "<b>{{$titu->nombre_proyecto}}<b>", el cual ha sido analizado en reunión de Academia, llegando a la siguiente conclusión: <b>SE APRUEBA</b>; quedando integrado el jurado de la siguiente manera:
         </p>
         <p align="justify">
         <br>
 				<table>
 				@if($ae->asesor_externo != 'N')
-				<tr> <td>PRESIDENTE: </td> <td>    {{$titu->revisor1}} </td><tr>
-        <tr> <td>SECRETARIO:   </td> <td>  {{$titu->revisor2}} </td><tr>
-        <tr> <td>VOCAL PROP.:  </td> <td>  {{$titu->revisor3}} </td><tr>
-        <tr> <td>VOCAL SUPL.:  </td> <td>  {{$titu->asesor}} </td><tr>
-      	<tr> <td>ASESOR:     </td> <td>    {{$titu->asesor}} </td><tr>
+				<tr> <td><b>PRESIDENTE:</b> </td> <td>    {{$titu->revisor1}} </td><tr>
+        <tr> <td><b>SECRETARIO:</b>   </td> <td>  {{$titu->revisor2}} </td><tr>
+        <tr> <td><b>VOCAL PROP.:</b>  </td> <td>  {{$titu->revisor3}} </td><tr>
+        <tr> <td><b>VOCAL SUPL. & ASESOR:</b>  </td> <td>  {{$titu->asesor}} </td><tr>
 				@else
-        <tr> <td>PRESIDENTE: </td> <td>    {{$titu->asesor}} </td><tr>
-        <tr> <td>SECRETARIO:   </td> <td>  {{$titu->revisor1}} </td><tr>
-        <tr> <td>VOCAL PROP.:  </td> <td>  {{$titu->revisor2}} </td><tr>
-        <tr> <td>VOCAL SUPL.:  </td> <td>  {{$titu->revisor3}} </td><tr>
-      	<tr> <td>ASESOR:     </td> <td>    {{$titu->asesor}} </td><tr>
+        <tr> <td><b>PRESIDENTE & ASESOR:</b> </td> <td>    {{$titu->asesor}} </td><tr>
+        <tr> <td><b>SECRETARIO:</b>   </td> <td>  {{$titu->revisor1}} </td><tr>
+        <tr> <td><b>VOCAL PROP.:</b>  </td> <td>  {{$titu->revisor2}} </td><tr>
+        <tr> <td><b>VOCAL SUPL.:</b>  </td> <td>  {{$titu->revisor3}} </td><tr>
 				@endif
       	</table>
 				</p>
@@ -84,7 +84,7 @@
           <br>
           <br>
 					<div class="col-md-12">
-	            <p id="cp">Cp. Integrantes del jurado<br>Alumno interesado<br>Archivo</p>
+	            <p id="cp">c.c.p. Alumno interesado<br>c.c.p.Archivo</p>
 	        </div>
     </div>
 

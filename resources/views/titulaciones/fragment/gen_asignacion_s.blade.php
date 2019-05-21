@@ -14,6 +14,8 @@
 						</h4>
 					</div>
 				</center>
+				@if (file_exists('pdf/AsignacionS/Asignacion_Sinodales_'.$titulacion->alumno.'.pdf')) <a href="{{ asset('pdf/AsignacionS/Asignacion_Sinodales_'.$titulacion->alumno.'.pdf')}}" target="_blank">Abrir Asignación de sinodales</a>
+        @endif
 				<hr>
 				<center>
 					<h5>
@@ -59,12 +61,16 @@
           </tbody>
         </table>
 				<br>
-				<form action="../crear_asignacion_s/{{$titulacion->id}}" method="POST" target="_blank">
+				<form action="{{ route('crear_asignacion_s', $titulacion->id) }}" method="POST" target="_blank">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div class="col-md-12">
 							<div class="col-md-6">
+								<label for="oficiodiv" class="control-label">Oficio de División de Estudios Prof.</label>
+								<input type="text" id="oficioe" name="oficiodiv" class="form-control" placeholder="" required>
+							</div>
+							<div class="col-md-6">
 								<label for="oficio" class="control-label">Oficio</label>
-								<input type="text" id="oficio" name="oficio" class="form-control" placeholder="DSC-D-001/2018" required>
+								<input type="text" id="oficio" name="oficio" class="form-control" placeholder="001/2018" required>
 							</div>
 						</div>
 						<p class="col-md-12">

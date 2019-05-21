@@ -23,7 +23,7 @@
           <td colspan="2" align="right">&nbsp;</td>
         </tr>
         <tr>
-          <td colspan="2" align="right"><b>ASUNTO:&nbsp;</b>Impresión definitiva</td>
+          <td colspan="2" align="right"><b>ASUNTO:&nbsp;</b> Autorización de impresión definitiva</td>
         </tr>
     </table>
     <br>

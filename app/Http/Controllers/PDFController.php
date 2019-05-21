@@ -174,6 +174,7 @@ class PDFController extends Controller
 
     public function crear_asignacion_s(Request $request,$nc){
         $oficio = $request->input('oficio');
+        $oficiodiv = $request->input('oficiodiv');
         $ae=Titulacion::select('asesor_externo')->where('id',$nc)->first();
         if($ae->asesor_externo != 'N'){
           $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(r1g.grado,' ',s1.apellidos_empleado,' ',s1.nombre_empleado) AS revisor1"),DB::raw("CONCAT(r2g.grado,' ',s2.apellidos_empleado,' ',s2.nombre_empleado) AS revisor2"),DB::raw("CONCAT(r3g.grado,' ',s3.apellidos_empleado,' ',s3.nombre_empleado) AS revisor3"),'titulaciones.asesor_externo as asesor','op.nombre_opcion as nombre_opcion','op.opcion_titulacion as op','op.detalle_opcion as detalle_opcion')
@@ -222,22 +223,23 @@ class PDFController extends Controller
         $jefedsc    = Jefe::where('clave_area','=',Auth::user()->clave_area)->first();
         $gjdsc      = Personal::select('sexo_empleado')->where('rfc','=',"$jefedsc->rfc")->get();
         //return $ae;
-        return $this->crearPDFAS($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$ae,$jefedsc,$gjdsc);
+        return $this->crearPDFAS($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$ae,$jefedsc,$gjdsc,$oficiodiv);
 
     }
 
-    public function crearPDFAS($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$ae,$jefedsc,$gjdsc){
+    public function crearPDFAS($titulacion,$c,$nomb,$oficio,$vistaurl,$nc,$jefediv,$gjdiv,$ae,$jefedsc,$gjdsc,$oficiodiv){
         $titu   = $titulacion;
         $carrera  = $c;
         $alumno  = $nomb;
         $nof    = $oficio;
+        $nofdiv = $oficiodiv;
         $jefediv=$jefediv;
         $gjdiv  =$gjdiv;
         $gjdsc  = $gjdsc;
         $jefedsc  = $jefedsc;
         $meses  = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
         $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
-        $view   = \View::make($vistaurl, compact('titu', 'carrera','alumno','date','nof','nc','jefediv','gjdiv','ae','jefedsc','gjdsc'))->render();
+        $view   = \View::make($vistaurl, compact('titu', 'carrera','alumno','date','nof','nc','jefediv','gjdiv','ae','jefedsc','gjdsc','nofdiv'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
         //$pdf    ->loadHTML($view)->save('pdf/AsignacionS/Asignacion_Sinodales_'.$nc.'.pdf');
         $pdf    ->loadHTML($view)->save('pdf/AsignacionS/Asignacion_Sinodales_'.$titu->alumno.'.pdf');
@@ -549,7 +551,7 @@ class PDFController extends Controller
         $titulacion   = $titulacion;
         $data2  = $c;
         $data3  = $nomb;
-        $date   = $dia[date('w',$fecha)]." ".date('d',$fecha)." DE ".$meses[date('m',$fecha)-1]." DE ".date('Y') ;
+        $date   = $dia[date('w',$fecha)]." ".date('d',$fecha)." DE ".$meses[date('m',$fecha)-1]." DE ".date('Y',$fecha);
         $view   = \View::make($vistaurl, compact('titulacion', 'data2','data3','date','nc','fecha','lugar','hora','ae'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
         $pdf    ->loadHTML($view)->save('pdf/INV/ICT_'.$titulacion->alumno.'.pdf');
@@ -657,111 +659,114 @@ class PDFController extends Controller
     //TITULACIONES - ESTADISTICAS
 
     public function crear_reporte_a(Request $request){
-        $a1= $request->input('anio1');
-        $oficio = $request->input('oficio');
-        if (file_exists('pdf/Reportes/'.$a1.'.pdf')){
-            File::delete('pdf/Reportes/'.$a1.'.pdf');
+        $a= $request->input('anio');
+        $periodo = $request->input('semestre');
+        if (file_exists('pdf/Reportes/'.$periodo.'_'.$a.'.pdf')){
+            File::delete('pdf/Reportes/'.$periodo.'_'.$a.'.pdf');
         }
             $vistaurl="pdfs.reporte_a";
-            $opc=OpcionesTitulacion::select('id')->where('nombre_opcion','LIKE','%CENEVAL%');
-            $ti1=Titulacion::select('titulaciones.nombre_proyecto as proyecto','titulaciones.asesor as asesor','titulaciones.estatus as estatus', 'titulaciones.created_at as created_at','titulaciones.opc_titu as opc_titu')
+            $clave_area_usuario = DB::table('personal')->select('area_academica')->where('rfc',Auth::user()->name)->first();
+            if($periodo == 'E-J'){
+            $ti=Titulacion::select(DB::raw("CONCAT(al.apellido_paterno,' ',al.apellido_materno,' ',al.nombre_alumno) AS completo"),'titulaciones.alumno','titulaciones.nombre_proyecto as proyecto','titulaciones.estatus as estatus', 'titulaciones.created_at as created_at','titulaciones.opc_titu as opc_titu','o.nombre_opcion','al.carrera','titulaciones.asesor',DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS revisor1"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS revisor2"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS revisor3"),'titulaciones.fecha_cer','o.detalle_opcion','titulaciones.asesor_externo','al.carrera','al.reticula')
                             ->join('opciones_titulacion as o', 'o.id','=','titulaciones.opc_titu')
-                            ->whereBetween('titulaciones.created_at', [$a1."-01-01", $a1."-06-30"])
-                            ->where('nombre_opcion','NOT LIKE','%CENEVAL%')
-                            ->orderBy('titulaciones.created_at','DESC')
+                            ->join('alumnos as al','al.no_de_control','=','titulaciones.alumno')
+                            ->join('personal as s1','s1.rfc','=','titulaciones.revisor1')
+                            ->join('personal as s2','s2.rfc','=','titulaciones.revisor2')
+                            ->join('personal as s3','s3.rfc','=','titulaciones.revisor3')
+                            ->whereBetween('titulaciones.fecha_cer', [$a."-01-01", $a."-06-30"])
+                            ->where('titulaciones.estatus','=','TITULADO')
+                            ->orderBy('titulaciones.updated_at','DESC')
                             ->get();
-            $ti2=Titulacion::select('titulaciones.nombre_proyecto as proyecto','titulaciones.asesor as asesor','titulaciones.estatus as estatus', 'titulaciones.created_at as created_at')
+            $sum=Titulacion::select('o.nombre_opcion as opcion',DB::raw('count(*) as total'),'opc_titu')
                             ->join('opciones_titulacion as o', 'o.id','=','titulaciones.opc_titu')
-                            ->whereBetween('titulaciones.created_at', [$a1."-08-01", $a1."-12-31"])
-                            ->orderBy('titulaciones.created_at','DESC')
-                            ->get();
-            $sum1=Titulacion::select('o.nombre_opcion as opcion',DB::raw('count(*) as total'),'opc_titu')->join('opciones_titulacion as o', 'o.id','=','titulaciones.opc_titu')
-                            ->whereBetween('titulaciones.created_at', [$a1."-01-01", $a1."-06-30"])
-                            ->where('o.nombre_opcion','NOT LIKE','%CENEVAL%')
+                            ->join('alumnos as a','a.no_de_control','=','titulaciones.alumno')
+                            ->whereBetween('titulaciones.fecha_cer', [$a."-01-01", $a."-06-30"])
+                            ->where('titulaciones.estatus','=','TITULADO')
                             ->groupBy('o.nombre_opcion','opc_titu')
                             ->get();
-            $sum2=Titulacion::select('o.nombre_opcion as opcion',DB::raw('count(*) as total'),'opc_titu')->join('opciones_titulacion as o', 'o.id','=','titulaciones.opc_titu')
-                            ->whereBetween('titulaciones.created_at', [$a1."-08-01", $a1."-12-31"])
-                            ->where('o.nombre_opcion','NOT LIKE','%CENEVAL%')
-                            ->groupBy('o.nombre_opcion','opc_titu')
-                            ->get();
-
-            //return $now->year;
-            return $this->crearPDFRA($ti1,$a1,$ti2,$sum1,$sum2,$vistaurl,$oficio);
-    }
-
-    public function crearPDFRA($ti1,$a1,$ti2,$sum1,$sum2,$vistaurl,$oficio){
-        $titu1=$ti1;
-        $titu2=$ti2;
-        $su1=$sum1;
-        $su2=$sum2;
-        $nof=$oficio;
-        $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
-        $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
-        $view   = \View::make($vistaurl, compact('titu1','titu2', 'a1','su1','su2','date','nof'))->render();
-        $pdf    = \App::make('snappy.pdf.wrapper');
-        $pdf    ->loadHTML($view)->save('pdf/Reportes/'.$a1.'.pdf');
-        return $pdf->stream(''.$a1.'.pdf');
-    }
-
-    public function crear_reporte_d(Request $request){
-        $asesor= $request->input('docente');
-        $anio= $request->input('anio');
-        $sem= $request->semestre;
-        if (file_exists('pdf/Reportes/'.$asesor.' '.$anio.'.pdf')){
-            File::delete('pdf/Reportes/'.$asesor.' '.$anio.'.pdf');
-        }
-
-            $vistaurl="pdfs.reporte_d";
-            $nombrea=Personal::select(DB::raw("CONCAT(personal.nombre_empleado,' ',personal.apellidos_empleado) AS completo"),'personal.especializacion')
-                            ->where('rfc','LIKE',"$asesor")->get();
-            if($sem == 'E-J'){
-                $ti=Titulacion::select('titulaciones.nombre_proyecto as proyecto','titulaciones.alumno as alumno','titulaciones.plan as plan','titulaciones.asesor as asesor','titulaciones.estatus as estatus', 'titulaciones.created_at as created_at','titulaciones.opc_titu as opc_titu')
-                                ->join('opciones_titulacion as o', 'o.id','=','titulaciones.opc_titu')
-                                ->whereBetween('titulaciones.created_at', [$anio."-01-01", $anio."-06-30"])
-                                ->where('nombre_opcion','NOT LIKE','%CENEVAL%')
-                                ->where('asesor','LIKE',"%$asesor%")
-                                ->orderBy('titulaciones.created_at','DESC')
-                                ->get();
-
-                $sum=Titulacion::select('o.nombre_opcion as opcion',DB::raw('count(*) as total'),'opc_titu')->join('opciones_titulacion as o', 'o.id','=','titulaciones.opc_titu')
-                            ->whereBetween('titulaciones.created_at', [$anio."-01-01", $anio."-06-30"])
-                            ->where('o.nombre_opcion','NOT LIKE','%CENEVAL%')
-                            ->where('asesor','LIKE',"%$asesor%")
-                            ->groupBy('o.nombre_opcion','opc_titu')
+            $asesor=Titulacion::select(DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),'a.rfc','titulaciones.alumno')
+                    ->join('personal as a','a.rfc','=','titulaciones.asesor')
+                    ->whereBetween('titulaciones.fecha_cer', [$a."-01-01", $a."-06-30"])
+                    ->where('titulaciones.estatus','=','TITULADO')
+                    ->orderBy('titulaciones.updated_at','DESC')
+                    ->get();
+            $carreras=Carrera::select('carreras.carrera','carreras.nombre_carrera')
+                    ->join('permisos as p','p.carrera','=','carreras.carrera')
+                    ->where('p.usuario',Auth::user()->name)
+                    ->groupBy('carreras.carrera','carreras.nombre_carrera')
+                    ->get();
+            //
+            $sumc=Titulacion::select('al.carrera',DB::raw('count(*) as total'))
+                            ->join('opciones_titulacion as o', 'o.id','=','titulaciones.opc_titu')
+                            ->join('alumnos as al','al.no_de_control','=','titulaciones.alumno')
+                            ->join('personal as s1','s1.rfc','=','titulaciones.revisor1')
+                            ->join('personal as s2','s2.rfc','=','titulaciones.revisor2')
+                            ->join('personal as s3','s3.rfc','=','titulaciones.revisor3')
+                            ->whereBetween('titulaciones.fecha_cer', [$a."-01-01", $a."-06-30"])
+                            ->where('titulaciones.estatus','=','TITULADO')
+                            ->groupBy('al.carrera')
                             ->get();
             }
-            else{
-                $ti=Titulacion::select('titulaciones.proyecto as proyecto','titulaciones.asesor as asesor','titulaciones.estatus as estatus', 'titulaciones.created_at as created_at','titulaciones.opc_titu as opc_titu')
-                                ->join('opciones_titulacion as o', 'o.id','=','titulaciones.opc_titu')
-                                ->whereBetween('titulaciones.created_at', [$anio."-08-01", $anio."-12-31"])
-                                ->where('nombre_opcion','NOT LIKE','%CENEVAL%')
-                                ->where('asesor','LIKE',"%$asesor%")
-                                ->orderBy('titulaciones.created_at','DESC')
-                                ->get();
 
-                $sum=Titulacion::select('o.nombre_opcion as opcion',DB::raw('count(*) as total'),'opc_titu')->join('opciones_titulacion as o', 'o.id','=','titulaciones.opc_titu')
-                                ->whereBetween('titulaciones.created_at', [$anio."-08-01", $anio."-12-31"])
-                                ->where('o.nombre_opcion','NOT LIKE','%CENEVAL%')
-                                ->where('asesor','LIKE',"%$asesor%")
-                                ->groupBy('o.nombre_opcion','opc_titu')
-                                ->get();
+            elseif ($periodo == 'A-D') {
+              $ti=Titulacion::select(DB::raw("CONCAT(al.apellido_paterno,' ',al.apellido_materno,' ',al.nombre_alumno) AS completo"),'titulaciones.alumno','titulaciones.nombre_proyecto as proyecto','titulaciones.estatus as estatus', 'titulaciones.created_at as created_at','titulaciones.opc_titu as opc_titu','o.nombre_opcion','al.carrera','titulaciones.asesor',DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS revisor1"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS revisor2"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS revisor3"),'titulaciones.fecha_cer','o.detalle_opcion','titulaciones.asesor_externo','al.carrera','al.reticula')
+                              ->join('opciones_titulacion as o', 'o.id','=','titulaciones.opc_titu')
+                              ->join('alumnos as al','al.no_de_control','=','titulaciones.alumno')
+                              ->join('personal as s1','s1.rfc','=','titulaciones.revisor1')
+                              ->join('personal as s2','s2.rfc','=','titulaciones.revisor2')
+                              ->join('personal as s3','s3.rfc','=','titulaciones.revisor3')
+                              ->whereBetween('titulaciones.fecha_cer', [$a."-08-01", $a."-12-31"])
+                              ->where('titulaciones.estatus','=','TITULADO')
+                              ->orderBy('titulaciones.updated_at','DESC')
+                              ->get();
+              $sum=Titulacion::select('o.nombre_opcion as opcion',DB::raw('count(*) as total'),'opc_titu')
+                              ->join('opciones_titulacion as o', 'o.id','=','titulaciones.opc_titu')
+                              ->join('alumnos as a','a.no_de_control','=','titulaciones.alumno')
+                              ->whereBetween('titulaciones.fecha_cer', [$a."-08-01", $a."-12-31"])
+                              ->where('titulaciones.estatus','=','TITULADO')
+                              ->groupBy('o.nombre_opcion','opc_titu')
+                              ->get();
+              $asesor=Titulacion::select(DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),'a.rfc','titulaciones.alumno')
+                      ->join('personal as a','a.rfc','=','titulaciones.asesor')
+                      ->whereBetween('titulaciones.fecha_cer', [$a."-08-01", $a."-12-31"])
+                      ->where('titulaciones.estatus','=','TITULADO')
+                      ->orderBy('titulaciones.updated_at','DESC')
+                      ->get();
+              $carreras=Carrera::select('carreras.carrera','carreras.nombre_carrera')
+                      ->join('permisos as p','p.carrera','=','carreras.carrera')
+                      ->where('p.usuario',Auth::user()->name)
+                      ->groupBy('carreras.carrera','carreras.nombre_carrera')
+                      ->get();
+              //
+              $sumc=Titulacion::select('al.carrera',DB::raw('count(*) as total'))
+                              ->join('opciones_titulacion as o', 'o.id','=','titulaciones.opc_titu')
+                              ->join('alumnos as al','al.no_de_control','=','titulaciones.alumno')
+                              ->join('personal as s1','s1.rfc','=','titulaciones.revisor1')
+                              ->join('personal as s2','s2.rfc','=','titulaciones.revisor2')
+                              ->join('personal as s3','s3.rfc','=','titulaciones.revisor3')
+                              ->whereBetween('titulaciones.fecha_cer', [$a."-08-01", $a."-12-31"])
+                              ->where('titulaciones.estatus','=','TITULADO')
+                              ->groupBy('al.carrera')
+                              ->get();
             }
-            //return $nombrea;
-            return $this->crearPDFRD($ti,$anio,$sem,$nombrea,$vistaurl,$sum,$asesor);
+
+            //return $asesor;
+            return $this->crearPDFRA($ti,$a,$sum,$vistaurl,$periodo,$asesor,$carreras,$sumc);
     }
 
-    public function crearPDFRD($ti,$anio,$sem,$nombrea,$vistaurl,$sum,$asesor){
+    public function crearPDFRA($ti,$a,$sum,$vistaurl,$periodo,$asesor,$carreras,$sumc){
         $titu=$ti;
         $su=$sum;
+        $asesor=$asesor;
+        $carrera=$carreras;
+        $sc=$sumc;
         $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
         $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
-        $view   = \View::make($vistaurl, compact('titu', 'anio','sem','su','nombrea','date'))->render();
+        $view   = \View::make($vistaurl, compact('titu','a','su','periodo','asesor','carrera','sc'))->render();
         $pdf    = \App::make('snappy.pdf.wrapper');
-        $pdf    ->loadHTML($view)->save('pdf/Reportes/'.$asesor.' '.$anio.'.pdf');
-        return $pdf->stream(''.$asesor.' '.$anio.'.pdf');
+        $pdf    ->loadHTML($view)->save('pdf/Reportes/'.$periodo.'_'.$a.'.pdf');
+        return $pdf->stream(''.$periodo.'_'.$a.'.pdf');
     }
-
 
 
 }

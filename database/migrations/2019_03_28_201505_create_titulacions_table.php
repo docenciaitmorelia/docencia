@@ -29,7 +29,7 @@ class CreateTitulacionsTable extends Migration
           $table->string('asesor_externo')->nullable();
           $table->string('nombre_proyecto')->nullable();
           $table->string('estatus');
-          $table->string('fecha_cer')->nullable();
+          $table->date('fecha_cer')->nullable();
           $table->string('lugar')->nullable();
           $table->string('hora')->nullable();
           $table->string('proceso')->nullable();

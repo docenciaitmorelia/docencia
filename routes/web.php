@@ -69,8 +69,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('crear_reporte_a','PDFController@crear_reporte_a')->name('crear_reporte_a');
 
-    Route::post('crear_reporte_d','PDFController@crear_reporte_d')->name('crear_reporte_d');
-
     Route::post('crear_horario','PDFController@crear_horario')->name('crear_horario');
 
     Route::post('crear_asignacion_s/{nc}', 'PDFController@crear_asignacion_s')->name('crear_asignacion_s');
@@ -107,8 +105,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('gen_asignacion_r','TitulacionController@gen_asignacion_s')->name('gen_asignacion_r');
 
     Route::get('gen_liberacion_p','TitulacionController@gen_asignacion_s')->name('gen_liberacion_p');
-
-    Route::get('gen_reporte_d','TitulacionController@gen_reporte_d')->name('gen_reporte_d');
 
     Route::post('gen_asignacion_s', 'TitulacionController@gen_asignacion_s')->name('gen_asignacion_s');
 

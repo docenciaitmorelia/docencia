@@ -14,6 +14,8 @@
 						</h4>
 					</div>
 				</center>
+				@if (file_exists('pdf/INV/ICT_'.$titulacion->alumno.'.pdf')) <a href="{{ asset('pdf/INV/ICT_'.$titulacion->alumno.'.pdf')}}" target="_blank">Abrir Invitación a ceremonia</a>
+        @endif
 				<hr>
 				<center>
 					<h5>
@@ -64,7 +66,7 @@
 						<div class="col-md-12">
 							<div class="col-md-4">
 								<label for="fecha" class="control-label">Fecha de Ceremonia</label>
-								<input type="date" name="fecha" class="form-control" placeholder="mm/dd/aaaa">
+								<input type="date" name="fecha" class="form-control" placeholder="aaaa-mm-dd">
 							</div>
 						<div class="col-md-4">
 							<label for="lugar" class="control-label">Lugar</label>

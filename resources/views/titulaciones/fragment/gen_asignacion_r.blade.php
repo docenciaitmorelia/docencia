@@ -17,6 +17,8 @@
             </h4>
           </div>
         </center>
+        @if (file_exists('pdf/AsignacionR/Asignacion_Revisores_'.$titulacion->alumno.'.pdf')) <a href="{{ asset('pdf/AsignacionR/Asignacion_Revisores_'.$titulacion->alumno.'.pdf')}}" target="_blank">Abrir Asignación de revisores</a>
+        @endif
         <hr>
         <center>
           <h5>

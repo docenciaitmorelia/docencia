@@ -13,7 +13,7 @@
 						<br>
 						@endforeach
 						<i>{{$grupocestudio->nombre_completo_materia}}</i></h5>
-            @if (file_exists('pdf/Circulos/'.$al->no_de_control.'.pdf')) <a href="{{ asset('pdf/Circulos/'.$al->no_de_control.'.pdf')}}" target="_blank">Abrir Constancia de Círculos de est.</a>
+            @if (file_exists('pdf/Circulos/'.$grupocestudio->tutor.'.pdf')) <a href="{{ asset('pdf/Circulos/'.$grupocestudio->tutor.'.pdf')}}" target="_blank">Abrir Constancia de Círculos de est.</a>
             @endif
 						<table class="table table-striped table-hover ">
 							<thead>

@@ -16,14 +16,12 @@ use Illuminate\Support\Facades\Auth;
 
 class TitulacionController extends Controller
 {
-    public function index(Request $request)
-    {
+    public function index(Request $request){
         $alumnos= Titulacion::BT2($request->busqueda)->orderBy('estatus','ASC')->paginate();
         return view('titulaciones.index',compact('alumnos'));
     }
 
-    public function create(Request $request)
-    {
+    public function create(Request $request){
         $alumnos=Alumno::al()->filtrar($request->busqueda)
                 ->orderBy('apellido_paterno','asc')
                 ->orderBy('apellido_materno','asc')
@@ -42,8 +40,7 @@ class TitulacionController extends Controller
         return view('titulaciones.create', compact('alumnos','personal','planes'));
     }
 
-    public function store(TitulacionRequest $request)
-    {
+    public function store(TitulacionRequest $request){
         $titulacion = new Titulacion;
         $titulacion->alumno             = $request->alumno;
         $titulacion->nombre_proyecto    = mb_strtoupper($request->proyecto,'UTF-8');
@@ -69,8 +66,7 @@ class TitulacionController extends Controller
         return redirect()->route('titulaciones.index');
     }
 
-    public function edit(Request $request,$id)
-    {
+    public function edit(Request $request,$id){
         $ae=Titulacion::select('asesor_externo')->where('id',$id)->first();
         $titulacion  = Titulacion::find($id);
         //$alumno=Alumno::select('no_de_control',DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))->orderBy('apellido_paterno')->get();
@@ -88,8 +84,7 @@ class TitulacionController extends Controller
         return view('titulaciones.edit', compact('titulacion','alumno','personal','planes','ae'));
     }
 
-    public function update(TitulacionRequest $request, $id)
-    {
+    public function update(TitulacionRequest $request, $id){
         $titulacion = Titulacion::find($id);
         //$titulacion->alumno        = $request->alumno;
         $titulacion->nombre_proyecto      = mb_strtoupper($request->proyecto,'UTF-8');
@@ -282,7 +277,15 @@ class TitulacionController extends Controller
     }
 
     public function gen_reporte_a(){
-        return view('titulaciones.fragment.gen_reporte_a');
+        $c = DB::table('personal')->select('area_academica')->where('rfc',Auth::user()->name)->first();
+        $carreras = DB::table('carreras as c')->select('c.carrera','c.nombre_carrera')
+                    ->join('permisos','permisos.carrera','=','c.carrera')
+                    ->where('permisos.clave_area',$c->area_academica)
+                    ->where('permisos.usuario',Auth::user()->name)
+                    ->groupBy('c.carrera','c.nombre_carrera')
+                    ->get();
+        //return $carreras;
+        return view('titulaciones.fragment.gen_reporte_a',compact('carreras'));
     }
 
     public function gen_reporte_d(){

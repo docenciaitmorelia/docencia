@@ -14,6 +14,8 @@
 						</h4>
 					</div>
 				</center>
+				@if (file_exists('pdf/LP/LP_'.$titulacion->alumno.'.pdf')) <a href="{{ asset('pdf/LP/LP_'.$titulacion->alumno.'.pdf')}}" target="_blank">Abrir Liberación de proyecto</a>
+        @endif
 				<hr>
 				<center>
 					<h5>
@@ -59,7 +61,7 @@
           </tbody>
         </table>
 				<br>
-				<form action="../crear_liberacion_p/{{$titulacion->id}}" method="POST" target="_blank">
+				<form action="{{ route('crear_liberacion_p', $titulacion->id) }}" method="POST" target="_blank">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div class="col-md-12">
 							<div class="col-md-6">

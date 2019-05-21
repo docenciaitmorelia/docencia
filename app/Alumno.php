@@ -19,7 +19,8 @@ class Alumno extends Model
       $carreras = DB::table('carreras')
       ->select('carreras.carrera','nombre_reducido','reticula')
       ->join('permisos','permisos.carrera','=','carreras.carrera')
-      ->where('permisos.clave_area',$clave_area_usuario->area_academica);
+      ->where('permisos.clave_area',$clave_area_usuario->area_academica)
+      ->where('permisos.usuario',Auth::user()->name);
       return $query
         ->select('alumnos.*','carreras.nombre_reducido')
         ->where(function($query){
@@ -45,7 +46,8 @@ class Alumno extends Model
       $carreras = DB::table('carreras')
       ->select('carreras.carrera','nombre_reducido','reticula')
       ->join('permisos','permisos.carrera','=','carreras.carrera')
-      ->where('permisos.clave_area',$clave_area_usuario->area_academica);
+      ->where('permisos.clave_area',$clave_area_usuario->area_academica)
+      ->where('permisos.usuario',Auth::user()->name);
       return $query
         ->select('alumnos.*','carreras.nombre_reducido')
         ->where(function($query){

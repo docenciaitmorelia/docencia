@@ -67,9 +67,7 @@
                     <b class="caret"></b></a>
                   <ul class="dropdown-menu">
                     <li><a href="{{ route('titulaciones.index') }}">Titulaciones </a></li>
-                    <!--<li><a href="{{ route('gen_reporte_a')}}">Reporte por año </a></li>
-                    <li><a href="{{ route('gen_reporte_d')}}">Reporte por docente </a></li>
-                    <li><a href="{{ route('revisiones.index') }}">Revisiones </a></li>-->
+                    <li><a href="{{ route('gen_reporte_a')}}">Reporte de titulaciones </a></li>
                   </ul>
                 </li>
 
