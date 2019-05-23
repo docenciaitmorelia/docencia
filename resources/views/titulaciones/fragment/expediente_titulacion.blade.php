@@ -57,7 +57,9 @@
 
 									<td>
 										<a href="{{ route('titulaciones.edit', $titulacion->id) }}" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Editar Expediente"><i class="material-icons">create</i></a>
+										@if($titulacion->detalle_opcion == 'Recepcional')
 										<a href="{{route('showRevisiones',$titulacion->id) }}" data-target="titulacion" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Ver Status de Revisiones"><i class="material-icons">find_in_page</i></a>
+										@endif
 									</td>
 								</tr>
 						</tbody>
