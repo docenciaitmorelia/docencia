@@ -91,7 +91,7 @@ class PDFController extends Controller
     public function crear_constancia_ce(Request $request,$nc){
         $input = $request->input('oficio');
             $vistaurl="pdfs.constancia_ce";
-            $alumno=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo"))
+            $alumno=Alumno::select(DB::raw("CONCAT(apellido_paterno,' ',apellido_materno,' ',nombre_alumno) AS completo",'no_de_control'))
                         ->where('no_de_control','=',"$nc")->first();
             if (file_exists('pdf/Circulos/'.$alumno->no_de_control.'.pdf')){
                 File::delete('pdf/Circulos/'.$alumno->no_de_control.'.pdf');
