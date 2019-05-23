@@ -2,7 +2,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Horario</title>
-  <link rel="stylesheet" type="text/css" href="{{ url('css/estilo.css') }}">
 </head>
 <body>
 
@@ -10,7 +9,7 @@
 		<div class="panel-body">
 
 			<legend>Horario</legend>
-			<table class="table table-bordered table-sm">
+			<table border="1">
 				<thead>
 					<tr>
 						<th> <center><b>Ciclo Escolar: @if($periodo == 'E-J') ENERO-JUNIO @else AGOSTO-DICIEMBRE  @endif {{$anio}}</b></center></th>
