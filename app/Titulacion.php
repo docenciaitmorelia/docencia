@@ -44,8 +44,8 @@ class Titulacion extends Model
             $join->on('titulaciones.alumno','=','alumnos.no_de_control');
           })
           ->join('permisos','permisos.carrera','=','alumnos.carrera')
-          ->where('permisos.usuario','=',Auth::user()->name)
           ->where('permisos.clave_area',$clave_area_usuario->area_academica)
+          ->where('permisos.usuario',Auth::user()->name)
           ->where('titulaciones.alumno','LIKE',"%$s%")
           ->orwhere(DB::raw("CONCAT(alumnos.nombre_alumno,' ',alumnos.apellido_paterno,' ',alumnos.apellido_materno)"), 'LIKE', "%$s%");
   }
