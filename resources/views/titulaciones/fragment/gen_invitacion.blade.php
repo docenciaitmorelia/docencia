@@ -66,7 +66,7 @@
 						<div class="col-md-12">
 							<div class="col-md-4">
 								<label for="fecha" class="control-label">Fecha de Ceremonia</label>
-								<input type="date" name="fecha" class="form-control" placeholder="aaaa-mm-dd">
+								<input type="date" name="fecha" class="form-control" placeholder="aaaa-mm-dd" required>
 							</div>
 						<div class="col-md-4">
 							<label for="lugar" class="control-label">Lugar</label>

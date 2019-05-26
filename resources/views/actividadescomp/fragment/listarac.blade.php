@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+@if(Auth::user()->rol == 'Jefe de Docencia')
 <div class="row">
   <div class="col">
     <div class="card">
@@ -47,9 +47,12 @@
  	@if($ncreditos>=5)
  	<form action="{{ route('crear_constancia_ac', $al->no_de_control)}}" method="POST" target="_blank">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <div class="col-md-6">
+      <input type="checkbox" id="cal" name="cal" onchange="myFunction()">No mostrar calificación
+    </div>
 		<div class="col-md-6">
 			<label for="oficio" class="control-label">Oficio:</label>
-			<input type="text" id="oficio" name="oficio" class="form-control" placeholder="DSC-D-001/2018">
+			<input type="text" id="oficio" name="oficio" class="form-control" placeholder="001/2018" required>
 		</div>
 		<p class="col-md-12">
 			<button type="submit" class="btn btn-raised btn-primary">Generar PDF</button>
@@ -63,4 +66,5 @@
 </div>
 </div>
 </div>
+@endif
 @endsection

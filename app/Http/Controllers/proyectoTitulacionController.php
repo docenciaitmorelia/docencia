@@ -51,7 +51,7 @@ class proyectoTitulacionController extends Controller
     {
       $ae=Titulacion::select('asesor_externo')->where('id',$nc)->first();
       if($ae->asesor_externo == 'N'){
-        $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno as alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),'op.nombre_opcion as nombre_opcion')
+        $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno as alumno','titulaciones.id','titulaciones.nombre_proyecto','s1.rfc as rfc_revisor1','s2.rfc as rfc_revisor2','s3.rfc as rfc_revisor3',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS revisor1"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS revisor2"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS revisor3"),'op.nombre_opcion as nombre_opcion')
                  ->join('personal as a','a.rfc','=','titulaciones.asesor')
                  ->join('personal as s1','s1.rfc','=','titulaciones.revisor1')
                  ->join('personal as s2','s2.rfc','=','titulaciones.revisor2')
@@ -61,7 +61,7 @@ class proyectoTitulacionController extends Controller
                  ->first();
       }
       else{
-        $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno as alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario") ,'titulaciones.asesor_externo as asesor','op.nombre_opcion as nombre_opcion')
+        $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno as alumno','titulaciones.id','titulaciones.nombre_proyecto','s1.rfc as rfc_revisor1','s2.rfc as rfc_revisor2','s3.rfc as rfc_revisor3',DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS revisor1"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS revisor2"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS revisor3") ,'titulaciones.asesor_externo as asesor','op.nombre_opcion as nombre_opcion')
                  ->join('personal as s1','s1.rfc','=','titulaciones.revisor1')
                  ->join('personal as s2','s2.rfc','=','titulaciones.revisor2')
                  ->join('personal as s3','s3.rfc','=','titulaciones.revisor3')
@@ -77,29 +77,39 @@ class proyectoTitulacionController extends Controller
 
     public function showRevisiones($nc)
     {
-      $ae=Titulacion::select('asesor_externo')->where('id',$nc)->first();
-      if($ae->asesor_externo == 'N'){
-        $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno as alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario"),'op.nombre_opcion as nombre_opcion')
+      $ae=Titulacion::select('asesor_externo','id')->where('alumno',$nc)->where('estatus','ACTIVO')->first();
+      if($ae && $ae->asesor_externo == 'N'){
+        $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno as alumno','titulaciones.id','titulaciones.nombre_proyecto','s1.rfc as rfc_revisor1','s2.rfc as rfc_revisor2','s3.rfc as rfc_revisor3',DB::raw("CONCAT(a.apellidos_empleado,' ',a.nombre_empleado) AS asesor"),DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS revisor1"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS revisor2"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS revisor3"),'op.nombre_opcion as nombre_opcion')
                  ->join('personal as a','a.rfc','=','titulaciones.asesor')
                  ->join('personal as s1','s1.rfc','=','titulaciones.revisor1')
                  ->join('personal as s2','s2.rfc','=','titulaciones.revisor2')
                  ->join('personal as s3','s3.rfc','=','titulaciones.revisor3')
                  ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
-                 ->where('titulaciones.id',$nc)
+                 ->where('titulaciones.id',$ae->id)
                  ->first();
+        //
+        $revisiones=DB::table('revisiones')->where('revisiones.id_titulacion',$titulacion->id)->get();
+        $alumno = Alumno::where('no_de_control','=',$titulacion->alumno)->first();
       }
-      else{
-        $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno as alumno','titulaciones.id','titulaciones.nombre_proyecto',DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS presidente"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS secretario"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS vocal_propietario") ,'titulaciones.asesor_externo as asesor','op.nombre_opcion as nombre_opcion')
+      elseif ($ae && $ae->asesor_externo != 'N'){
+        $titulacion=Titulacion::select('titulaciones.estatus','titulaciones.alumno as alumno','titulaciones.id','titulaciones.nombre_proyecto','s1.rfc as rfc_revisor1','s2.rfc as rfc_revisor2','s3.rfc as rfc_revisor3',DB::raw("CONCAT(s1.apellidos_empleado,' ',s1.nombre_empleado) AS revisor1"),DB::raw("CONCAT(s2.apellidos_empleado,' ',s2.nombre_empleado) AS revisor2"),DB::raw("CONCAT(s3.apellidos_empleado,' ',s3.nombre_empleado) AS revisor3") ,'titulaciones.asesor_externo as asesor','op.nombre_opcion as nombre_opcion')
                  ->join('personal as s1','s1.rfc','=','titulaciones.revisor1')
                  ->join('personal as s2','s2.rfc','=','titulaciones.revisor2')
                  ->join('personal as s3','s3.rfc','=','titulaciones.revisor3')
                  ->join('opciones_titulacion as op','op.id','=','titulaciones.opc_titu')
-                 ->where('titulaciones.id',$nc)
+                 ->where('titulaciones.id',$ae->id)
                  ->first();
+        //
+        $revisiones=DB::table('revisiones')->where('revisiones.id_titulacion',$titulacion->id)->get();
+
 
     }
-     $revisiones=DB::table('revisiones')->where('revisiones.id_titulacion',$titulacion->id)->get();
-     $alumno = Alumno::where('no_de_control','=',$titulacion->alumno)->first();
+    else{
+      $titulacion = "N";
+      $revisiones = "N";
+    }
+    $alumno = Alumno::where('no_de_control','=',$nc)->first();
+     //return $revisiones;
      return view('titulaciones.proyecto.expediente_docencia',compact('titulacion','alumno','revisiones'));
     }
 

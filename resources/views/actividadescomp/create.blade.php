@@ -74,7 +74,7 @@
 
 	<div class="form-group col-md-5">
 			<label for="alumno" class="bmd-label-floating col-form-label">{{ __('Alumno') }}</label>
-					<select id="alumno" type="text" class="form-control{{ $errors->has('alumno') ? ' is-invalid' : '' }}" name="alumno" value="" required autofocus>
+					<select id="alumno" type="text" class="form-control{{ $errors->has('alumno') ? ' is-invalid' : '' }}" name="alumno" value="" required>
 						<option value="">Seleccione alumno...</option>
 						@foreach($alumnos as $alumno)
 							<option value="{{ $alumno->no_de_control }}">{{$alumno->apellido_paterno}} {{$alumno->apellido_materno}} {{$alumno->nombre_alumno}}</option>
@@ -133,16 +133,41 @@
 		<select id="docente_resp" name="docente_resp" class="form-control" data-live-search="true" required>
 			<option value="">Seleccione docente</option>
 			@foreach($docente as $doc)
-			<option value="{!! $doc->rfc !!}">{!! $doc->completo !!}</option>
+			<option value="{!! $doc->rfc !!}">{{$doc->rfc}} {{ $doc->completo }}</option>
 			@endforeach
 		</select>
 	</div>
 </div>
 
-    <p class="col-md-12">
-		<button type="submit" class="btn btn-raised btn-primary">Guardar</button>
-		<a href="{{ route('actividadescomp.index') }}" class="btn btn-raised btn-primary">Cancelar</a>
-	</p>
+<p class="form-group col-md-12">
+	<button type="submit" class="btn btn-raised btn-primary">Guardar</button>
+	<a data-toggle="modal" data-target="#modal1" class="btn btn-raised btn-primary">Cancelar</a>
+</p>
+
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title">Eliminar</h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="{{ route('procesotitulacion.index') }}" method="POST" id='form-modal1'>
+						{{ csrf_field() }}
+				</form>
+				<p>¿Seguro de que desea cancelar?</p>
+			</div>
+			<div class="modal-footer">
+				<a href="{{ route('titulaciones.index') }}" type="button" class="btn btn-primary" >Aceptar</a>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div> <!-- end modal structure -->
 
 
 </form>

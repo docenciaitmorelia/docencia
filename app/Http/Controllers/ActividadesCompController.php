@@ -87,4 +87,15 @@ class ActividadesCompController extends Controller
         return view('actividadescomp.fragment.listarac',compact('actividadescomp','alumno','docente','ncreditos'));
 
     }
+
+    public function listar_ac_al($nc){
+        $actividadescomp  = ActividadesComp::where('alumno','=',"$nc")->orderBy('id','ASC')->get();
+        $alumno = Alumno::where('no_de_control','=',"$nc")->get();
+        $docente = Personal::select('rfc',DB::raw("CONCAT(apellidos_empleado,' ',nombre_empleado) AS completo"))->orderBy('apellidos_empleado')->get();
+        $ncreditos=actividadescomp::where('alumno','=',"$nc")
+                        ->sum('creditos');
+        //return $actividadescomp;
+        return view('actividadescomp.fragment.listarac_al',compact('actividadescomp','alumno','docente','ncreditos'));
+
+    }
 }

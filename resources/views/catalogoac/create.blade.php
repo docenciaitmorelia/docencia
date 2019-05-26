@@ -24,27 +24,35 @@
         <input class="form-control" type="number" id="creditos" name="creditos" required>
     </div>
 
-    <p class="col-md-12 form-group">
-        <button type="submit" class="btn btn-raised btn-primary">Guardar</button>
-        <button name="cancel" id="cancel" data-toggle="modal" data-target="#modal1" class="btn btn-raised btn-primary" required>Cancelar</button>
+    <p class="form-group col-md-12">
+      <button type="submit" class="btn btn-raised btn-primary">Guardar</button>
+      <a data-toggle="modal" data-target="#modal1" class="btn btn-raised btn-primary">Cancelar</a>
     </p>
 
 
-
-  <!-- Modal Structure -->
-  <div class="modal" id="modal1" name="modal1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body">
-          <p>¿Seguro de que desea cancelar?</p>
-        </div>
-        <div class="modal-footer">
-          <a href="{{ route('catalogoac.index') }}" class="btn btn-raised btn-primary">Aceptar</a>
-          <a href="{{ url()->current() }}" class="btn btn-raised btn-primary">Cancelar</a>
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">Eliminar</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{{ route('procesotitulacion.index') }}" method="POST" id='form-modal1'>
+                {{ csrf_field() }}
+            </form>
+            <p>¿Seguro de que desea cancelar?</p>
+          </div>
+          <div class="modal-footer">
+            <a href="{{ route('titulaciones.index') }}" type="button" class="btn btn-primary" >Aceptar</a>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </div> <!-- end modal structure -->
 
 </form>
 </div>

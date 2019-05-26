@@ -23,6 +23,8 @@ Route::group(['middleware' => ['auth']], function () {
   ]);
   Route::get('showRevisiones/{nc}', 'proyectoTitulacionController@showRevisiones')->name('showRevisiones');
 
+  Route::get('progreso_t/{nc}', 'TitulacionController@progreso_t')->name('progreso_t');
+
   //Módulo de Administración de Usuarios
   Route::get('/admin', 'usuariosController@index')->name('admin');
   Route::resource('usuariosCtl','usuariosController');
@@ -36,6 +38,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::get('listar_ac/{nc}', 'ActividadesCompController@listar_ac')->name('listar_ac');
+
+    Route::get('listar_ac_al/{nc}', 'ActividadesCompController@listar_ac_al')->name('listar_ac_al');
 
     Route::post('crear_constancia_ac/{nc}', 'PDFController@crear_constancia_ac')->name('crear_constancia_ac');
 

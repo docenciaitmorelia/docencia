@@ -11,7 +11,7 @@
 		<div class="col-md-12">
 			<div class="col-md-4 form-group">
 				<label for="semestre" class="control-label">Semestre</label>
-				<select id="semestre" name="semestre" class="form-control">
+				<select id="semestre" name="semestre" class="form-control" required>
 					<option value="">Seleccione periodo...</option>
 					<option value="E-J">ENERO-JUNIO</option>
 					<option value="A-D">AGOSTO-DICIEMBRE</option>
@@ -19,7 +19,7 @@
 			</div>
 			<div class="col-md-4 form-group">
 				<label class="control-label" for="anio">Año</label>
-				<input type="text" class="form-control" id="anio" name="anio" value="2017">
+				<input type="text" class="form-control" id="anio" name="anio" value="2017" required>
 			</div>
 
 			<p class="col-md-12 form-group">

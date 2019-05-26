@@ -66,15 +66,40 @@
 				<select id="docente_resp" name="docente_resp" class="form-control" required>
 					<option value="">Seleccione docente</option>
 					@foreach($docente as $doc)
-					<option value="{!! $doc->rfc !!}" {{(old('docente_resp',$actividadescomp->docente_resp)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}</option>
+					<option value="{!! $doc->rfc !!}" {{(old('docente_resp',$actividadescomp->docente_resp)==$doc->rfc)? 'selected':''}}> {{$doc->rfc}} {{ $doc->completo }}</option>
 					@endforeach
 				</select>
 			</div>
 		</div>
-			<p class="col-md-12">
-				<button type="submit" class="btn btn-raised btn-primary">Guardar</button>
-				<a href="{{ route('actividadescomp.index') }}" class="btn btn-raised btn-primary">Cancelar</a>
-			</p>
+    <p class="form-group col-md-12">
+      <button type="submit" class="btn btn-raised btn-primary">Guardar</button>
+      <a data-toggle="modal" data-target="#modal1" class="btn btn-raised btn-primary">Cancelar</a>
+    </p>
+
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">Eliminar</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{{ route('procesotitulacion.index') }}" method="POST" id='form-modal1'>
+                {{ csrf_field() }}
+            </form>
+            <p>¿Seguro de que desea cancelar?</p>
+          </div>
+          <div class="modal-footer">
+            <a href="{{ route('titulaciones.index') }}" type="button" class="btn btn-primary" >Aceptar</a>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end modal structure -->
 
 		</form>
 	</div>

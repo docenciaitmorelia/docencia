@@ -108,6 +108,30 @@ class TitulacionController extends Controller
         return redirect()->route('titulaciones.index');
     }
 
+    public function progreso_t($nc){
+      $al=Titulacion::select('titulaciones.proceso','titulaciones.id','o.detalle_opcion')->join('opciones_titulacion as o','o.id','titulaciones.opc_titu')->where([['alumno',$nc],['estatus','ACTIVO']])->orwhere([['alumno',$nc],['estatus','TITULADO']])->first();
+      if($al){
+        $proceso = Titulacion::select('p.orden','p.descripcion','p.id')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.id','=',$al->id)->orderBy('p.orden')->get();
+        $pro= Titulacion::select('proceso','opc_titu')->where('id', $al->id)->first();
+        if($al->proceso == 'Alta'){
+          $orden = 'Alta';
+        }
+        else{
+        $ord = Titulacion::select('p.orden','p.id_opcion')
+        ->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')
+        ->where('p.descripcion','=',$pro->proceso)->where('titulaciones.id',$al->id)->first();
+        $orden =$ord->orden;
+        }
+      }
+      else{
+        $proceso= 'N';
+        $pro='N';
+        $orden='N';
+      }
+      //return $al;
+      return view('titulaciones.proyecto.progreso_t',compact('al','proceso','pro','orden'));
+    }
+
     public function expediente_titulacion($nc){
       $ae=Titulacion::select('asesor_externo')->where('id',$nc)->first();
       if($ae->asesor_externo == 'N'){
@@ -134,42 +158,7 @@ class TitulacionController extends Controller
      $pro= Titulacion::select('proceso','opc_titu')->where('id', $nc)->first();
      $p=$pro->proceso;
      $opc=$pro->opc_titu;
-     $proceso = Titulacion::select('p.orden','p.descripcion','p.id')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.id','=',$nc)->get();
-     $propuesta = Revision::select('veredicto')->where('id_titulacion','=',"$titulacion->id")->where('tipo_revision','=','Propuesta')->get();
-     $ordenL = Titulacion::select('p.orden')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.id','=',$nc)->where('descripcion','=',"Liberación de Proyecto")->get();
-     $aprobacion = Revision::select(DB::raw('count(*) as total'))->where('veredicto','APROBADO')->where('id_titulacion','=',"$titulacion->id")->where('tipo_revision','=','PROPUESTA')->first();
-     if(count($propuesta) > 0){
-       if($aprobacion->total == 3){
-         $v=1;
-       }
-       else{
-         $v=0;
-       }
-     }
-     else{
-       $v=0;
-     }
-     if(count($ordenL) > 0){
-       $ol= $ordenL[0]->orden;
-     }
-     else {
-       $ol=0;
-     }
-     $borrador = Revision::select(DB::raw('count(*) as total'))->where('veredicto','APROBADO')->where('id_titulacion','=',"$titulacion->id")->where('tipo_revision','=','PROYECTO')->first();
-     $ordenI = Titulacion::select('p.orden')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('descripcion','Invitación a Ceremonia de Titulación')->get();
-     if($borrador->total == 3){
-       $b = 'A';
-     }
-     else{
-       $b= 'N';
-     }
-     if(count($ordenI) > 0){
-       $oi= $ordenI[0]->orden;
-     }
-     else {
-       $oi=0;
-
-     }
+     $proceso = Titulacion::select('p.orden','p.descripcion','p.id')->join('proceso_titulacion as p','p.id_opcion','=','titulaciones.opc_titu')->where('titulaciones.id','=',$nc)->orderBy('p.orden')->get();
      if($p=='Alta'){
        $orden = 'Alta';
      }
@@ -180,16 +169,8 @@ class TitulacionController extends Controller
        $orden =$ord->orden;
      }
      //return $ord;
-     return view('titulaciones.fragment.expediente_titulacion',compact('titulacion','alumno','proceso','orden','b','ol','v','oi','ae'));
+     return view('titulaciones.fragment.expediente_titulacion',compact('titulacion','alumno','proceso','orden','ae'));
  }
-
-    public function proyectosDocentes(Request $request){
-
-    }
-
-    public function autorizarProyecto(){
-
-    }
 
     public function autorizarLiberacionProyecto(){
 

@@ -10,7 +10,10 @@
   				<div class="col-md-6">
   					<strong>Alumno: </strong>{{$alumno->no_de_control}} — {{$alumno->apellido_paterno}} {{$alumno->apellido_materno}} {{$alumno->nombre_alumno}}
   				</div>
-
+					@if($titulacion == 'N')
+					<br>
+					<h4>No existe expediente de titulación</h4>
+					@else
           <div class="col-md-12">
   					<strong>Proyecto:</strong> {{$titulacion->nombre_proyecto}}
   				</div>
@@ -32,36 +35,29 @@
 
 								<tr>
                   <td><strong>Revisores:</strong></td>
-									<td>{{ $titulacion->presidente }}</td>
-									<td>{{ $titulacion->secretario }}</td>
-									<td>{{ $titulacion->vocal_propietario}}</td>
+									<td>{{ $titulacion->revisor1 }}</td>
+									<td>{{ $titulacion->revisor2 }}</td>
+									<td>{{ $titulacion->revisor3}}</td>
 								</tr>
                 <tr>
                   <td><strong>Veredicto:</strong></td>
                   <td>
                     @foreach($revisiones as $revision)
-                      @if($revision->revisor == $titulacion->rfc_presidente && $revision->tipo_revision == "PROPUESTA")
+                      @if($revision->revisor == $titulacion->rfc_revisor1 && $revision->tipo_revision == "PROPUESTA")
                         {{ $revision->veredicto }} el {{ $revision->fecha_revision}}<BR>
                       @endif
                     @endforeach
                   </td>
                   <td>
                     @foreach($revisiones as $revision)
-                      @if($revision->revisor == $titulacion->rfc_secretario && $revision->tipo_revision == "PROPUESTA")
+                      @if($revision->revisor == $titulacion->rfc_revisor2 && $revision->tipo_revision == "PROPUESTA")
                         {{ $revision->veredicto }} el {{ $revision->fecha_revision}}<BR>
                       @endif
                     @endforeach
                   </td>
                   <td>
                     @foreach($revisiones as $revision)
-                      @if($revision->revisor == $titulacion->rfc_vocal_propietario && $revision->tipo_revision == "PROPUESTA")
-                        {{ $revision->veredicto }} el {{ $revision->fecha_revision}}<BR>
-                      @endif
-                    @endforeach
-                  </td>
-                  <td>
-                    @foreach($revisiones as $revision)
-                      @if($revision->revisor == $titulacion->rfc_vocal_suplente && $revision->tipo_revision == "PROPUESTA")
+                      @if($revision->revisor == $titulacion->rfc_revisor3 && $revision->tipo_revision == "PROPUESTA")
                         {{ $revision->veredicto }} el {{ $revision->fecha_revision}}<BR>
                       @endif
                     @endforeach
@@ -71,28 +67,21 @@
                   <td><strong>Observaciones:</strong></td>
                   <td>
                     @foreach($revisiones as $revision)
-                      @if($revision->revisor == $titulacion->rfc_presidente && $revision->tipo_revision == "PROPUESTA")
+                      @if($revision->revisor == $titulacion->rfc_revisor1 && $revision->tipo_revision == "PROPUESTA")
                         {{ $revision->comentarios }}<BR>
                       @endif
                     @endforeach
                   </td>
                   <td>
                     @foreach($revisiones as $revision)
-                      @if($revision->revisor == $titulacion->rfc_secretario && $revision->tipo_revision == "PROPUESTA")
+                      @if($revision->revisor == $titulacion->rfc_revisor2 && $revision->tipo_revision == "PROPUESTA")
                       {{ $revision->comentarios }}<BR>
                       @endif
                     @endforeach
                   </td>
                   <td>
                     @foreach($revisiones as $revision)
-                      @if($revision->revisor == $titulacion->rfc_vocal_propietario && $revision->tipo_revision == "PROPUESTA")
-                      {{ $revision->comentarios }}<BR>
-                      @endif
-                    @endforeach
-                  </td>
-                  <td>
-                    @foreach($revisiones as $revision)
-                      @if($revision->revisor == $titulacion->rfc_vocal_suplente && $revision->tipo_revision == "PROPUESTA")
+                      @if($revision->revisor == $titulacion->rfc_revisor3 && $revision->tipo_revision == "PROPUESTA")
                       {{ $revision->comentarios }}<BR>
                       @endif
                     @endforeach
@@ -109,47 +98,36 @@
   						<thead>
   							<tr>
                   <th></th>
-  								<th><center>Presidente</center></th>
-  								<th><center>Secretario</center></th>
-  								<th><center>Vocal Propietario</center></th>
-  								<th><center>Vocal Suplente</center></th>
+  								<th colspan="3"><center>Revisores</center></th>
   							</tr>
   						</thead>
   						<tbody>
 
   								<tr>
-                    <td><strong>Revisores:</strong></td>
-  									<td>{{ $titulacion->presidente }}</td>
-  									<td>{{ $titulacion->secretario }}</td>
-  									<td>{{ $titulacion->vocal_propietario}}</td>
-                    <td>{{ $titulacion->vocal_suplente}}</td>
-  								</tr>
+										<td><strong>Revisores:</strong></td>
+										<td>{{ $titulacion->revisor1 }}</td>
+										<td>{{ $titulacion->revisor2 }}</td>
+										<td>{{ $titulacion->revisor3}}</td>
+									</tr>
                   <tr>
                     <td><strong>Veredicto:</strong></td>
                     <td>
                       @foreach($revisiones as $revision)
-                        @if($revision->revisor == $titulacion->rfc_presidente && $revision->tipo_revision == "PROYECTO")
+                        @if($revision->revisor == $titulacion->rfc_revisor1 && $revision->tipo_revision == "PROYECTO")
                           {{ $revision->veredicto }} el {{ $revision->fecha_revision}}<BR>
                         @endif
                       @endforeach
                     </td>
                     <td>
                       @foreach($revisiones as $revision)
-                        @if($revision->revisor == $titulacion->rfc_secretario && $revision->tipo_revision == "PROYECTO")
+                        @if($revision->revisor == $titulacion->rfc_revisor2 && $revision->tipo_revision == "PROYECTO")
                           {{ $revision->veredicto }} el {{ $revision->fecha_revision}}<BR>
                         @endif
                       @endforeach
                     </td>
                     <td>
                       @foreach($revisiones as $revision)
-                        @if($revision->revisor == $titulacion->rfc_vocal_propietario && $revision->tipo_revision == "PROYECTO")
-                          {{ $revision->veredicto }} el {{ $revision->fecha_revision}}<BR>
-                        @endif
-                      @endforeach
-                    </td>
-                    <td>
-                      @foreach($revisiones as $revision)
-                        @if($revision->revisor == $titulacion->rfc_vocal_suplente && $revision->tipo_revision == "PROYECTO")
+                        @if($revision->revisor == $titulacion->rfc_revisor3 && $revision->tipo_revision == "PROYECTO")
                           {{ $revision->veredicto }} el {{ $revision->fecha_revision}}<BR>
                         @endif
                       @endforeach
@@ -159,28 +137,21 @@
                     <td><strong>Observaciones:</strong></td>
                     <td>
                       @foreach($revisiones as $revision)
-                        @if($revision->revisor == $titulacion->rfc_presidente && $revision->tipo_revision == "PROYECTO")
+                        @if($revision->revisor == $titulacion->rfc_revisor1 && $revision->tipo_revision == "PROYECTO")
                           {{ $revision->comentarios }}<BR>
                         @endif
                       @endforeach
                     </td>
                     <td>
                       @foreach($revisiones as $revision)
-                        @if($revision->revisor == $titulacion->rfc_secretario && $revision->tipo_revision == "PROYECTO")
+                        @if($revision->revisor == $titulacion->rfc_revisor2 && $revision->tipo_revision == "PROYECTO")
                         {{ $revision->comentarios }}<BR>
                         @endif
                       @endforeach
                     </td>
                     <td>
                       @foreach($revisiones as $revision)
-                        @if($revision->revisor == $titulacion->rfc_vocal_propietario && $revision->tipo_revision == "PROYECTO")
-                        {{ $revision->comentarios }}<BR>
-                        @endif
-                      @endforeach
-                    </td>
-                    <td>
-                      @foreach($revisiones as $revision)
-                        @if($revision->revisor == $titulacion->rfc_vocal_suplente && $revision->tipo_revision == "PROYECTO")
+                        @if($revision->revisor == $titulacion->rfc_revisor3 && $revision->tipo_revision == "PROYECTO")
                         {{ $revision->comentarios }}<BR>
                         @endif
                       @endforeach
@@ -188,6 +159,7 @@
                   </tr>
   						</tbody>
   					</table>
+						@endif
 						<div class="col-md-12">
 							@if(Auth::user()->rol == 'Jefe de Docencia')
 									<a href="{{ route('titulaciones.index') }}" class="btn btn-raised btn-primary"><i class="material-icons">chevron_left</i>Regresar</a>

@@ -57,8 +57,8 @@
 
 									<td>
 										<a href="{{ route('titulaciones.edit', $titulacion->id) }}" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Editar Expediente"><i class="material-icons">create</i></a>
-										@if($titulacion->detalle_opcion == 'Recepcional')
-										<a href="{{route('showRevisiones',$titulacion->id) }}" data-target="titulacion" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Ver Status de Revisiones"><i class="material-icons">find_in_page</i></a>
+										@if($titulacion->detalle_opcion == 'Recepcional' && $titulacion->estatus == 'ACTIVO')
+										<a href="{{route('showRevisiones',$titulacion->alumno) }}" data-target="titulacion" class="btn btn-raised btn-primary" data-toggle="tooltip" title="Ver Status de Revisiones"><i class="material-icons">find_in_page</i></a>
 										@endif
 									</td>
 								</tr>
@@ -87,7 +87,7 @@
 							<select id="documento" type="text" class="form-control" name="documento" value="" required autofocus>
 								<option value="">Seleccione documento</option>
 									@foreach($proceso as $documento)
-										<option id="documento" value="{{ $documento->descripcion }}" @if($ol != 0 && $documento->orden >= $ol && $v == 0) @if($b == 'N') disabled @endif @endif @if($oi != 0 && $documento->orden >= $oi && $b == 'N') disabled @endif>{{$documento->descripcion}}</option>
+										<option id="documento" value="{{ $documento->descripcion }}" >{{$documento->descripcion}}</option>
 									@endforeach
 						  </select>
 						</div>
@@ -96,7 +96,7 @@
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 							<div class="col-md-12">
 								<label for="documento" class="control-label">Tipo de Documento</label>
-								<select id="documento" type="text" class="form-control" name="documento" value="" required autofocus>
+								<select id="documento" type="text" class="form-control" name="documento" value="" required>
 									<option value="">Seleccione documento</option>
 										@foreach($proceso as $documento)
 											<option id="documento" value="{{ $documento->descripcion }}">{{$documento->descripcion}}</option>

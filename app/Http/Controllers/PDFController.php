@@ -24,28 +24,16 @@ class PDFController extends Controller
 
     //ACTIVIDADES COMPLEMENTARIAS
 
-    public function crearPDFAC($datos,$datos2,$datos3,$vistaurl,$nc,$carrera,$jefedsc,$gjdsc,$doc,$jefeesc,$gjesc,$nof,$docencia){
-        $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
-        $data   = $datos;
-        $data2  = $datos2;
-        $data3  = $datos3;
-        $data4  = $carrera;
-        $data5  = $jefedsc;
-        $gjdsc  = $gjdsc;
-        $gjesc  = $gjesc;
-        $data6  = $doc;
-        $data7  = $jefeesc;
-        $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
-        $view   = \View::make($vistaurl, compact('data', 'date','data2','data3','date','nc','data4','data5','data6','data7','nof','gjesc','gjdsc','docencia'))->render();
-        $pdf    = \App::make('snappy.pdf.wrapper');
-        $pdf    ->loadHTML($view,[],$overwrite = true)->save('pdf/AC/'.$nc.'.pdf');
-        return $pdf->stream(''.$nc.'.pdf');
-    }
-
     public function crear_constancia_ac(Request $request,$nc){
         $input = $request->input('oficio');
+        $cal = $request->input('cal');
         $controller = new ActividadesCompController;
-        $vistaurl="pdfs.constancia_ac";
+        if($cal == 'on'){
+          $vistaurl="pdfs.constancia_ac1";
+        }
+        else{
+          $vistaurl="pdfs.constancia_ac2";
+        }
         $ac=ActividadesComp::select('actividad','creditos','fecha_del','fecha_al','calificacion')
                         ->where('alumno','=',"$nc")->orderBy('fecha_del','ASC')->orderBy('fecha_al','ASC')->get();
         $nomb=DB::table('alumnos')->where('no_de_control','=',"$nc")->get();
@@ -65,8 +53,26 @@ class PDFController extends Controller
         $jefeesc    = Jefe::where('clave_area','=','120600')->first();
         $gjesc      = Personal::select('sexo_empleado')->where('rfc','=',"$jefeesc->rfc")->get();
         $docencia   =Puesto::select('g.grado as grado','d.apellidos_empleado','d.nombre_empleado','d.sexo_empleado as sexo_empleado')->join('grados as g','g.rfc','=','puesto_d.rfc')->join('personal as d','d.rfc','=','puesto_d.rfc')->where('puesto_d.puesto','JEFE DOCENCIA')->where('puesto_d.clave_area','=',Auth::user()->clave_area)->first();
-            //return $doc;
+        //return $cal;
         return $this->crearPDFAC($ac,$nomb,$prom, $vistaurl,$nc,$c,$jefedsc,$gjdsc,$doc,$jefeesc,$gjesc,$input,$docencia);
+    }
+
+    public function crearPDFAC($datos,$datos2,$datos3,$vistaurl,$nc,$carrera,$jefedsc,$gjdsc,$doc,$jefeesc,$gjesc,$nof,$docencia){
+        $meses = array("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+        $data   = $datos;
+        $data2  = $datos2;
+        $data3  = $datos3;
+        $data4  = $carrera;
+        $data5  = $jefedsc;
+        $gjdsc  = $gjdsc;
+        $gjesc  = $gjesc;
+        $data6  = $doc;
+        $data7  = $jefeesc;
+        $date   = date('d')."/".$meses[date('m')-1]."/".date('Y') ;
+        $view   = \View::make($vistaurl, compact('data', 'date','data2','data3','date','nc','data4','data5','data6','data7','nof','gjesc','gjdsc','docencia'))->render();
+        $pdf    = \App::make('snappy.pdf.wrapper');
+        $pdf    ->loadHTML($view,[],$overwrite = true)->save('pdf/AC/'.$nc.'.pdf');
+        return $pdf->stream(''.$nc.'.pdf');
     }
 
     //CIRCULOS DE ESTUDIOS

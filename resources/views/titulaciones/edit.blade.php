@@ -41,7 +41,7 @@
 						@if($titulacion->asesor_externo == 'N')
 						<div class="form-group col-md-12">
 							<label for="asesor" class="control-label">Asesor</label>
-							<select id="asesor" name="asesor" class="form-control" required>
+							<select id="asesor" name="asesor" class="form-control">
 								<option value="0">Seleccione Asesor</option>
 								@foreach($personal as $doc)
 								<option value="{!! $doc->rfc !!}" {{(old('asesor',$titulacion->asesor)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}, {{ $doc->rfc}}</option>
@@ -58,7 +58,7 @@
 						@else
 						<div class="form-group col-md-12">
 							<label for="asesor" class="control-label">Asesor</label>
-							<select id="asesor" name="asesor" class="form-control" required>
+							<select id="asesor" name="asesor" class="form-control">
 								<option value="0">Seleccione Asesor</option>
 								@foreach($personal as $doc)
 								<option value="{!! $doc->rfc !!}" {{(old('asesor',$titulacion->asesor)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}, {{ $doc->rfc}}</option>
@@ -106,7 +106,7 @@
 
 						<div class="col-md-4">
 							<label for="estatus" class="control-label">Estatus</label>
-							<select id="estatus" name="estatus" class="form-control" required="">
+							<select id="estatus" name="estatus" class="form-control" required>
 								<option value="">Seleccione estatus</option>
 			                    <option value="ACTIVO" {!! (old('estatus',$titulacion->estatus)=='ACTIVO')? 'selected':'' !!}>Activo</option>
 			                    <option value="CANCELADO" {!! (old('estatus',$titulacion->estatus)=='CANCELADO')? 'selected':'' !!}>Cancelado</option>
@@ -115,7 +115,7 @@
 
 
 						<p class="form-group col-md-12">
-							<button type="submit" class="btn btn-raised btn-primary" onclick="validarFormulario()">Guardar</button>
+							<button type="submit" class="btn btn-raised btn-primary">Guardar</button>
 							<a data-toggle="modal" data-target="#modal1" class="btn btn-raised btn-primary">Cancelar</a>
 						</p>
 

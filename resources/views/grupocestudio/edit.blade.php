@@ -73,10 +73,12 @@
 							<input type="text" id="salon2" name="salon2" class="form-control" style="text-transform:uppercase;" value="{{ old('salon2', $grupo->salon2) }}" required>
 						</div>
 
-						<div class="col-md-12 form-group">
+            <p class="form-group col-md-12">
 							<button type="submit" class="btn btn-raised btn-primary">Guardar</button>
-							<button data-toggle="modal" data-target="#modal1" class="btn btn-raised btn-primary">Cancelar</button>
-						</div>
+							<a data-toggle="modal" data-target="#modal1" class="btn btn-raised btn-primary">Cancelar</a>
+						</p>
+
+
 						<!-- Modal Structure -->
 						<div id="modal1" class="modal" tabindex="-1" role="dialog">
 							<div class="modal-dialog" role="document">
@@ -94,7 +96,7 @@
 										<p>¿Seguro de que desea cancelar?</p>
 									</div>
 									<div class="modal-footer">
-										<a href="{{ route('grupocestudio.index') }}" type="button" class="btn btn-primary" >Aceptar</a>
+										<a href="{{ route('titulaciones.index') }}" type="button" class="btn btn-primary" >Aceptar</a>
 										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 									</div>
 								</div>

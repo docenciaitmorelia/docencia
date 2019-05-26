@@ -25,7 +25,7 @@ class CreateActividadesCompsTable extends Migration
           $table->string('fecha_al');
           $table->string('horas')->nullable();
           $table->decimal('calificacion',5,2);
-          $table->string('docente_resp');
+          $table->string('docente_resp')->nullable();
           $table->foreign('docente_resp')->references('rfc')->on('personal');
           $table->timestamps();
       });

@@ -82,7 +82,8 @@
                 <li><a href="{{ route('proyectoTitulacionCtl.index')}}">Proyectos de Titulación Asignados</a></li>
               @break
               @case("Alumno")
-                <li><a href="{{ route('showRevisiones',Auth::user()->name)}}">Ver el Status de Mi Proyecto de Titulación</a></li>
+                <li><a href="{{ route('listar_ac_al',Auth::user()->name)}}">Ver el Número de créditos</a></li>
+                <li><a href="{{ route('progreso_t',Auth::user()->name)}}">Ver el estatus de titulación</a></li>
               @break
               @case("Administrador")
                 <li><a href="{{ route('usuariosCtl.index') }}">Usuarios</a></li>
