@@ -42,7 +42,7 @@
 						<div class="form-group col-md-12">
 							<label for="asesor" class="control-label">Asesor</label>
 							<select id="asesor" name="asesor" class="form-control">
-								<option value="0">Seleccione Asesor</option>
+								<option value="">Seleccione Asesor</option>
 								@foreach($personal as $doc)
 								<option value="{!! $doc->rfc !!}" {{(old('asesor',$titulacion->asesor)==$doc->rfc)? 'selected':''}}>{!! $doc->completo !!}, {{ $doc->rfc}}</option>
 								@endforeach
