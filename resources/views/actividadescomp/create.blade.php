@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@if(Auth::user()->rol == 'Jefe de Docencia')
 <div class="row">
 	<div class="col">
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -176,4 +177,5 @@
 </div>
 </div>
 </div>
+@endif
 @endsection

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@if(Auth::user()->rol == 'Jefe de Docencia')
 <div class="row">
 	<div class="col">
 		<div class="card">
@@ -118,5 +119,6 @@
 			</div>
 		</div>
 	</div>
+@endif
 @endif
 @endsection
