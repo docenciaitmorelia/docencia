@@ -100,9 +100,9 @@ class TitulacionController extends Controller
           $titulacion->asesor_externo   = "N";
         }
         $titulacion->estatus       = $request->estatus;
-        $titulacion->fecha_cer     = "";
-        $titulacion->lugar         = "";
-        $titulacion->hora          = "";
+        $titulacion->fecha_cer     = $titulacion->fecha_cer;
+        $titulacion->lugar         = $titulacion->lugar;
+        $titulacion->hora          = $titulacion->hora;
 
         $titulacion->save();
         return redirect()->route('titulaciones.index');
