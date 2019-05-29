@@ -45,7 +45,7 @@
 			</strong>
 		</p>
 		<p align="justify">
-			En respuesta a su oficio <b>{{$nofdiv}}</b> la solicitud de titulación; informo a usted que @if($alumno->sexo=='M') el @else la @endif <strong>C. {{$alumno->completo}}</strong>, pasante de la carrera de <b>{{$carrera->nombre}}</b> y con número de control <b>{{$alumno->no_de_control}}</b>, registró la opción de titulación: @if($alumno->reticula < 2010) <b>{{$titu->op}}. {{$titu->nombre_opcion}}</b>; @else <b>{{$titu->nombre_opcion}}</b>; @endif la cual ha sido analizado en reunión de Academia, llegando a la siguiente conclusión: <b>SE APRUEBA</b>; quedando integrado el jurado de la siguiente manera:
+			En respuesta a su oficio <b>{{$nofdiv}}</b> la solicitud de titulación; informo a usted que @if($alumno->sexo=='M') el @else la @endif <strong>C. {{$alumno->completo}}</strong>, pasante de la carrera de <b>{{$carrera->nombre}}</b> y con número de control <b>{{$alumno->no_de_control}}</b>, registró la opción de titulación: @if($alumno->reticula < 2010) <b>{{$titu->op}}. {{$titu->nombre_opcion}}</b>; @else <b>{{$titu->nombre_opcion}}</b>; @endif el cual ha sido analizado en reunión de Academia, llegando a la siguiente conclusión: <b>SE APRUEBA</b>; quedando integrado el jurado de la siguiente manera:
 		</p>
 			<p align="justify">
 				<table>
